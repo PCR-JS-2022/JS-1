@@ -25,5 +25,5 @@
 
 	❗Обратите внимание: ``getMinimumPresentsPrice`` может получить некорректный список друзей. В таком случае функция должна вернуть пустой массив.
 	* Список друзей считается корректным, если он является массивом.
-
+### Пример функции ``getMinimumPresentsPrice``
 ![](https://lh5.googleusercontent.com/fx6eaReQn7N2v_mEkONwgCLY8CG0Anm5RGj89tBnMi803gPkCIP6ZCt5Q-aPBjpYoTNYJiGi8s-MsgLA0_FxrUWDxYtj1_Lci0oYOjrrr-fjxigr3ji0TZAzGmAEle1jFVy7--L2)
