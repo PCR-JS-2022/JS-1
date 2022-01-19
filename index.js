@@ -15,7 +15,7 @@
  */
 export function getNextBirthdays(date, phoneList) {
 
-}
+};
 
 /**
  * @param {
@@ -36,7 +36,7 @@ export function getNextBirthdays(date, phoneList) {
  */
 export function getMonthsList(phoneList) {
 
-}
+};
 
 /**
  * @param {
@@ -65,4 +65,6 @@ export function getMonthsList(phoneList) {
  */
 export function getMinimumPresentsPrice(phoneList) {
 
-}
+};
+
+module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
