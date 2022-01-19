@@ -67,3 +67,6 @@ export function getMonthsList(phoneList) {
 export function getMinimumPresentsPrice(phoneList) {
 
 }
+
+
+/* Добавлен комментарий для теста */
