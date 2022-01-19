@@ -33,6 +33,7 @@ export function getNextBirthdays(date, phoneList) {
  *    }>
  *  }>
  * }
+ * 
  */
 export function getMonthsList(phoneList) {
 
