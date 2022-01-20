@@ -1,67 +1,51 @@
 /**
- * @param {string} date - дата отсчета
- * @param {
- *  Array<{
- *    name: string,
- *    birthdate: string,
- *  }>
- * } phoneList - список друзей из телефонной книги
- * @returns {
- *  Array<{
- *    name: string,
- *    birthdate: string,
- *  }>
- * }
+ * @typedef Person
+ * @type {object}
+ * @property {string} name - имя
+ * @property {string} birthdate - дата рождения
  */
-export function getNextBirthdays(date, phoneList) {
+
+/**
+ * @typedef Gift
+ * @type {object}
+ * @property {string} title - название подарка
+ * @property {number} price - стоимость подарка
+ */
+
+/**
+ * @param {string} date - дата отсчета
+ * @param {Array<Person>} phoneList - список друзей из телефонной книги
+ * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
+ */
+ export function getNextBirthdays(date, phoneList) {
 
 };
 
 /**
- * @param {
- *  Array<{
- *    name: string,
- *    birthdate: string,
- *  }>
- * } phoneList - список друзей из телефонной книги
- * @returns {
- *  Array<{
+ * @param {Array<Person>} phoneList - список друзей из телефонной книги
+ * @returns {Array<{
  *    month: string,
- *    friends: Array<{
- *      name: string,
- *      birthdate: string,
- *    }>
- *  }>
- * }
+ *    friends: Array<Person>,
+ *  }>}
  */
 export function getMonthsList(phoneList) {
 
 };
 
 /**
- * @param {
- *  Array<{
+ * @param {Array<{
  *    name: string,
  *    birthdate: string,
- *    wishList: Array<{
- *      title: string,
- *      price: number
- *    }>
- *  }>
- * } phoneList - список друзей из телефонной книги
- * @returns {
- *  {
+ *    wishList: Array<Gift>
+ *  }>} phoneList - список друзей из телефонной книги
+ * @returns {{
  *    friendsList: Array<{
  *      name: string,
  *      birthdate: string,
- *      present: {
- *        title: string,
- *        price: number,
- *      },
+ *      present: Gift
  *    }>,
  *    totalPrice: number
- *  }>
- * }}
+ *  }}
  */
 export function getMinimumPresentsPrice(phoneList) {
 
