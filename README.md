@@ -17,7 +17,79 @@
 	* Список друзей считается корректным, если он является массивом.
 
 ### Примеры функций ``getNextBirthdays`` и ``getMonthsList``
-![](https://lh4.googleusercontent.com/e7lAKScK08-CQP6OtOfcHaQ3CChbcjUeFA9enlbnnEVEbj7KdyWl3_EYC_-2ArwPLzPuAz4RqlNJAnaVF0DP0wJEjSbARH24t9s2RWfNDHCybYTTYDReuFUGGU_ydAaLBsnKnHMe)
+```js
+const phoneList = [
+  {
+    name: 'Александра',
+    birthdate: '21.05.2001',
+  },
+  {
+    name: 'Егор',
+    birthdate: '06.08.1976',
+  },
+  {
+    name: 'Роман',
+    birthdate: '14.05.2000',
+  },
+  {
+    name: 'Василий',
+    birthdate: '27.02.1980',
+  },
+];
+
+getNextBirthdays('30.02.1980', phoneList);
+
+/*
+[
+  {
+    name: 'Роман',
+    birthdate: '14.05.2000',
+  },
+  {
+    name: 'Александра',
+    birthdate: '21.05.2001',
+  },
+]
+*/
+
+getMonthsList(phoneList);
+
+/*
+[
+  {
+    month: 'февраль',
+    friends: [
+      {
+        name: 'Василий',
+        birthdate: '27.02.1980',
+      },
+    ],
+  },
+  {
+    month: 'май',
+    friends: [
+      {
+        name: 'Роман',
+        birthdate: '14.05.2000',
+      },
+      {
+        name: 'Александра',
+        birthdate: '21.05.2001',
+      },
+    ],
+  },
+  {
+    month: 'август',
+    friends: [
+      {
+        name: 'Егор',
+        birthdate: '06.08.1976',
+      },
+    ],
+  },
+]
+*/
+```
 
 3. ⭐ Иннокентий не любит тратить много денег на подарки ко дням рождения. Поэтому он попросил написать ещё одну функцию – ``getMinimumPresentsPrice``. Эта функция принимает список друзей с еще одним полем – массивом из объектов подарков, в каждом из которых указывается название подарка и его стоимость. Ваша задача – вернуть объект с двумя полями:
 	* ``friendsList`` – исходный список друзей только с минимальным по стоимости подарком из исходного списка желанных презентов;
