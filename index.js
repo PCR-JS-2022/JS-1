@@ -80,19 +80,17 @@ export function getMonthsList(phoneList) {
     }
 
     const sortedPhoneListByMonth = phoneList.sort((a, b) => {
-        const aDate = parseRuDate(a.birthdate);
-        const bDate = parseRuDate(b.birthdate);
-        return aDate.getMonth() - bDate.getMonth();
+        const aMonth = getMonthFomDate(a.birthdate)
+        const bMonth = getMonthFomDate(b.birthdate);
+        return aMonth - bMonth;
     });
 
     const result = [];
     let prevMonthNumber = parseInt(sortedPhoneListByMonth[0].birthdate.slice(3, 5));
     let monthName = getMonthName(prevMonthNumber);
     let currentIndex = 0;
-    result.push({
-        month: monthName,
-        friends: []
-    })
+    result.push({ month: monthName,friends: [] });
+
     for (const el of sortedPhoneListByMonth) {
         const monthNumber = parseInt(el.birthdate.slice(3, 5));
         if (monthNumber === prevMonthNumber) {
@@ -100,7 +98,7 @@ export function getMonthsList(phoneList) {
             continue;
         }
 
-        if (result[currentIndex].friends.length !== 0) {
+        if (result[currentIndex].friends.length > 1) {
             result[currentIndex].friends = result[currentIndex].friends.sort((a, b) => {
                 const aDate = parseRuDate(a.birthdate);
                 const bDate = parseRuDate(b.birthdate);
@@ -108,14 +106,10 @@ export function getMonthsList(phoneList) {
             })
         }
         
-
         currentIndex++;
         prevMonthNumber = monthNumber;
         monthName = getMonthName(prevMonthNumber);
-        result.push({
-            month: monthName,
-            friends: [el]
-        })
+        result.push({month: monthName, friends: [el]})
     }
 
     return result;
@@ -141,6 +135,14 @@ function getMonthName(month) {
         case 12: return 'декабрь';
         default: return null;
     }
+}
+
+/**
+ * @param {string} date - Дата
+ * @returns {number}
+ */
+function getMonthFomDate(date) {
+    return parseInt(date.slice(3, 5));
 }
 
 /**
