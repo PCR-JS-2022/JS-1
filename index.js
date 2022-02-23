@@ -17,7 +17,7 @@
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
-export function getNextBirthdays(date, phoneList) {
+function getNextBirthdays(date, phoneList) {
     const startDate = parseRuDate(date);
 
     if (!Array.isArray(phoneList) || phoneList.length === 0 || startDate === null) {
@@ -62,21 +62,14 @@ export function getNextBirthdays(date, phoneList) {
  * @returns {Date} дата
  */
 function parseRuDate(date) {
-    if (typeof date !== 'string') {
+    const dateRegex = /^\d{2}.\d{2}.\d{4}$/
+    if (typeof date !== 'string' || !date.match(dateRegex)) {
         return null;
     }
 
     const split = date.split('.');
-    if (split.length !== 3) {
-        return null;
-    }
-
     const parseToIntList = split.map(el => parseInt(el));
-
-    if (parseToIntList.find(el => isNaN(el))) {
-        return null;
-    }
-
+    
     return new Date(parseToIntList[2], parseToIntList[1] - 1, parseToIntList[0]);
 }
 
@@ -87,7 +80,7 @@ function parseRuDate(date) {
  *    friends: Array<Person>,
  *  }>}
  */
-export function getMonthsList(phoneList) {
+function getMonthsList(phoneList) {
     if (!Array.isArray(phoneList) || phoneList.length === 0) {
         return [];
     }
@@ -173,7 +166,7 @@ function getMonthFomDate(date) {
  *    totalPrice: number
  *  }}
  */
-export function getMinimumPresentsPrice(phoneList) {
+function getMinimumPresentsPrice(phoneList) {
     if (!Array.isArray(phoneList) || phoneList.length === 0 ) {
         return [];
     }
