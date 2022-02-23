@@ -25,6 +25,8 @@ export function getNextBirthdays(date, phoneList) {
     }
 
     const result = [];
+    const dateFromTime = dateFrom.getTime();
+    const currentTime = Date.now();
 
     for (const phone of phoneList) {
         const birthdate = parseRuDate(phone.birthdate);
@@ -32,7 +34,8 @@ export function getNextBirthdays(date, phoneList) {
             return [];
         }
 
-        if (dateFrom.getTime() > birthdate.getTime()) {
+        const birthdateTime = birthdate.getTime();
+        if (dateFromTime > birthdateTime || birthdateTime > currentTime) {
             continue;
         }
 
