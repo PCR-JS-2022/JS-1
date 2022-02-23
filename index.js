@@ -67,7 +67,7 @@ function parseRuDate(date) {
         return null;
     }
 
-    return new Date(parseToIntList[2], parseToIntList[1], parseToIntList[0]);
+    return new Date(parseToIntList[2], parseToIntList[1] - 1, parseToIntList[0]);
 }
 
 /**
@@ -163,7 +163,7 @@ function getMonthFomDate(date) {
  *    totalPrice: number
  *  }}
  */
-export function getMinimumPresentsPrice(phoneList) {
+ export function getMinimumPresentsPrice(phoneList) {
     if (!Array.isArray(phoneList) || phoneList.length === 0 ) {
         return [];
     }
