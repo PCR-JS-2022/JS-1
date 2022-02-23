@@ -18,15 +18,18 @@
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
 export function getNextBirthdays(date, phoneList) {
-    const dateFrom = parseRuDate(date);
+    const startDate = parseRuDate(date);
 
-    if (!Array.isArray(phoneList) || phoneList.length === 0 || dateFrom === null) {
+    if (!Array.isArray(phoneList) || phoneList.length === 0 || startDate === null) {
         return [];
     }
 
     const result = [];
-    const dateFromTime = dateFrom.getTime();
-    const currentTime = Date.now();
+    const timeStartDate = startDate.getTime();
+    const currentDate = new Date();
+    const currentDay = currentDate.getDate();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
 
     for (const phone of phoneList) {
         const birthdate = parseRuDate(phone.birthdate);
@@ -34,8 +37,15 @@ export function getNextBirthdays(date, phoneList) {
             return [];
         }
 
+        const birthdateYear = birthdate.getFullYear();
+        const birthdateMonth = birthdate.getMonth();
+        const birthdateDay = birthdate.getDate();
+
         const birthdateTime = birthdate.getTime();
-        if (dateFromTime > birthdateTime || birthdateTime > currentTime) {
+        if (timeStartDate > birthdateTime 
+            || birthdateYear > currentYear
+            || (birthdateYear === currentYear && birthdateMonth > currentMonth)
+            || (birthdateYear === currentYear && birthdateMonth === currentMonth && birthdateDay > currentDay)) {
             continue;
         }
 
@@ -163,7 +173,7 @@ function getMonthFomDate(date) {
  *    totalPrice: number
  *  }}
  */
- export function getMinimumPresentsPrice(phoneList) {
+export function getMinimumPresentsPrice(phoneList) {
     if (!Array.isArray(phoneList) || phoneList.length === 0 ) {
         return [];
     }
