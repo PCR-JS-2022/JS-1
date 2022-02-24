@@ -18,8 +18,29 @@
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
  export function getNextBirthdays(date, phoneList) {
+    const regex = new RegExp("^(\d{2}[.]){2}\d{4}$");
+    if (!regex.test(date) || !Array.isArray(phoneList))
+        return [];
 
+    phoneList.filter((person) => {
+        const reversedBirthdate = getReversedDate(person.birthdate);
+        const reversedDate = getReversedDate(date);
+
+        return reversedDate < reversedBirthdate;
+    })
+    .sort((first, second) => {
+        const reversedFirstBirthdate = getReversedDate(first.birthdate);
+        const reversedSecondBirthdate = getReversedDate(second.birthdate);
+        return reversedFirstBirthdate > reversedSecondBirthdate ? 1 : -1;
+    });
 };
+
+function getReversedDate(date) {
+    const dateArray = date.split('.').reverse();
+    const reversedDate = `${dateArray[0]}.${dateArray[1]}.${dateArray[2]}`;
+
+    return reversedDate;
+}
 
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
