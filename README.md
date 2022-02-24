@@ -20,73 +20,74 @@
 ```js
 const phoneList = [
   {
-    name: 'Александра',
-    birthdate: '21.05.2001',
+    name: "Александра",
+    birthdate: "21.05.2001",
   },
   {
-    name: 'Егор',
-    birthdate: '06.08.1976',
+    name: "Егор",
+    birthdate: "06.08.1976",
   },
   {
-    name: 'Роман',
-    birthdate: '14.05.2000',
+    name: "Роман",
+    birthdate: "14.04.2000",
   },
   {
-    name: 'Василий',
-    birthdate: '27.02.1980',
+    name: "Василий",
+    birthdate: "27.02.1980",
   },
 ];
 
-getNextBirthdays('30.02.1980', phoneList);
+getNextBirthdays('28.02.1980', phoneList);
 
 /*
 [
   {
-    name: 'Роман',
-    birthdate: '14.05.2000',
+    name: 'Егор',
+    birthdate: '06.08.1976',
   },
-  {
-    name: 'Александра',
-    birthdate: '21.05.2001',
-  },
-]
+];
 */
 
 getMonthsList(phoneList);
 
 /*
 [
-  {
-    month: 'февраль',
-    friends: [
-      {
-        name: 'Василий',
-        birthdate: '27.02.1980',
-      },
-    ],
-  },
-  {
-    month: 'май',
-    friends: [
-      {
-        name: 'Роман',
-        birthdate: '14.05.2000',
-      },
-      {
-        name: 'Александра',
-        birthdate: '21.05.2001',
-      },
-    ],
-  },
-  {
-    month: 'август',
-    friends: [
-      {
-        name: 'Егор',
-        birthdate: '06.08.1976',
-      },
-    ],
-  },
+   {
+      month: 'февраль',
+      friends: [
+         {
+            name: 'Василий',
+            birthdate: '27.02.1980'
+         }
+      ]
+   },
+   {
+      month: 'апрель',
+      friends: [
+         {
+            name: 'Роман',
+            birthdate: '14.04.2000'
+         }
+      ]
+   },
+   {
+      month: 'май',
+      friends: [
+         {
+            name: 'Александра',
+            birthdate: '21.05.2001'
+         }
+      ]
+   },
+   {
+      month: 'август',
+      friends: [
+         {
+            name: 'Егор',
+            birthdate: '06.08.1976'
+         }
+      ]
+   }
 ]
 */
 ```
@@ -158,38 +159,37 @@ const phoneList = [
 getMinimumPresentsPrice(phoneList);
 /*
 {
-  friendsList: [
-    {
-      name: 'Александра',
-      birthdate: '21.05.2001',
-      present: {
-        title: 'Книга "Чистый код. Создание, анализ и рефакторинг"',
-        price: 200,
+   friendsList: [
+      {
+         name: 'Александра',
+         birthdate: '21.05.2001',
+         present: {
+            title: 'Книга "Чистый код. Создание, анализ и рефакторинг"',
+            price: 200
+         }
       },
-    },
-    {
-      name: 'Егор',
-      birthdate: '06.08.1976',
-      present: {
-        title: 'Годовой абонимент в библиотеку',
-        price: 400,
+      {
+         name: 'Егор',
+         birthdate: '06.08.1976',
+         present: {
+            title: 'Годовой абонимент в библиотеку',
+            price: 400
+         }
       },
-    },
-    {
-      name: 'Роман',
-      birthdate: '14.05.2000',
-      present: undefined,
-    },
-    {
-      name: 'Василий',
-      birthdate: '27.02.1980',
-      wishList: {
-        title: 'Годовой курс обучения на ИРИТ-РтФ',
-        price: 100500,
+      {
+         name: 'Роман',
+         birthdate: '14.05.2000'
       },
-    },
-  ],
-  totalPrice: 101100,
+      {
+         name: 'Василий',
+         birthdate: '27.02.1980',
+         present:{
+            title: 'Годовой курс обучения на ИРИТ-РтФ',
+            price: 100500
+         }
+      }
+   ],
+   totalPrice: 101100
 }
 */
 ```
