@@ -123,6 +123,31 @@ export function getMonthsList(phoneList) {
  *    totalPrice: number
  *  }}
  */
-export function getMinimumPresentsPrice(phoneList) {}
+export function getMinimumPresentsPrice(phoneList) {
+  let totalPrice = 0;
+
+  const friendsList = phoneList.map((person) => {
+    const cheapestWish = person.wishList?.sort((wish1, wish2) => wish1.price > wish2.price ? 1 : -1)[0];
+    const present =
+      cheapestWish === undefined
+        ? undefined
+        : {
+            title: cheapestWish.title,
+            price: cheapestWish.price,
+          };
+    totalPrice += cheapestWish === undefined ? 0 : present.price;
+
+    return {
+      name: person.name,
+      birthdate: person.birthdate,
+      present: present,
+    };
+  });
+
+  return {
+    friendsList: friendsList,
+    totalPrice: totalPrice,
+  };
+}
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
