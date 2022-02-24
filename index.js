@@ -28,8 +28,8 @@
       dateObject: getDateObject(friend.birthdate),
       currentYearBirthday: getCurrentYearBirthday(getDateObject(friend.birthdate), currentYear)
     }))
-    .filter(friend => friend.dateObject < startDate)
-    .filter(friend => friend.currentYearBirthday > startDate)
+    .filter(friend => friend.dateObject <= startDate)
+    .filter(friend => friend.currentYearBirthday >= startDate)
     .sort((friend1, friend2) => friend1.currentYearBirthday - friend2.currentYearBirthday)
     .map(({ name, birthdate }) => ({ name, birthdate }));
 };
