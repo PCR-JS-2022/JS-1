@@ -28,11 +28,9 @@
 
         return reversedDate < reversedBirthdate;
     })
-    .sort((first, second) => {
-        const reversedFirstBirthdate = getReversedDate(first.birthdate);
-        const reversedSecondBirthdate = getReversedDate(second.birthdate);
-        return reversedFirstBirthdate > reversedSecondBirthdate ? 1 : -1;
-    });
+    .sort(sortByBirthdate);
+
+    return phoneList;
 };
 
 function getReversedDate(date) {
@@ -40,6 +38,12 @@ function getReversedDate(date) {
     const reversedDate = `${dateArray[0]}.${dateArray[1]}.${dateArray[2]}`;
 
     return reversedDate;
+}
+
+function sortByBirthdate(first, second) {
+    const reversedFirstBirthdate = getReversedDate(first.birthdate);
+    const reversedSecondBirthdate = getReversedDate(second.birthdate);
+    return reversedFirstBirthdate > reversedSecondBirthdate ? 1 : -1;
 }
 
 /**
@@ -50,7 +54,44 @@ function getReversedDate(date) {
  *  }>}
  */
 export function getMonthsList(phoneList) {
+    if (!Array.isArray(phoneList))
+        return [];
 
+    var monthNames = {
+        1: "январь", 
+        2: "февраль", 
+        3: "март", 
+        4: "апрель", 
+        5: "май", 
+        6: "июнь", 
+        7: "июль", 
+        8: "август", 
+        9: "сентябрь", 
+        10: "октябрь", 
+        11: "ноябрь", 
+        12: "декабрь", 
+    };
+
+    var monthList = [];
+
+    phoneList.forEach((person) => {
+        const monthNumber = parseInt(person.birthdate.split('.')[1]);
+        const monthName = monthNames[monthNumber];
+
+        if (monthList.some((month) => {
+            return month.month === monthName
+        }))
+            month.friends.push(person);
+        else 
+            monthList.push({
+                month: monthName,
+                friends: [person]
+            });
+    })
+
+    monthList.forEach((month) => month.friends.sort(sortByBirthdate));
+
+    return monthList;
 };
 
 /**
