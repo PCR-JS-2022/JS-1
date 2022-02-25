@@ -83,14 +83,6 @@ function getMonthsList(phoneList) {
             result[currentIndex].friends.push(el);
             continue;
         }
-
-        if (result[currentIndex].friends.length > 1) {
-            result[currentIndex].friends = result[currentIndex].friends.sort((a, b) => {
-                const aDate = parseRuDate(a.birthdate);
-                const bDate = parseRuDate(b.birthdate);
-                return aDate.getTime() - bDate.getTime();
-            })
-        }
         
         currentIndex++;
         prevMonthNumber = monthNumber;
