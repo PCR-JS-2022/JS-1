@@ -24,37 +24,12 @@ function getNextBirthdays(date, phoneList) {
         return [];
     }
 
-    const result = [];
-    const timeStartDate = startDate.getTime();
-    const currentDate = new Date();
-    const currentDay = currentDate.getDate();
-    const currentMonth = currentDate.getMonth();
-    const currentYear = currentDate.getFullYear();
-
-    for (const phone of phoneList) {
+    return phoneList.filter(phone => {
         const birthdate = parseRuDate(phone.birthdate);
-        if (birthdate === null) {
-            return [];
-        }
-
-        const birthdateYear = birthdate.getFullYear();
-        const birthdateMonth = birthdate.getMonth();
-        const birthdateDay = birthdate.getDate();
-
-        const birthdateTime = birthdate.getTime();
-        if (timeStartDate > birthdateTime 
-            || birthdateYear > currentYear
-            || (birthdateYear === currentYear && birthdateMonth > currentMonth)
-            || (birthdateYear === currentYear && birthdateMonth === currentMonth && birthdateDay > currentDay)) {
-            continue;
-        }
-
-        result.push(phone);
-    }
-
-    return result.sort((a, b) => {
-        return parseRuDate(a.birthdate).getTime() - parseRuDate(b.birthdate).getTime()
-    });
+        const birthdateSmallerThanStartDate = birthdate <= startDate;
+        birthdate.setFullYear(startDate.getFullYear());
+        return birthdateSmallerThanStartDate && birthdate >= startDate;
+    }).sort((a, b) => parseRuDate(a.birthdate) - parseRuDate(b.birthdate))
 };
 
 /**
@@ -67,10 +42,9 @@ function parseRuDate(date) {
         return null;
     }
 
-    const split = date.split('.');
-    const parseToIntList = split.map(el => parseInt(el));
+    const split = date.split('.').map(el => parseInt(el));
     
-    return new Date(parseToIntList[2], parseToIntList[1] - 1, parseToIntList[0]);
+    return new Date(split[2], split[1] - 1, split[0]);
 }
 
 /**
@@ -86,8 +60,8 @@ function getMonthsList(phoneList) {
     }
 
     const sortedPhoneListByMonth = phoneList.sort((a, b) => {
-        const aMonth = getMonthFomDate(a.birthdate)
-        const bMonth = getMonthFomDate(b.birthdate);
+        const aMonth = getMonthFromDate(a.birthdate)
+        const bMonth = getMonthFromDate(b.birthdate);
         return aMonth - bMonth;
     });
 
@@ -147,7 +121,7 @@ function getMonthName(month) {
  * @param {string} date - Дата
  * @returns {number}
  */
-function getMonthFomDate(date) {
+function getMonthFromDate(date) {
     return parseInt(date.slice(3, 5));
 }
 
