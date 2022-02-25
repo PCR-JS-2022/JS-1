@@ -24,12 +24,18 @@ function getNextBirthdays(date, phoneList) {
         return [];
     }
 
+    const startDayYear = startDate.getFullYear();
+    const dates = {};
+
     return phoneList.filter(phone => {
         const birthdate = parseRuDate(phone.birthdate);
+        dates[phone.birthdate] = birthdate;
         const birthdateSmallerThanStartDate = birthdate <= startDate;
-        birthdate.setFullYear(startDate.getFullYear());
+        birthdate.setFullYear(startDayYear);
         return birthdateSmallerThanStartDate && birthdate >= startDate;
-    }).sort((a, b) => parseRuDate(a.birthdate) - parseRuDate(b.birthdate))
+    }).sort((a, b) => {
+        return dates[a.birthdate] - dates[b.birthdate]
+    })
 };
 
 /**
