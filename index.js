@@ -92,47 +92,50 @@ const phoneList2 = [
 function getNextBirthdays(date, phoneList) {
     let a = date;
     let b = 0;
-    let day = a.split('.')[0];
-    let month = a.split('.')[1] - 1;
-    let mlength = a.split('.')[1];
-    let year = a.split('.')[2];
-    a = new Date(year, month, day);
-    if (
-        a != '' ||
-        year.length !== 4 ||
-        mlength.length !== 2 ||
-        day.length !== 2 ||
-        a.getFullYear() != year ||
-        a.getMonth() != month ||
-        a.getDate() != day
-    ) {
-        b = Infinity;
-    };
     const futureBD = [];
-    if (Array.isArray(phoneList)) {
-        phoneList.forEach(el => {
-            let bday = el.birthdate.split('.');
-            let elMonth = parseInt(bday[1]) - 1;
-            let elDay = parseInt(bday[0]);
-            let elYear = parseInt(bday[2]);
-            //birthdate = new Date(bday[2], bday[1] - 1, bday[0]);
-            if (b === 0) {
-                if (elYear <= parseInt(year)) {
-                    if (elMonth > parseInt(month)) {
-                        futureBD.push(el);
-                    };
-                    if (elMonth == parseInt(month) &&
-                        elDay >= parseInt(day)) {
-                        futureBD.push(el)
+    if (a != '') {
+        let day = a.split('.')[0];
+        let month = a.split('.')[1] - 1;
+        let mlength = a.split('.')[1];
+        let year = a.split('.')[2];
+        a = new Date(year, month, day);
+
+        if (
+            year.length !== 4 ||
+            mlength.length !== 2 ||
+            day.length !== 2 ||
+            a.getFullYear() != year ||
+            a.getMonth() != month ||
+            a.getDate() != day
+        ) {
+            b = Infinity;
+        };
+        if (Array.isArray(phoneList)) {
+            phoneList.forEach(el => {
+                let bday = el.birthdate.split('.');
+                let elMonth = parseInt(bday[1]) - 1;
+                let elDay = parseInt(bday[0]);
+                let elYear = parseInt(bday[2]);
+                //birthdate = new Date(bday[2], bday[1] - 1, bday[0]);
+                if (b === 0) {
+                    if (elYear <= parseInt(year)) {
+                        if (elMonth > parseInt(month)) {
+                            futureBD.push(el);
+                        };
+                        if (elMonth == parseInt(month) &&
+                            elDay >= parseInt(day)) {
+                            futureBD.push(el)
+                        };
                     };
                 };
-            };
-        });
+            });
+        };
+        futureBD.sort((a, b) => a.birthdate.split('.')[0] >= b.birthdate.split('.')[0] ? 1 : -1);
+        futureBD.sort((a, b) => a.birthdate.split('.')[1] >= b.birthdate.split('.')[1] ? 1 : -1);
     };
-    futureBD.sort((a, b) => a.birthdate.split('.')[0] >= b.birthdate.split('.')[0] ? 1 : -1);
-    futureBD.sort((a, b) => a.birthdate.split('.')[1] >= b.birthdate.split('.')[1] ? 1 : -1);
 
-    //return JSON.stringify(futureBD);
+
+   // return JSON.stringify(futureBD);
     return futureBD;
 };
 
@@ -226,7 +229,7 @@ function getMinimumPresentsPrice(phoneList) {
     };
 };
 
-// console.log(getNextBirthdays('', phoneList2));
+// console.log(getNextBirthdays('01.01.1980', phoneList2));
 // console.log(getMonthsList(phoneList2));
 // console.log(getMinimumPresentsPrice(phoneList1));
 
