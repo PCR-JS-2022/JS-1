@@ -33,6 +33,7 @@ export function getNextBirthdays(date, phoneList) {
   }
 
   const nextBirthdays = phoneList
+    .filter((person) => filterFutureDays(person.birthdate))
     .filter((person) => {
       const reversedBirthdate = getReversedDate(person.birthdate);
       const reversedDate = getReversedDate(date);
@@ -42,6 +43,18 @@ export function getNextBirthdays(date, phoneList) {
     .sort(sortByBirthdate);
 
   return nextBirthdays;
+}
+
+function filterFutureDays(date) {
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, "0");
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const yyyy = today.getFullYear();
+
+  const reversedCurrentDate = `${yyyy}.${mm}.${dd}`;
+  const reversedDate = getReversedDate(date);
+
+  return reversedDate < reversedCurrentDate;
 }
 
 function getReversedDate(date) {
@@ -84,18 +97,22 @@ export function getMonthsList(phoneList) {
 
   var monthList = [];
 
-  phoneList.forEach((person) => {
-    const monthNumber = parseInt(person.birthdate.split(".")[1]);
-    const monthName = monthNames[monthNumber];
+  phoneList
+    .filter((person) => filterFutureDays(person.birthdate))
+    .forEach((person) => {
+      const monthNumber = parseInt(person.birthdate.split(".")[1]);
+      const monthName = monthNames[monthNumber];
 
-    if (monthList.some((month) => month.month === monthName))
-      monthList.find((month) => month.month === monthName).friends.push(person);
-    else
-      monthList.push({
-        month: monthName,
-        friends: [person],
-      });
-  });
+      if (monthList.some((month) => month.month === monthName))
+        monthList
+          .find((month) => month.month === monthName)
+          .friends.push(person);
+      else
+        monthList.push({
+          month: monthName,
+          friends: [person],
+        });
+    });
 
   monthList.sort((first, second) =>
     first.friends[0].birthdate.split(".")[1] >
@@ -126,23 +143,27 @@ export function getMonthsList(phoneList) {
 export function getMinimumPresentsPrice(phoneList) {
   let totalPrice = 0;
 
-  const friendsList = phoneList.map((person) => {
-    const cheapestWish = person.wishList?.sort((wish1, wish2) => wish1.price > wish2.price ? 1 : -1)[0];
-    const present =
-      cheapestWish === undefined
-        ? undefined
-        : {
-            title: cheapestWish.title,
-            price: cheapestWish.price,
-          };
-    totalPrice += cheapestWish === undefined ? 0 : present.price;
+  const friendsList = phoneList
+    .filter((person) => filterFutureDays(person.birthdate))
+    .map((person) => {
+      const cheapestWish = person.wishList?.sort(
+        (a, b) => a.price - b.price
+      )[0];
+      const present =
+        cheapestWish === undefined
+          ? undefined
+          : {
+              title: cheapestWish.title,
+              price: cheapestWish.price,
+            };
+      totalPrice += cheapestWish === undefined ? 0 : present.price;
 
-    return {
-      name: person.name,
-      birthdate: person.birthdate,
-      present: present,
-    };
-  });
+      return {
+        name: person.name,
+        birthdate: person.birthdate,
+        present: present,
+      };
+    });
 
   return {
     friendsList: friendsList,
