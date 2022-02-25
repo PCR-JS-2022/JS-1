@@ -149,7 +149,11 @@ function getMinimumPresentsPrice(phoneList) {
     for (let phone of phoneList) {
         const present = phone.wishList?.sort((gift1, gift2) => gift1.price - gift2.price)[0];
         totalPrice += present?.price || 0;
-        friendsList.push({name: phone.name, birthdate: phone.birthdate, present});
+        let friend = {name: phone.name, birthdate: phone.birthdate};
+        if (present) {
+            friend = {...friend, present }
+        }
+        friendsList.push(friend);
     }
 
     return {totalPrice, friendsList};
