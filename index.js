@@ -90,7 +90,7 @@ const phoneList2 = [
 ];
 const phoneList3 = [
     {
-        
+
     },
 ];
 
@@ -98,7 +98,7 @@ function getNextBirthdays(date, phoneList) {
     let a = date;
     let b = 0;
     const futureBD = [];
-    if (a != '' && typeof(a) == 'string') {
+    if (a != '' && typeof (a) == 'string') {
         let day = a.split('.')[0];
         let month = a.split('.')[1] - 1;
         let mlength = a.split('.')[1];
@@ -115,21 +115,31 @@ function getNextBirthdays(date, phoneList) {
         ) {
             b = Infinity;
         };
-        if (Array.isArray(phoneList)) {
+        if (
+            Array.isArray(phoneList)) {
             phoneList.forEach(el => {
-                let bday = el.birthdate.split('.');
-                let elMonth = parseInt(bday[1]) - 1;
-                let elDay = parseInt(bday[0]);
-                let elYear = parseInt(bday[2]);
-                //birthdate = new Date(bday[2], bday[1] - 1, bday[0]);
-                if (b === 0) {
-                    if (elYear <= parseInt(year)) {
-                        if (elMonth > parseInt(month)) {
-                            futureBD.push(el);
-                        };
-                        if (elMonth == parseInt(month) &&
-                            elDay >= parseInt(day)) {
-                            futureBD.push(el)
+                if (
+                    el &&
+                    el.name &&
+                    el.birthdate &&
+                    typeof (el) == 'object' &&
+                    typeof (el.name) == 'string' &&
+                    typeof (el.birthdate) == 'string'
+                ) {
+                    let bday = el.birthdate.split('.');
+                    let elMonth = parseInt(bday[1]) - 1;
+                    let elDay = parseInt(bday[0]);
+                    let elYear = parseInt(bday[2]);
+                    //birthdate = new Date(bday[2], bday[1] - 1, bday[0]);
+                    if (b === 0) {
+                        if (elYear <= parseInt(year)) {
+                            if (elMonth > parseInt(month)) {
+                                futureBD.push(el);
+                            };
+                            if (elMonth == parseInt(month) &&
+                                elDay >= parseInt(day)) {
+                                futureBD.push(el)
+                            };
                         };
                     };
                 };
@@ -140,7 +150,7 @@ function getNextBirthdays(date, phoneList) {
     };
 
 
-    // return JSON.stringify(futureBD);
+   // return JSON.stringify(futureBD);
     return futureBD;
 };
 
@@ -234,7 +244,8 @@ function getMinimumPresentsPrice(phoneList) {
     };
 };
 //const aff = new Date(2022, 20, 25);
-// console.log(getNextBirthdays(aff, phoneList2));
+//const arr = [{ notname: 'dfdf', notdate: '23423' }, { notname: 'dfdf2', notdate: '234232' }]
+// console.log(getNextBirthdays('11.02.1994', arr));
 // console.log(getMonthsList(phoneList2));
 // console.log(getMinimumPresentsPrice(phoneList1));
 
