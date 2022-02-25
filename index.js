@@ -214,22 +214,21 @@ function getMonthsList(phoneList) {
 function getMinimumPresentsPrice(phoneList) {
     const friendsList = [];
     let totalPrice = 0;
+    let present;
     if (Array.isArray(phoneList)) {
         phoneList.forEach(el => {
             if (el.wishList) {
                 el.wishList.sort((a, b) => parseInt(a.price) >= parseInt(b.price) ? 1 : -1);
                 el.wishList.splice(1);
                 totalPrice += parseInt(el.wishList[0].price);
+                present = el.wishList[0];
             } else {
-                let wl = {
-                    wishList: undefined
-                }
-                el = Object.assign(el, wl);
+                present = undefined;
             };
             let frlel = {
                 name: el.name,
                 birthdate: el.birthdate,
-                present: el.wishList
+                present: present
             };
             friendsList.push(frlel);
         });
@@ -237,13 +236,14 @@ function getMinimumPresentsPrice(phoneList) {
             friendsList: friendsList,
             totalPrice: totalPrice
         }
-        return totalObj;
+         return totalObj;
+        // return JSON.stringify(totalObj);
     } else {
         return friendsList;
     };
 };
 
-//console.log(getNextBirthdays('11.02.1994', phoneList3));
+// console.log(getNextBirthdays('11.02.1994', phoneList3));
 // console.log(getMonthsList(phoneList2));
 // console.log(getMinimumPresentsPrice(phoneList1));
 
