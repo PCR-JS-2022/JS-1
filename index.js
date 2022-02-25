@@ -116,7 +116,7 @@ function getNextBirthdays(date, phoneList) {
             let elYear = parseInt(bday[2]);
             //birthdate = new Date(bday[2], bday[1] - 1, bday[0]);
             if (b === 0) {
-                if (elYear <= parseInt(year)) {
+                if (elYear < parseInt(year)) {
                     if (elMonth > parseInt(month)) {
                         futureBD.push(el);
                     };
@@ -225,7 +225,7 @@ function getMinimumPresentsPrice(phoneList) {
     };
 };
 
-// console.log(getNextBirthdays('28.02.2000', phoneList2));
+// console.log(getNextBirthdays('25.02.2000', phoneList2));
 // console.log(getMonthsList(phoneList2));
 // console.log(getMinimumPresentsPrice(phoneList1));
 
