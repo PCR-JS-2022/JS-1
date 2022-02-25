@@ -19,55 +19,40 @@
  */
 export function getNextBirthdays(date, phoneList) {
   const splitedDate = date.split(".");
+  const year = splitedDate[2];
   if (
     !(
       splitedDate.length === 3 &&
       splitedDate[0].length === 2 &&
       splitedDate[1].length === 2 &&
-      splitedDate[2].length === 4
+      year.length === 4
     ) ||
     !Array.isArray(phoneList)
   ) {
-    console.log("Я сломался");
     return [];
   }
 
   const nextBirthdays = phoneList
-    .filter((person) => filterFutureDays(person.birthdate))
     .filter((person) => {
-      const reversedBirthdate = getReversedDate(person.birthdate);
-      const reversedDate = getReversedDate(date);
+      if (parseInt(person.birthdate.substring(person.birthdate.length - 4)) >= parseInt(year))
+        return false;
 
-      return reversedDate < reversedBirthdate;
+      return toNumber(date.substring(0, date.length - 5)) < toNumber(person.birthdate.substring(0, person.birthdate.length - 5));
     })
-    .sort(sortByBirthdate);
+    .sort((person1, person2) => sortByDate(person1.birthdate, person2.birthdate));
 
   return nextBirthdays;
 }
 
-function filterFutureDays(date) {
-  const today = new Date();
-  const dd = String(today.getDate()).padStart(2, "0");
-  const mm = String(today.getMonth() + 1).padStart(2, "0");
-  const yyyy = today.getFullYear();
+function sortByDate(date1, date2) {
+  const number1 = toNumber(date1);
+  const number2 = toNumber(date2);
 
-  const reversedCurrentDate = `${yyyy}.${mm}.${dd}`;
-  const reversedDate = getReversedDate(date);
-
-  return reversedDate < reversedCurrentDate;
+  return number1 - number2;
 }
 
-function getReversedDate(date) {
-  const dateArray = date.split(".").reverse();
-  const reversedDate = `${dateArray[0]}.${dateArray[1]}.${dateArray[2]}`;
-
-  return reversedDate;
-}
-
-function sortByBirthdate(first, second) {
-  const reversedFirstBirthdate = getReversedDate(first.birthdate);
-  const reversedSecondBirthdate = getReversedDate(second.birthdate);
-  return reversedFirstBirthdate > reversedSecondBirthdate ? 1 : -1;
+function toNumber(date) {
+  return parseInt(date.split('.').reverse().reduce((acc, cur) => acc + `${cur}`));
 }
 
 /**
@@ -98,7 +83,6 @@ export function getMonthsList(phoneList) {
   var monthList = [];
 
   phoneList
-    .filter((person) => filterFutureDays(person.birthdate))
     .forEach((person) => {
       const monthNumber = parseInt(person.birthdate.split(".")[1]);
       const monthName = monthNames[monthNumber];
@@ -120,7 +104,7 @@ export function getMonthsList(phoneList) {
       ? 1
       : -1
   );
-  monthList.forEach((month) => month.friends.sort(sortByBirthdate));
+  monthList.forEach((month) => month.friends.sort((person1, person2) => sortByDate(person1.birthdate, person2.birthdate)));
 
   return monthList;
 }
@@ -144,7 +128,6 @@ export function getMinimumPresentsPrice(phoneList) {
   let totalPrice = 0;
 
   const friendsList = phoneList
-    .filter((person) => filterFutureDays(person.birthdate))
     .map((person) => {
       const cheapestWish = person.wishList?.sort(
         (a, b) => a.price - b.price
