@@ -31,7 +31,7 @@ function parseDateSeparatedByDots(date){
 
 function filterByBirthday(dateFrom, birthdate)
 {   
-    return birthdate.getFullYear() <= dateFrom.getFullYear()
+    return birthdate <= dateFrom
     && (birthdate.getMonth() > dateFrom.getMonth()
      || birthdate.getMonth() === dateFrom.getMonth() && birthdate.getDate() > dateFrom.getDate())
 }
