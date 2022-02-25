@@ -88,12 +88,17 @@ const phoneList2 = [
         birthdate: '27.02.1980',
     },
 ];
+const phoneList3 = [
+    {
+        
+    },
+];
 
 function getNextBirthdays(date, phoneList) {
     let a = date;
     let b = 0;
     const futureBD = [];
-    if (a != '') {
+    if (a != '' && typeof(a) == 'string') {
         let day = a.split('.')[0];
         let month = a.split('.')[1] - 1;
         let mlength = a.split('.')[1];
@@ -135,7 +140,7 @@ function getNextBirthdays(date, phoneList) {
     };
 
 
-   // return JSON.stringify(futureBD);
+    // return JSON.stringify(futureBD);
     return futureBD;
 };
 
@@ -228,8 +233,8 @@ function getMinimumPresentsPrice(phoneList) {
         return friendsList;
     };
 };
-
-// console.log(getNextBirthdays('01.01.1980', phoneList2));
+//const aff = new Date(2022, 20, 25);
+// console.log(getNextBirthdays(aff, phoneList2));
 // console.log(getMonthsList(phoneList2));
 // console.log(getMinimumPresentsPrice(phoneList1));
 
