@@ -90,7 +90,7 @@ const phoneList2 = [
 ];
 
 function getNextBirthdays(date, phoneList) {
-    a = date;
+    let a = date;
     let b = 0;
     let day = a.split('.')[0];
     let month = a.split('.')[1] - 1;
@@ -173,8 +173,8 @@ function getMonthsList(phoneList) {
         };
     };
     //console.log(JSON.stringify(list));
-    return JSON.stringify(list);
-    //return list
+    //return JSON.stringify(list);
+    return list
 };
 
 /**
@@ -225,7 +225,7 @@ function getMinimumPresentsPrice(phoneList) {
     };
 };
 
-// console.log(getNextBirthdays('25.02.2000', phoneList2));
+ console.log(getNextBirthdays('01.05.2004', phoneList2));
 // console.log(getMonthsList(phoneList2));
 // console.log(getMinimumPresentsPrice(phoneList1));
 
