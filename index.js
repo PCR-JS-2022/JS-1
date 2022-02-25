@@ -90,8 +90,9 @@ const phoneList2 = [
 ];
 const phoneList3 = [
     {
-
-    },
+        name: 'Александра',
+        birthdate: '11.05.1990',
+    }
 ];
 
 function getNextBirthdays(date, phoneList) {
@@ -124,7 +125,9 @@ function getNextBirthdays(date, phoneList) {
                     el.birthdate &&
                     typeof (el) == 'object' &&
                     typeof (el.name) == 'string' &&
-                    typeof (el.birthdate) == 'string'
+                    typeof (el.birthdate) == 'string' &&
+                    el.name != '' &&
+                    el.birthdate != ''
                 ) {
                     let bday = el.birthdate.split('.');
                     let elMonth = parseInt(bday[1]) - 1;
@@ -150,7 +153,7 @@ function getNextBirthdays(date, phoneList) {
     };
 
 
-   // return JSON.stringify(futureBD);
+    //return JSON.stringify(futureBD);
     return futureBD;
 };
 
@@ -244,8 +247,8 @@ function getMinimumPresentsPrice(phoneList) {
     };
 };
 //const aff = new Date(2022, 20, 25);
-//const arr = [{ notname: 'dfdf', notdate: '23423' }, { notname: 'dfdf2', notdate: '234232' }]
-// console.log(getNextBirthdays('11.02.1994', arr));
+//const arr = [{ notname: 'dfdf', notdate: '23423' }, {}]
+//console.log(getNextBirthdays('11.02.1994', phoneList3));
 // console.log(getMonthsList(phoneList2));
 // console.log(getMinimumPresentsPrice(phoneList1));
 
