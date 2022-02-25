@@ -37,7 +37,7 @@ export function getNextBirthdays(date, phoneList) {
       if (parseInt(person.birthdate.substring(person.birthdate.length - 4)) >= parseInt(year))
         return false;
 
-      return toNumber(date.substring(0, date.length - 5)) < toNumber(person.birthdate.substring(0, person.birthdate.length - 5));
+      return toNumber(date.substring(0, date.length - 5)) <= toNumber(person.birthdate.substring(0, person.birthdate.length - 5));
     })
     .sort((person1, person2) => sortByDate(person1.birthdate, person2.birthdate));
 
