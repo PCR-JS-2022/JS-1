@@ -172,7 +172,7 @@ function getMonthsList(phoneList) {
         phoneList.forEach(el => {
             let bdayold = el.birthdate.split('.');
             let bday = new Date(bdayold[2], bdayold[1] - 1, bdayold[0]);
-            const month = bday.toLocaleString('default', { month: 'long' });
+            const month = bday.toLocaleString('ru-RU', { month: 'long' });
             list.push(
                 {
                     month: month,
@@ -247,8 +247,7 @@ function getMinimumPresentsPrice(phoneList) {
         return friendsList;
     };
 };
-//const aff = new Date(2022, 20, 25);
-//const arr = [{ notname: 'dfdf', notdate: '23423' }, {}]
+
 //console.log(getNextBirthdays('11.02.1994', phoneList3));
 // console.log(getMonthsList(phoneList2));
 // console.log(getMinimumPresentsPrice(phoneList1));
