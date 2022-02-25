@@ -12,6 +12,86 @@
  * @property {number} price - стоимость подарка
  */
 
+ const phoneList = [
+    {
+      name: "Александра",
+      birthdate: "21.05.2001",
+    },
+    {
+      name: "Егор",
+      birthdate: "06.08.1976",
+    },
+    {
+      name: "Роман",
+      birthdate: "14.04.2000",
+    },
+    {
+      name: "Василий",
+      birthdate: "27.02.1980",
+    },
+    {
+        name: "Максим",
+        birthdate: "18.02.2001",
+    }
+  ];
+
+  const phoneListWithWishList = [
+    {
+      name: 'Александра',
+      birthdate: '21.05.2001',
+      wishList: [
+        {
+          title: 'Книга "Изучаем программирование на JavaScript"',
+          price: 250,
+        },
+        {
+          title: 'Билет на концерт Макса Коржа',
+          price: 1500,
+        },
+        {
+          title: 'Книга "Чистый код. Создание, анализ и рефакторинг"',
+          price: 200,
+        },
+      ],
+    },
+    {
+      name: 'Егор',
+      birthdate: '06.08.1976',
+      wishList: [
+        {
+          title: 'Годовой абонимент в библиотеку',
+          price: 400,
+        },
+        {
+          title: 'Шариковая ручка',
+          price: 750,
+        },
+      ],
+    },
+    {
+      name: 'Роман',
+      birthdate: '14.05.2000',
+    },
+    {
+      name: 'Василий',
+      birthdate: '27.02.1980',
+      wishList: [
+        {
+          title: 'Годовой курс обучения на ИРИТ-РтФ',
+          price: 100500,
+        },
+        {
+          title: 'Путешествие на Марс',
+          price: 999999999,
+        },
+      ],
+    },
+  ];
+  
+ console.log(getNextBirthdays('26.02.1981', phoneList))
+ // getMonthsList(phoneList).forEach(p => console.log(p));
+ //console.log(getMinimumPresentsPrice(phoneListWithWishList));
+
 /**
  * @param {string} date - дата отсчета
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
@@ -21,8 +101,23 @@
      const dateTimeFrom = parseDateSeparatedByDots(date);
      if(dateTimeFrom.getDay() === NaN || !phoneList instanceof Array)
         return [];
-     return phoneList.filter(person => filterByBirthday(dateTimeFrom, parseDateSeparatedByDots(person.birthdate)));
+     return phoneList
+     .filter(person => filterByBirthday(dateTimeFrom, parseDateSeparatedByDots(person.birthdate)))
+     .sort((a,b) => sortByBirthDay(parseDateSeparatedByDots(a.birthdate),parseDateSeparatedByDots(b.birthdate)));
 };
+
+
+function sortByBirthDay(firstDate, secondDate)
+{
+    const firstDateWithoutYear = new Date(0, firstDate.getMonth(), firstDate.getDate())
+    const secondDateWithoutYear = new Date(0, secondDate.getMonth(), secondDate.getDate())
+    if(firstDateWithoutYear < secondDateWithoutYear)
+        return -1;
+    else if(firstDateWithoutYear > secondDateWithoutYear)
+        return 1;
+    else
+        return 0;       
+}
 
 function parseDateSeparatedByDots(date){
     [day, month, year] = date.split('.');
@@ -32,8 +127,7 @@ function parseDateSeparatedByDots(date){
 function filterByBirthday(dateFrom, birthdate)
 {   
     return birthdate <= dateFrom
-    && (birthdate.getMonth() > dateFrom.getMonth()
-     || birthdate.getMonth() === dateFrom.getMonth() && birthdate.getDate() > dateFrom.getDate())
+    && new Date(0, dateFrom.getMonth(), dateFrom.getDate()) <= new Date(0, dateFrom.getMonth(), dateFrom.getDate());
 }
 
 /**
