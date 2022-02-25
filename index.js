@@ -185,6 +185,7 @@ function getMonthsList(phoneList) {
             list.forEach(el => {
                 if (el.month == nullEl.month) {
                     if (el.friends != nullEl.friends) {
+                        let assArr = [];
                         assArr = nullEl.friends.concat(el.friends);
                         assArr.sort((a, b) => a.birthdate.split('.')[0] > b.birthdate.split('.')[0] ? 1 : -1);
                         nullEl.friends = assArr;
