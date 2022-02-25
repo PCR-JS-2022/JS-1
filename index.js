@@ -26,8 +26,7 @@
 
 function parseDateSeparatedByDots(date){
     [day, month, year] = date.split('.');
-    //return new Date(year, month, day)
-    return new Date(date);
+    return new Date(year, month, day)
 }
 
 function filterByBirthday(dateFrom, birthdate)
