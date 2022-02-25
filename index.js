@@ -116,12 +116,12 @@ function getNextBirthdays(date, phoneList) {
             let elYear = parseInt(bday[2]);
             //birthdate = new Date(bday[2], bday[1] - 1, bday[0]);
             if (b === 0) {
-                if (elYear < parseInt(year)) {
+                if (elYear <= parseInt(year)) {
                     if (elMonth > parseInt(month)) {
                         futureBD.push(el);
                     };
                     if (elMonth == parseInt(month) &&
-                        elDay > parseInt(day)) {
+                        elDay >= parseInt(day)) {
                         futureBD.push(el)
                     };
                 };
@@ -225,7 +225,7 @@ function getMinimumPresentsPrice(phoneList) {
     };
 };
 
- console.log(getNextBirthdays('01.05.2004', phoneList2));
+// console.log(getNextBirthdays('02.05.2000', phoneList2));
 // console.log(getMonthsList(phoneList2));
 // console.log(getMinimumPresentsPrice(phoneList1));
 
