@@ -139,7 +139,7 @@ function getMonthFromDate(date) {
  *  }}
  */
 function getMinimumPresentsPrice(phoneList) {
-    if (!Array.isArray(phoneList) || phoneList.length === 0 ) {
+    if (!Array.isArray(phoneList)) {
         return [];
     }
 
@@ -149,10 +149,7 @@ function getMinimumPresentsPrice(phoneList) {
     for (let phone of phoneList) {
         const present = phone.wishList?.sort((gift1, gift2) => gift1.price - gift2.price)[0];
         totalPrice += present?.price || 0;
-        let friend = {name: phone.name, birthdate: phone.birthdate};
-        if (present) {
-            friend = {...friend, present }
-        }
+        let friend = {name: phone.name, birthdate: phone.birthdate, present};
         friendsList.push(friend);
     }
 
