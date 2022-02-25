@@ -131,8 +131,8 @@ function getNextBirthdays(date, phoneList) {
     futureBD.sort((a, b) => a.birthdate.split('.')[0] >= b.birthdate.split('.')[0] ? 1 : -1);
     futureBD.sort((a, b) => a.birthdate.split('.')[1] >= b.birthdate.split('.')[1] ? 1 : -1);
 
-    return JSON.stringify(futureBD);
-    //return futureBD;
+    //return JSON.stringify(futureBD);
+    return futureBD;
 };
 
 /**
@@ -225,7 +225,7 @@ function getMinimumPresentsPrice(phoneList) {
     };
 };
 
- console.log(getNextBirthdays('28.02.2000', phoneList2));
+// console.log(getNextBirthdays('28.02.2000', phoneList2));
 // console.log(getMonthsList(phoneList2));
 // console.log(getMinimumPresentsPrice(phoneList1));
 
