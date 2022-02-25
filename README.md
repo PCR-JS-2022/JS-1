@@ -178,7 +178,8 @@ getMinimumPresentsPrice(phoneList);
       },
       {
          name: 'Роман',
-         birthdate: '14.05.2000'
+         birthdate: '14.05.2000',
+     	 present: undefined,
       },
       {
          name: 'Василий',
