@@ -72,25 +72,26 @@ const phoneList1 = [
 ];
 const phoneList2 = [
     {
-      name: 'Александра',
-      birthdate: '21.05.2001',
+        name: 'Александра',
+        birthdate: '11.05.2001',
     },
     {
-      name: 'Егор',
-      birthdate: '06.08.1976',
+        name: 'Егор',
+        birthdate: '06.08.1976',
     },
     {
-      name: 'Роман',
-      birthdate: '14.05.2000',
+        name: 'Роман',
+        birthdate: '02.05.2000',
     },
     {
-      name: 'Василий',
-      birthdate: '27.02.1980',
+        name: 'Василий',
+        birthdate: '27.02.1980',
     },
-  ];
+];
 
 function getNextBirthdays(date, phoneList) {
     a = date;
+    let b = 0;
     let day = a.split('.')[0];
     let month = a.split('.')[1] - 1;
     let mlength = a.split('.')[1];
@@ -104,26 +105,32 @@ function getNextBirthdays(date, phoneList) {
         a.getMonth() != month ||
         a.getDate() != day
     ) {
-        a = Infinity;
+        b = Infinity;
     };
     const futureBD = [];
     if (Array.isArray(phoneList)) {
         phoneList.forEach(el => {
             let bday = el.birthdate.split('.');
-            el.birthdate = new Date(bday[2], bday[1] - 1, bday[0]);
-            if (a < el.birthdate) {
-                futureBD.push(el)
+            let elMonth = parseInt(bday[1]) - 1;
+            let elDay = parseInt(bday[0]);
+            //birthdate = new Date(bday[2], bday[1] - 1, bday[0]);
+            if (b === 0) {
+                if (elMonth > parseInt(month)) {
+                    futureBD.push(el);
+                };
+                if (elMonth == parseInt(month) &&
+                    elDay > parseInt(day)) {
+                    futureBD.push(el)
+                };
             };
         });
     };
-    futureBD.sort((a, b) => a.birthdate > b.birthdate ? 1 : -1);
-    //return JSON.stringify(futureBD);
-    return futureBD;
+    futureBD.sort((a, b) => a.birthdate.split('.')[0] >= b.birthdate.split('.')[0] ? 1 : -1);
+    futureBD.sort((a, b) => a.birthdate.split('.')[1] >= b.birthdate.split('.')[1] ? 1 : -1);
+
+    return JSON.stringify(futureBD);
+    //return futureBD;
 };
-
-
-
-
 
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
@@ -132,6 +139,7 @@ function getNextBirthdays(date, phoneList) {
  *    friends: Array<Person>,
  *  }>}
  */
+
 function getMonthsList(phoneList) {
     const list = [];
     if (Array.isArray(phoneList)) {
@@ -162,11 +170,9 @@ function getMonthsList(phoneList) {
         };
     };
     //console.log(JSON.stringify(list));
-    //return JSON.stringify(list);
-    return list
+    return JSON.stringify(list);
+    //return list
 };
-
-
 
 /**
  * @param {Array<{
@@ -183,6 +189,7 @@ function getMonthsList(phoneList) {
  *    totalPrice: number
  *  }}
  */
+
 function getMinimumPresentsPrice(phoneList) {
     const friendsList = [];
     let totalPrice = 0;
@@ -215,7 +222,7 @@ function getMinimumPresentsPrice(phoneList) {
     };
 };
 
-// console.log(getNextBirthdays('28.02.1980', phoneList1));
+// console.log(getNextBirthdays('28.02.1960', phoneList2));
 // console.log(getMonthsList(phoneList2));
 // console.log(getMinimumPresentsPrice(phoneList1));
 
