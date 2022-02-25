@@ -88,12 +88,7 @@ const phoneList2 = [
         birthdate: '27.02.1980',
     },
 ];
-const phoneList3 = [
-    {
-        name: 'Александра',
-        birthdate: '11.05.1990',
-    }
-];
+
 
 function getNextBirthdays(date, phoneList) {
     let a = date;
