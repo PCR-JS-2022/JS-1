@@ -22,8 +22,8 @@ function getNextBirthdays(date, phoneList) {
         return [];
     }
 
-    return phoneList.filter(item => parseDateFormat(date) < parseDateFormat(item.birthdate)).sort((a, b) => {
-        return parseDateFormat(a) - parseDateFormat(b);
+    return phoneList.filter(item => parseDateFormat(item.birthdate) > parseDateFormat(date) && parseDateFormat(item.birthdate).getMonth() <= 11 && parseDateFormat(item.birthdate).getFullYear() === parseDateFormat(date).getFullYear()).sort((a, b) => {
+        return parseDateFormat(a).getDate() - parseDateFormat(b).getDate();
     });
 };
 
@@ -38,7 +38,7 @@ function getMonthsList(phoneList) {
     if (!Array.isArray(phoneList)) {
         return [];
     }
-    
+
     const newArray = [];
     const months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
 
@@ -99,8 +99,8 @@ function getMinimumPresentsPrice(phoneList) {
  * @returns {Date} дата
 */
 function parseDateFormat(date) {
-    if (/[0[1-9]|[11-31]{2}\.(0[1-9]|1[012])\.\d{4}/.exec(date)) {
-        return new Date(`${date.split('.')[2]}.${date.split('.')[1]}.${date.split('.')[0]}`);
+    if (/[0[1-9]|[11-31]{2}\.(0[1-9]|1[012])\.\d{4}/.test(date)) {
+        return new Date(`${date.toString().split('.')[2]}.${date.toString().split('.')[1]}.${date.toString().split('.')[0]}`);
     } else {
         return null;
     }
