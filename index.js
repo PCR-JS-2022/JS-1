@@ -32,12 +32,7 @@ function getNextBirthdays(date, phoneList) {
 
 	const friendsList = phoneList.filter(person => checkDate(getDate(person.birthdate), normedDate))
 
-	return friendsList.sort((a, b) => {
-		const aDate = getDate(a.birthdate)
-		const bDate = getDate(b.birthdate)
-
-		return aDate - bDate
-	})
+	return friendsList.sort((a, b) => getDate(a.birthdate) - getDate(b.birthdate))
 }
 
 /**
@@ -54,12 +49,12 @@ function getMonthsList(phoneList) {
 
 	for (const person of phoneList) {
 		const birthdate = getDate(person.birthdate)
-		const month = birthdate.toLocaleString('default', { month: 'long' }).toLowerCase()
+		const month = birthdate.toLocaleString('default', {month: 'long'}).toLowerCase()
 		let monthItem = monthsList.find(item => item.month === month)
 		if (monthItem) {
 			monthItem.friends.push(person)
 		} else {
-			monthsList.push({ month, friends: [person] })
+			monthsList.push({month, friends: [person]})
 		}
 	}
 	return monthsList.sort((a, b) => monthsNumbers[a.month] - monthsNumbers[b.month])
@@ -86,12 +81,12 @@ function getMinimumPresentsPrice(phoneList) {
 	let result = { totalPrice: 0, friendsList: [] }
 
 	for (const person of phoneList) {
-		if (!person.wishList) {
-			result.friendsList.push({ ...person, present: undefined })
-		} else {
+		if (person.wishList) {
 			person.wishList.sort((a, b) => a.price - b.price)
 			result.totalPrice += person.wishList[0].price
 			result.friendsList.push({ name: person.name, birthdate: person.birthdate, present: person.wishList[0] })
+		} else {
+			result.friendsList.push({ ...person, present: undefined })
 		}
 	}
 
@@ -134,13 +129,15 @@ function getDate(date) {
  * @returns {boolean}
  */
 function checkDate(date, currentDate) {
-	if (date.getFullYear() <= currentDate.getFullYear()) {
+	if (date.getFullYear() < currentDate.getFullYear()) {
 		if (currentDate.getMonth() === date.getMonth()) {
-			return currentDate.getDay() < date.getDay()
+			return currentDate.getDate() <= date.getDate()
 		}
 		return currentDate.getMonth() < date.getMonth()
 	}
-	return false
+	return date.getFullYear() === currentDate.getFullYear()
+		&& currentDate.getMonth() === date.getMonth()
+		&& currentDate.getDate() === date.getDate()
 }
 
 const monthsNumbers = {
