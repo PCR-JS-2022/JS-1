@@ -30,12 +30,7 @@ function getNextBirthdays(date, phoneList) {
 	if (!Array.isArray(phoneList) || !normedDate)
 		return []
 
-	const friendsList = phoneList.filter(person => {
-		const personDate = getDate(person.birthdate)
-		if (personDate > normedDate) {
-			return person
-		}
-	})
+	const friendsList = phoneList.filter(person => checkDate(getDate(person.birthdate), normedDate))
 
 	return friendsList.sort((a, b) => {
 		const aDate = getDate(a.birthdate)
@@ -131,6 +126,21 @@ function getDate(date) {
 	const {day, month, year} = sd
 
 	return new Date(year, month - 1, day)
+}
+
+/**
+ * @param {Date} date - дата для проверки
+ * @param {Date} currentDate - текущая переданная дата
+ * @returns {boolean}
+ */
+function checkDate(date, currentDate) {
+	if (date.getFullYear() <= currentDate.getFullYear()) {
+		if (currentDate.getMonth() === date.getMonth()) {
+			return currentDate.getDay() < date.getDay()
+		}
+		return currentDate.getMonth() < date.getMonth()
+	}
+	return false
 }
 
 const monthsNumbers = {
