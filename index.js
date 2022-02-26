@@ -22,7 +22,7 @@ function getNextBirthdays(date, phoneList) {
         return [];
     }
 
-    return phoneList.filter(item => parseDateFormat(item.birthdate) > parseDateFormat(date) && parseDateFormat(item.birthdate).getMonth() <= 11 && parseDateFormat(item.birthdate).getFullYear() === parseDateFormat(date).getFullYear()).sort((a, b) => {
+    return phoneList.filter(item => parseDateFormat(item.birthdate).getMonth() >= parseDateFormat(date).getMonth() && parseDateFormat(item.birthdate).getFullYear() < parseDateFormat(date).getFullYear()).sort((a, b) => {
         return parseDateFormat(a).getDate() - parseDateFormat(b).getDate();
     });
 };
@@ -105,5 +105,26 @@ function parseDateFormat(date) {
         return null;
     }
 }
+
+const phoneList = [
+    {
+      name: "Александра",
+      birthdate: "21.05.2001",
+    },
+    {
+      name: "Егор",
+      birthdate: "06.08.1976",
+    },
+    {
+      name: "Роман",
+      birthdate: "14.04.2000",
+    },
+    {
+      name: "Василий",
+      birthdate: "27.02.1980",
+    },
+  ];
+  
+  console.log(getNextBirthdays('28.02.1980', phoneList));
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
