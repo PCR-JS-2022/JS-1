@@ -17,8 +17,14 @@
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
- export function getNextBirthdays(date, phoneList) {
+function getNextBirthdays(date, phoneList) {
+    if (!Array.isArray(phoneList) && !parseDateFormat(date)) {
+        return [];
+    }
 
+    return phoneList.filter(item => parseDateFormat(date) < parseDateFormat(item.birthdate)).sort((a, b) => {
+        return parseDateFormat(a) - parseDateFormat(b);
+    });
 };
 
 /**
@@ -28,8 +34,30 @@
  *    friends: Array<Person>,
  *  }>}
  */
-export function getMonthsList(phoneList) {
+function getMonthsList(phoneList) {
+    if (!Array.isArray(phoneList)) {
+        return [];
+    }
+    
+    const newArray = [];
+    const months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
 
+    phoneList.sort((a, b) => parseDateFormat(a.birthdate).getMonth() - parseDateFormat(b.birthdate).getMonth());
+
+    phoneList.forEach(item => {
+        if (newArray.findIndex(m => m.month === months[parseDateFormat(item.birthdate).getMonth()]) > -1) {
+            newArray[newArray.findIndex(m => m.month === months[parseDateFormat(item.birthdate).getMonth()])].friends.push(item);
+        } else {
+            newArray.push({
+                month: months[parseDateFormat(item.birthdate).getMonth()],
+                friends: [
+                    item
+                ]
+            })
+        }
+    });
+
+    return newArray;
 };
 
 /**
@@ -47,8 +75,35 @@ export function getMonthsList(phoneList) {
  *    totalPrice: number
  *  }}
  */
-export function getMinimumPresentsPrice(phoneList) {
+function getMinimumPresentsPrice(phoneList) {
+    if (!Array.isArray(phoneList)) {
+        return [];
+    }
 
+    const friendsObject = phoneList.map(item => {
+        return {
+            name: item.name,
+            birthdate: item.birthdate,
+            present: item.wishList ? item.wishList.filter(i => i.price === Math.min(...item.wishList.map(p => p.price)))[0] : undefined
+        }
+    });
+
+    friendsObject.totalPrice = friendsObject.filter(item => typeof item.present === 'object').reduce((prev, curr) => prev + curr.present.price, 0);
+
+    return friendsObject;
 };
+
+/**
+ * форматируем строку формата dd.mm.yyyy в дату
+ * @param {string} date строка формата dd.mm.yyyy
+ * @returns {Date} дата
+*/
+function parseDateFormat(date) {
+    if (/[0[1-9]|[11-31]{2}\.(0[1-9]|1[012])\.\d{4}/.exec(date)) {
+        return new Date(`${date.split('.')[2]}.${date.split('.')[1]}.${date.split('.')[0]}`);
+    } else {
+        return null;
+    }
+}
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
