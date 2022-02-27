@@ -34,7 +34,7 @@ function filterByBd(splittedDate, birthDate){
   let sD = new Date(splittedDate[2], parseInt(splittedDate[1])-1, splittedDate[0]);
   let bD = new Date(birthDate[2], parseInt(birthDate[1])-1, birthDate[0]);
 
-  return (bD.getFullYear() <= sD.getFullYear() &&
+  return (bD.getFullYear() < sD.getFullYear() &&
      ((bD.getMonth() == sD.getMonth() && bD.getDate() > sD.getDate()) || bD.getMonth() > sD.getMonth()))
   
 }
