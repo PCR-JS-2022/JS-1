@@ -40,7 +40,7 @@
     },
   ];
   
-function getNextBirthdays(date, phoneList) {
+function getNextBirthdays(date, phoneList) { 
     const reg = /^\d{2}\.\d{2}\.\d{4}$/;
     if(!Array.isArray(phoneList) || !reg.test(date)) return []; 
     date = date.split("."); 
@@ -108,7 +108,7 @@ function getMonthsList(phoneList) {
     let month = +sortedList[i].birthdate.split(".")[1];
     if(passed.indexOf(month) !== -1) {
       result[i-1].friends.push(sortedList[i]);
-      break;
+      continue;
     }
     passed.push(month);
     result.push({month: months[month-1], friends: [sortedList[i]]});
@@ -117,6 +117,7 @@ function getMonthsList(phoneList) {
 };
 
 //console.log(getMonthsList(phoneList2));
+
 
 /**
  * @param {Array<{
