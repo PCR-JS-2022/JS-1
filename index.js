@@ -24,7 +24,7 @@
     const currDateObject = getObjectDate(date);
     const sortedPhoneList = phoneList.filter(friend => {
         const friendBirthday = getObjectDate(friend.birthdate);
-        if (friendBirthday.getFullYear() <= currDateObject.getFullYear()) return friend;
+        if (friendBirthday <= currDateObject) return friend;
     }).filter(friend => {
       const friendBirthday = getObjectDate(friend.birthdate);
       const currYear = currDateObject.setFullYear(currDateSplited[2]);
@@ -69,7 +69,7 @@ const phoneList = [
     },
   ];;
   
-  console.log(getNextBirthdays('28.02.1980', phoneList));
+  console.log(getNextBirthdays('05.08.1977', phoneList));
 
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
