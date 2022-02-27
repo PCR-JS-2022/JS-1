@@ -1,3 +1,7 @@
+const { parseDate } = require("./parseData");
+const { parseMonth } = require("./parseMonth");
+
+
 /**
  * @typedef Person
  * @type {object}
@@ -17,8 +21,30 @@
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
-    export function getNextBirthdays(date, phoneList) {
+function getNextBirthdays(date, phoneList) {
+    let compareDate = parseDate(date)
 
+    if (!Array.isArray(phoneList) || compareDate === null) {
+        return [];
+    }
+
+    let compareDateYear = compareDate.getFullYear()
+    let compareDateMonth = compareDate.getMonth()
+    let compareDateDay = compareDate.getDay()
+
+    let listBirthday = phoneList.filter((phone) => {
+        let birthday = parseDate(phone.birthdate)
+        let year = birthday.getFullYear() <= compareDateYear
+        let month = birthday.getMonth() > compareDateMonth
+        let day = ((birthday.getMonth() == compareDateMonth) && (birthday.getDay() >= compareDateDay))
+        return year && (month || day)
+    })
+
+    return listBirthday.sort((a, b) => {
+        let a_birthday = parseDate(a.birthdate)
+        let b_birthday = parseDate(b.birthdate)
+        return b_birthday - a_birthday
+    })[0]
 };
 
 /**
@@ -28,8 +54,27 @@
  *    friends: Array<Person>,
  *  }>}
  */
-export function getMonthsList(phoneList) {
+function getMonthsList(phoneList) {
+    if (!Array.isArray(phoneList)) {
+        return [];
+    }
+    answer = {}
+    phoneList.map((friend) => {
+        let month = parseInt(friend.birthdate.slice(3, 5))
+        if (answer.hasOwnProperty(month)){
+            answer[month].push(friend)
+        } else {
+            answer[month] = [friend]
+        }
+    });
 
+    res = []
+    Object.entries(answer).forEach(([m, friends]) => {
+        let month = parseMonth(m)
+        res.push({month, friends})
+    });
+
+    return JSON.stringify(res)
 };
 
 /**
@@ -47,8 +92,35 @@ export function getMonthsList(phoneList) {
  *    totalPrice: number
  *  }}
  */
-export function getMinimumPresentsPrice(phoneList) {
+function getMinimumPresentsPrice(phoneList) {
+    if (!Array.isArray(phoneList)) {
+        return [];
+    }
 
+    let totalPrice = 0;
+    let friendsList = [];
+
+    phoneList.map((phone) => {
+        let name = phone.name
+        let birthdate = phone.birthdate
+        if (!Array.isArray(phone.wishList)) {
+            let present = undefined
+            friendsList.push({name, birthdate, present})
+        } else {
+            let present = phone.wishList.sort((a, b) => {
+                console.log(a.price, b.price, a.price < b.price)
+                return a.price - b.price
+            })[0]
+            totalPrice += present.price
+            friendsList.push({name, birthdate, present})
+        }
+    })
+
+    return {
+        friendsList,
+        totalPrice
+    };
 };
+
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
