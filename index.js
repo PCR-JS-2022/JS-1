@@ -44,10 +44,10 @@ function getNextBirthdays(date, phoneList) {
  */
 function getMonthsList(phoneList) {
 	if (!Array.isArray(phoneList)) return []
-
+	const tempPhoneList = phoneList.sort((a, b) => sortByBirthday(getDate(a.birthdate), getDate(b.birthdate)))
 	let monthsList = []
 
-	for (const person of phoneList) {
+	for (const person of tempPhoneList) {
 		const birthdate = getDate(person.birthdate)
 		const month = birthdate.toLocaleString('default', { month: 'long' }).toLowerCase()
 		let monthItem = monthsList.find(item => item.month === month)
@@ -57,7 +57,7 @@ function getMonthsList(phoneList) {
 			monthsList.push({ month, friends: [person] })
 		}
 	}
-	return monthsList.sort((a, b) => monthsNumbers[a.month] - monthsNumbers[b.month])
+	return monthsList
 }
 
 /**
@@ -77,10 +77,10 @@ function getMonthsList(phoneList) {
  */
 function getMinimumPresentsPrice(phoneList) {
 	if (!Array.isArray(phoneList)) return []
-
+	const tempPhoneList = phoneList.sort((a, b) => sortByBirthday(getDate(a.birthdate), getDate(b.birthdate)))
 	let result = { totalPrice: 0, friendsList: [] }
 
-	for (const person of phoneList) {
+	for (const person of tempPhoneList) {
 		if (person.wishList) {
 			person.wishList.sort((a, b) => a.price - b.price)
 			result.totalPrice += person.wishList[0].price
@@ -158,13 +158,6 @@ function sortByBirthday(a, b) {
 		return a.getDate() - b.getDate()
 	}
 	return -1
-}
-
-const monthsNumbers = {
-	'январь': 0, 'февраль': 1, 'март': 2,
-	'апрель': 3, 'май': 4, 'июнь': 5,
-	'июль': 6, 'август': 7, 'сентябрь': 8,
-	'октябрь': 9, 'ноябрь': 10, 'декабрь': 11
 }
 
 module.exports = {getNextBirthdays, getMonthsList, getMinimumPresentsPrice};
