@@ -35,7 +35,8 @@ function filterByBd(splittedDate, birthDate){
   let bD = new Date(birthDate[2], parseInt(birthDate[1])-1, birthDate[0]);
 
   return (bD.getFullYear() <= sD.getFullYear() &&
-     ((bD.getMonth() == sD.getMonth() && bD.getDate() >= sD.getDate()) || bD.getMonth() > sD.getMonth()))
+     ((bD.getMonth() == sD.getMonth() && bD.getDate() > sD.getDate()) || bD.getMonth() > sD.getMonth()))
+  
 }
 
 function sortByBd(dateForSort1, dateForSort2){
@@ -44,27 +45,27 @@ function sortByBd(dateForSort1, dateForSort2){
   return (d1 - d2);
 }
 
-// const phoneList = [
-//   {
-//     name: "Александра",
-//     birthdate: "21.05.2001",
-//   },
-//   {
-//     name: "Егор",
-//     birthdate: "06.08.1976",
-//   },
-//   {
-//     name: "Роман",
-//     birthdate: "14.04.2000",
-//   },
-//   {
-//     name: "Василий",
-//     birthdate: "27.02.1980",
-//   },
-// ];
+const phoneList = [
+  {
+    name: "Александра",
+    birthdate: "21.05.2001",
+  },
+  {
+    name: "Егор",
+    birthdate: "06.08.1976",
+  },
+  {
+    name: "Роман",
+    birthdate: "14.04.2000",
+  },
+  {
+    name: "Василий",
+    birthdate: "27.02.1980",
+  },
+];
 
-// const result = getNextBirthdays('28.02.1980', phoneList);
-// console.log(JSON.stringify(result))
+const result = getNextBirthdays('28.02.1980', phoneList);
+console.log(JSON.stringify(result))
   
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
