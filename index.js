@@ -91,50 +91,45 @@ const phoneList2 = [
 
 
 function getNextBirthdays(date, phoneList) {
-    let a = date;
-    let b = 0;
+    let forcompare = 0;
     const futureBD = [];
-    if (a != '' && typeof (a) == 'string') {
-        let day = a.split('.')[0];
-        let month = a.split('.')[1] - 1;
-        let mlength = a.split('.')[1];
-        let year = a.split('.')[2];
-        a = new Date(year, month, day);
-
-        if (
-            year.length !== 4 ||
+    if (date != '' && typeof (date) == 'string') {
+        const day = date.split('.')[0];
+        const month = date.split('.')[1] - 1;
+        const mlength = date.split('.')[1];
+        const year = date.split('.')[2];
+        date = new Date(year, month, day);
+        if (year.length !== 4 ||
             mlength.length !== 2 ||
             day.length !== 2 ||
-            a.getFullYear() != year ||
-            a.getMonth() != month ||
-            a.getDate() != day
+            date.getFullYear() != year ||
+            date.getMonth() != month ||
+            date.getDate() != day
         ) {
-            b = Infinity;
+            forcompare = Infinity;
         };
-        if (
-            Array.isArray(phoneList)) {
+        if (Array.isArray(phoneList)) {
             phoneList.forEach(el => {
-                if (
-                    el &&
+                if (el &&
                     el.name &&
                     el.birthdate &&
-                    typeof (el) == 'object' &&
-                    typeof (el.name) == 'string' &&
-                    typeof (el.birthdate) == 'string' &&
+                    typeof (el) === 'object' &&
+                    typeof (el.name) === 'string' &&
+                    typeof (el.birthdate) === 'string' &&
                     el.name != '' &&
                     el.birthdate != ''
                 ) {
-                    let bday = el.birthdate.split('.');
-                    let elMonth = parseInt(bday[1]) - 1;
-                    let elDay = parseInt(bday[0]);
-                    let elYear = parseInt(bday[2]);
+                    const bday = el.birthdate.split('.');
+                    const elMonth = parseInt(bday[1]) - 1;
+                    const elDay = parseInt(bday[0]);
+                    const elYear = parseInt(bday[2]);
                     //birthdate = new Date(bday[2], bday[1] - 1, bday[0]);
-                    if (b === 0) {
+                    if (forcompare === 0) {
                         if (elYear <= parseInt(year)) {
                             if (elMonth > parseInt(month)) {
                                 futureBD.push(el);
                             };
-                            if (elMonth == parseInt(month) &&
+                            if (elMonth === parseInt(month) &&
                                 elDay >= parseInt(day)) {
                                 futureBD.push(el)
                             };
@@ -143,12 +138,12 @@ function getNextBirthdays(date, phoneList) {
                 };
             });
         };
-        futureBD.sort((a, b) => a.birthdate.split('.')[0] >= b.birthdate.split('.')[0] ? 1 : -1);
-        futureBD.sort((a, b) => a.birthdate.split('.')[1] >= b.birthdate.split('.')[1] ? 1 : -1);
+        futureBD.sort((a, b) => a.birthdate.split('.')[0] >= b.birthdate.split('.')[0] ? 1 : -1)
+            .sort((a, b) => a.birthdate.split('.')[1] >= b.birthdate.split('.')[1] ? 1 : -1);
     };
 
 
-    //return JSON.stringify(futureBD);
+    // return JSON.stringify(futureBD);
     return futureBD;
 };
 
@@ -165,8 +160,8 @@ function getMonthsList(phoneList) {
     if (Array.isArray(phoneList)) {
         phoneList.sort((a, b) => a.birthdate.split('.')[1] > b.birthdate.split('.')[1] ? 1 : -1);
         phoneList.forEach(el => {
-            let bdayold = el.birthdate.split('.');
-            let bday = new Date(bdayold[2], bdayold[1] - 1, bdayold[0]);
+            const bdayold = el.birthdate.split('.');
+            const bday = new Date(bdayold[2], bdayold[1] - 1, bdayold[0]);
             const month = bday.toLocaleString('ru-RU', { month: 'long' });
             list.push(
                 {
@@ -178,12 +173,10 @@ function getMonthsList(phoneList) {
         for (let i = 0; i < list.length; i++) {
             let nullEl = list[i];
             list.forEach(el => {
-                if (el.month == nullEl.month) {
-                    if (el.friends != nullEl.friends) {
-                        let assArr = [];
-                        assArr = nullEl.friends.concat(el.friends);
-                        assArr.sort((a, b) => a.birthdate.split('.')[0] > b.birthdate.split('.')[0] ? 1 : -1);
-                        nullEl.friends = assArr;
+                if (el.month === nullEl.month) {
+                    if (el.friends !== nullEl.friends) {
+                        nullEl.friends = nullEl.friends.concat(el.friends)
+                            .sort((a, b) => a.birthdate.split('.')[0] > b.birthdate.split('.')[0] ? 1 : -1);
                         list.splice(list.indexOf(el), 1);
                     };
                 };
@@ -225,26 +218,26 @@ function getMinimumPresentsPrice(phoneList) {
             } else {
                 present = undefined;
             };
-            let frlel = {
+            const formattedFriend = {
                 name: el.name,
                 birthdate: el.birthdate,
                 present: present
             };
-            friendsList.push(frlel);
+            friendsList.push(formattedFriend);
         });
         const totalObj = {
             friendsList: friendsList,
             totalPrice: totalPrice
         }
-         return totalObj;
+        return totalObj;
         // return JSON.stringify(totalObj);
     } else {
         return friendsList;
     };
 };
 
-// console.log(getNextBirthdays('11.02.1994', phoneList3));
+// console.log(getNextBirthdays('14.01.1994', phoneList2));
 // console.log(getMonthsList(phoneList2));
-// console.log(getMinimumPresentsPrice(phoneList1));
+//  console.log(getMinimumPresentsPrice(phoneList1));
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
