@@ -36,7 +36,7 @@
     },
     {
       name: "Настя",
-      birthdate: "02.08.2001",
+      birthdate: "21.05.2002",
     },
   ];
   
@@ -56,10 +56,12 @@ function getNextBirthdays(date, phoneList) {
       }
     }
     return result.sort((a, b) => {
-      monthA = +a.birthdate.split(".")[1];
-      monthB = +b.birthdate.split(".")[1];
-      dayA = +a.birthdate.split(".")[0];
-      dayB = +a.birthdate.split(".")[0];
+      let yearA = +a.birthdate.split(".")[2];
+      let yearB = +b.birthdate.split(".")[2];
+      let monthA = +a.birthdate.split(".")[1];
+      let monthB = +b.birthdate.split(".")[1];
+      let dayA = +a.birthdate.split(".")[0];
+      let dayB = +a.birthdate.split(".")[0];
       if(monthA < monthB) {
         return -1;
       } 
@@ -69,8 +71,9 @@ function getNextBirthdays(date, phoneList) {
       if(monthA === monthB) {
         if(dayA > dayB) {
           return 1;
-        } else {
-          return -1;
+        } 
+        if(dayA === dayB) {
+          return yearA - yearB;
         }
       }
     });
