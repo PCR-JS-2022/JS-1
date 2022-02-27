@@ -32,7 +32,7 @@ function getNextBirthdays(date, phoneList) {
 
 	const friendsList = phoneList.filter(person => checkDate(getDate(person.birthdate), normedDate))
 
-	return friendsList.sort((a, b) => getDate(a.birthdate) - getDate(b.birthdate))
+	return friendsList.sort((a, b) => sortByBirthday(getDate(a.birthdate), getDate(b.birthdate)))
 }
 
 /**
@@ -138,6 +138,23 @@ function checkDate(date, currentDate) {
 	return date.getFullYear() === currentDate.getFullYear()
 		&& currentDate.getMonth() === date.getMonth()
 		&& currentDate.getDate() === date.getDate()
+}
+
+/**
+ * @param {Date} a - первая дата
+ * @param {Date} b - вторая дата
+ * @returns {number}
+ */
+function sortByBirthday(a, b) {
+	if (a.getMonth() > b.getMonth()) {
+		return 1
+	} else if (a.getMonth() === b.getMonth()) {
+		if (a.getDate() === b.getDate()) {
+			return a.getFullYear() - b.getFullYear()
+		}
+		return a.getDate() - b.getDate()
+	}
+	return -1
 }
 
 const monthsNumbers = {
