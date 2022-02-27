@@ -18,7 +18,7 @@
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
 function getNextBirthdays(date, phoneList) {
-    if (!Array.isArray(phoneList) || !date || !parseDateFormat(date).getMonth()) {
+    if (!Array.isArray(phoneList) || !date || !parseDateFormat(date)) {
         return [];
     }
 
@@ -100,7 +100,7 @@ function getMinimumPresentsPrice(phoneList) {
  * @returns {Date} дата
 */
 function parseDateFormat(date) {
-    if (/[0[1-9]|[11-31]{2}\.(0[1-9]|1[012])\.\d{4}/.test(date)) {
+    if (/(0[1-9]|[11-31])\.(0[1-9]|1[012])\.\d{4}/.test(date)) {
         return new Date(`${date.toString().split('.')[2]}.${date.toString().split('.')[1]}.${date.toString().split('.')[0]}`);
     } else {
         return null;
