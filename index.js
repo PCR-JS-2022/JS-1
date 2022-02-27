@@ -106,16 +106,13 @@ function getMonthName(dateObj) {
 export function getMinimumPresentsPrice(phoneList) {
   if (!isListValid(phoneList)) return [];
 
-  const friendsList = phoneList.map(friend => {
-      const friendObject = {
-        name: friend.name,
-        birthdate: friend.birthdate,
-      };
-      if (friend.wishList) {
-        friendObject.present = friend.wishList.reduce((prev, next) => prev.price < next.price ? prev : next);
-      }
-      return friendObject;
-    });
+  const friendsList = phoneList.map(friend => ({
+    name: friend.name,
+    birthdate: friend.birthdate,
+    present: friend.wishList
+      ? friend.wishList.reduce((prev, next) => prev.price < next.price ? prev : next)
+      : undefined,
+  }));
 
   return {
     friendsList,
