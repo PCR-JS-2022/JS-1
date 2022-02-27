@@ -49,7 +49,8 @@ function getMonthsList(phoneList) {
 
 	for (const person of tempPhoneList) {
 		const birthdate = getDate(person.birthdate)
-		const month = birthdate.toLocaleString('default', { month: 'long' }).toLowerCase()
+		let month = birthdate.toLocaleString('default', { month: 'long' })
+		month = month[0].toUpperCase() + month.substring(1)
 		let monthItem = monthsList.find(item => item.month === month)
 		if (monthItem) {
 			monthItem.friends.push(person)
