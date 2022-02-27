@@ -18,6 +18,8 @@
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
 
+
+
 function getNextBirthdays(date, phoneList) {
   if (!(checkValidDate(date) && isArray(phoneList)) || phoneList.length === 0) return [];
   const currDateSplited = date.split(".");
@@ -43,6 +45,7 @@ function getObjectDate(date) {
 }
 
 function checkValidDate(date) {
+  if (typeof date !== "string") return false;
   let splitedDate = date.split(".");
   return (splitedDate.length === 3 &&
     splitedDate[0].length === 2 &&
@@ -109,7 +112,7 @@ function getMonthsList(phoneList) {
 };
 
 console.log(getMonthsList(phoneList));
-console.log(getNextBirthdays("28.02.2000", phoneList));
+console.log(getNextBirthdays( null));
 
 function getMonthNumber(date) {
   const splitedDate = date.split(".");
