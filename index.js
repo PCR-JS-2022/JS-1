@@ -100,7 +100,7 @@ function getMinimumPresentsPrice(phoneList) {
  * @returns {Date} дата
 */
 function parseDateFormat(date) {
-    if (/(0[1-9]|[11-31])\.(0[1-9]|1[012])\.\d{4}/.test(date)) {
+    if (/(\d{2})\.(0[1-9]|1[012])\.\d{4}/.test(date)) {
         return new Date(`${date.toString().split('.')[2]}.${date.toString().split('.')[1]}.${date.toString().split('.')[0]}`);
     } else {
         return null;
