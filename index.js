@@ -17,7 +17,7 @@
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
- export function getNextBirthdays(date, phoneList) {
+    export function getNextBirthdays(date, phoneList) {
 
 };
 
