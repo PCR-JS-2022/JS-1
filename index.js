@@ -56,13 +56,29 @@ function getNextBirthdays(date, phoneList) {
       }
     }
     return result.sort((a, b) => {
-      a = a.birthdate.split(".").reverse().join("-");
-      b = b.birthdate.split(".").reverse().join("-");
-      return Date.parse(a) - Date.parse(b);
+      monthA = +a.birthdate.split(".")[1];
+      monthB = +b.birthdate.split(".")[1];
+      dayA = +a.birthdate.split(".")[0];
+      dayB = +a.birthdate.split(".")[0];
+      if(monthA < monthB) {
+        return -1;
+      } 
+      if(monthA > monthB) {
+        return 1;
+      }
+      if(monthA === monthB) {
+        if(dayA > dayB) {
+          return 1;
+        } else {
+          return -1;
+        }
+      }
     });
 };
 
-//console.log(getNextBirthdays('21.01.2002', phoneList2));
+//console.log(getNextBirthdays('27.02.1980', phoneList2));
+
+
   
 
 /**
