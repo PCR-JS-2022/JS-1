@@ -29,7 +29,7 @@ function getNextBirthdays(date, phoneList) {
     if(friendDate.getFullYear() <= keyDate.getFullYear()){
       if(friendDate.getMonth() > keyDate.getMonth()) return e;
 
-      if(friendDate.getMonth() == keyDate.getMonth())
+      if(friendDate.getMonth() === keyDate.getMonth())
         if(friendDate.getDate() >= keyDate.getDate()) return e;
     }
   });
@@ -48,12 +48,14 @@ function GetDateObject(date){
 }
 
 function CheckDateIsCorrect(date){
+  if(typeof date !== 'string')
+    return false;
   let splitDateElements = date.split('.');
 
-  return splitDateElements[0].length == 2 
-    && splitDateElements[1].length == 2 
-    && splitDateElements[2].length == 4 
-    && splitDateElements.length == 3;
+  return splitDateElements[0].length === 2 
+    && splitDateElements[1].length === 2 
+    && splitDateElements[2].length === 4 
+    && splitDateElements.length === 3;
 }
 
 /**
@@ -65,7 +67,7 @@ function CheckDateIsCorrect(date){
  */
 
 function getMonthsList(phoneList) {
-  if(!Array.isArray(phoneList)) return [];
+  if(!Array.isArray(phoneList) || phoneList.length === 0) return [];
 
   const months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
 
@@ -79,7 +81,7 @@ function getMonthsList(phoneList) {
   })
 
   return birthdaysList.filter((e) => {
-    if(e.friends.length != 0) return e;
+    if(e.friends.length !== 0) return e;
   });
 }
 
