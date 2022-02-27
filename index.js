@@ -19,7 +19,7 @@
  */
 
 function getNextBirthdays(date, phoneList) {
-  if(!Array.isArray(phoneList) || !CheckDateIsCorrect(date)) return [];
+  if(!Array.isArray(phoneList) || !CheckDateIsCorrect(date) || phoneList.length === 0) return [];
 
   let keyDate = GetDateObject(date);
 
@@ -78,9 +78,9 @@ function getMonthsList(phoneList) {
     birthdaysList[+month].friends.push(e);
   })
 
-    return birthdaysList.filter((e) => {
-      if(e.friends.length != 0) return e;
-    });
+  return birthdaysList.filter((e) => {
+    if(e.friends.length != 0) return e;
+  });
 }
 
 /**
