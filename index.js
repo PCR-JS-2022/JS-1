@@ -49,12 +49,12 @@ function getMonthsList(phoneList) {
 
 	for (const person of phoneList) {
 		const birthdate = getDate(person.birthdate)
-		const month = birthdate.toLocaleString('default', {month: 'long'}).toLowerCase()
+		const month = birthdate.toLocaleString('default', { month: 'long' }).toLowerCase()
 		let monthItem = monthsList.find(item => item.month === month)
 		if (monthItem) {
 			monthItem.friends.push(person)
 		} else {
-			monthsList.push({month, friends: [person]})
+			monthsList.push({ month, friends: [person] })
 		}
 	}
 	return monthsList.sort((a, b) => monthsNumbers[a.month] - monthsNumbers[b.month])
@@ -98,11 +98,14 @@ function getMinimumPresentsPrice(phoneList) {
  * @returns {SplitDate | undefined}
  */
 function getSplitDate(date) {
+	if (typeof date !== 'string')
+		return undefined
+
 	const sd = date.split('.')
 	if (sd.length !== 3)
 		return undefined
 
-	const [day, month, year] = date.split('.')
+	const [day, month, year] = sd
 
 	if (day.length !== 2 || month.length !== 2 || year.length !== 4)
 		return undefined
