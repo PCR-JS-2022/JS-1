@@ -18,7 +18,7 @@
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
 function getNextBirthdays(date, phoneList) {
-    if (!Array.isArray(phoneList) && !parseDateFormat(date)) {
+    if (!Array.isArray(phoneList) || !date || !parseDateFormat(date).getMonth()) {
         return [];
     }
 
