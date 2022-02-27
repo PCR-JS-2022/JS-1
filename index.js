@@ -29,10 +29,6 @@
       name: "Василий",
       birthdate: "27.02.1980",
     },
-    {
-        name: "Максим",
-        birthdate: "18.02.2001",
-    }
   ];
 
   const phoneListWithWishList = [
@@ -88,9 +84,9 @@
     },
   ];
   
- console.log(getNextBirthdays('26.02.1981', phoneList))
- // getMonthsList(phoneList).forEach(p => console.log(p));
- //console.log(getMinimumPresentsPrice(phoneListWithWishList));
+// console.log(getNextBirthdays('26.02.1981', phoneList))
+// console.log(getMonthsList(phoneList))
+// console.log(getMinimumPresentsPrice(phoneListWithWishList));
 
 /**
  * @param {string} date - дата отсчета
@@ -120,7 +116,7 @@ function sortByBirthDay(firstDate, secondDate)
 }
 
 function parseDateSeparatedByDots(date){
-    [day, month, year] = date.split('.');
+    const [day, month, year] = date.split('.');
     return new Date(year, month, day)
 }
 
@@ -156,7 +152,7 @@ function getMonthsList(phoneList) {
             friends: value,
         });
     })
-    return result;
+    return result.sort((a,b) => months.indexOf(a.month) < months.indexOf(b.month) ? -1 : 1);
     }
 
 
