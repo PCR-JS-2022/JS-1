@@ -23,7 +23,7 @@ function getNextBirthdays(date, phoneList) {
     }
 
     return phoneList.filter(item => parseDateFormat(item.birthdate).getMonth() >= parseDateFormat(date).getMonth() && parseDateFormat(item.birthdate).getFullYear() <= parseDateFormat(date).getFullYear() && (parseDateFormat(date).getMonth() === parseDateFormat(item.birthdate).getMonth() ? parseDateFormat(item.birthdate).getDate() >= parseDateFormat(date).getDate() : true)).sort((a, b) => {
-        return parseDateFormat(a).getDate() - parseDateFormat(b).getDate();
+        return parseDateFormat(b.birthdate).getDate() - parseDateFormat(a.birthdate).getDate();
     });
 };
 
@@ -88,9 +88,10 @@ function getMinimumPresentsPrice(phoneList) {
         }
     });
 
-    friendsObject.totalPrice = friendsObject.filter(item => typeof item.present === 'object').reduce((prev, curr) => prev + curr.present.price, 0);
-
-    return friendsObject;
+    return {
+        friendsList: friendsObject,
+        totalPrice: friendsObject.filter(item => typeof item.present === 'object').reduce((prev, curr) => prev + curr.present.price, 0)
+    }
 };
 
 /**
