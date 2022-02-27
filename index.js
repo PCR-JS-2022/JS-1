@@ -34,6 +34,10 @@
       name: "Василий",
       birthdate: "27.02.1980",
     },
+    {
+      name: "Настя",
+      birthdate: "02.08.2001",
+    },
   ];
   
 function getNextBirthdays(date, phoneList) {
@@ -58,7 +62,7 @@ function getNextBirthdays(date, phoneList) {
     });
 };
 
-console.log(getNextBirthdays('21.01.2002', phoneList2));
+//console.log(getNextBirthdays('21.01.2002', phoneList2));
   
 
 /**
@@ -69,8 +73,31 @@ console.log(getNextBirthdays('21.01.2002', phoneList2));
  *  }>}
  */
 function getMonthsList(phoneList) {
+  if(!Array.isArray(phoneList)) return [];
+  const months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
+  let result = [];
+  const sortedList = phoneList.sort((a,b) => {
+    a = a.birthdate.split(".").reverse();
+    b = b.birthdate.split(".").reverse();
+    let date1 = new Date(+a[0], +a[1], +a[2]);
+    let date2 = new Date(+b[0], +b[1], +b[2]);
+    return date1.getMonth() - date2.getMonth();
+  })
 
+  let passed = [];
+  for(let i = 0; i < sortedList.length; i++) {
+    let month = +sortedList[i].birthdate.split(".")[1];
+    if(passed.indexOf(month) !== -1) {
+      result[i-1].friends.push(sortedList[i]);
+      break;
+    }
+    passed.push(month);
+    result.push({month: months[month-1], friends: [sortedList[i]]});
+  }
+  return result;
 };
+
+//console.log(getMonthsList(phoneList2));
 
 /**
  * @param {Array<{
