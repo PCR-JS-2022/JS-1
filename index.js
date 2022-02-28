@@ -39,7 +39,6 @@ function filterByBd(splittedDate, birthDate){
   if (bD.getFullYear() > sD.getFullYear()) return(false);
   else if (bD.getMonth() > sD.getMonth()) return(true);
   else if (bD.getMonth() === sD.getMonth() && bD.getDate() >= sD.getDate()) return(true);
-
 }
 
 function sortByBd(dateForSort1, dateForSort2){
