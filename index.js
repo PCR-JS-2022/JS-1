@@ -98,14 +98,7 @@ const phoneList = [
     name: 'Василий',
     birthdate: '27.02.1980',
     wishList: [
-      {
-        title: 'Годовой курс обучения на ИРИТ-РтФ',
-        price: 100500,
-      },
-      {
-        title: 'Путешествие на Марс',
-        price: 999999999,
-      },
+
     ],
   },
 ];
@@ -142,8 +135,8 @@ function getMonthsList(phoneList) {
   });
 };
 
-console.log(getMonthsList(phoneList));
-console.log(getNextBirthdays( null));
+
+
 
 function getMonthNumber(date) {
   const splitedDate = date.split(".");
@@ -166,19 +159,20 @@ function getMonthNumber(date) {
  *  }}
  */
 function getMinimumPresentsPrice(phoneList) {
-  if (!(isArray(phoneList))) return [];
+  if (!(isArray(phoneList)) || phoneList.length === 0) return [];
   const presents = {
     friendList: [],
     totalPrice: 0
   };
   phoneList.forEach((e) => {
-    if (!(e.hasOwnProperty('wishList')) || e.wishList.length === 0) {
+    if (!(e.hasOwnProperty('wishList') && isArray(e.wishList)) || e.wishList.length === 0) {
       e.present = undefined;
+      delete e.wishList;
       return presents.friendList.push(e);
     }
     e.wishList.sort((a, b) => {
       return a.price - b.price;
-    })
+    });
     e.present = e.wishList[0];
     delete e.wishList;
     presents.totalPrice += Number(e.present.price);
@@ -187,4 +181,5 @@ function getMinimumPresentsPrice(phoneList) {
   return presents;
 };
 
+console.log(getMinimumPresentsPrice(phoneList));
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
