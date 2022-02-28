@@ -20,10 +20,20 @@
  
 function checkDateCorrect(date){
     const splitDate = date.split('.');
-    if ((typeof(date) !== "string") || (splitDate.length != 3) && (splitDate[0].length != 2) && (splitDate[1].length != 2) &&
-    (splitDate[2].length != 4)) return false;
+    const startDate = getObjectDate(date)
+    if (typeof(date) !== "string" || splitDate.length != 3 && splitDate[0].length != 2 && splitDate[1].length != 2 &&
+    splitDate[2].length != 4) return false;
+    else return startDate
 }
+
+
+function getObjectDate(date) {
+    return new Date(splitDate[2], splitDate[1] - 1, splitDate[0]);
+  }
+
 function getNextBirthdays(date, phoneList) {
+    if(checkDateCorrect == false || !Array.isArray(phoneList) || phoneList.length === 0) return [];
+
     
 };
 
