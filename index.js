@@ -122,3 +122,5 @@ function getMinimumPresentsPrice(phoneList) {
     })
     return {friendsList:result,totalPrice:totalPrice}
 }
+
+module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
