@@ -84,7 +84,7 @@
     },
   ];
   
-// console.log(getNextBirthdays('26.02.1981', phoneList))
+console.log(getNextBirthdays("01.01.3000", phoneList))
 // console.log(getMonthsList(phoneList))
 // console.log(getMinimumPresentsPrice(phoneListWithWishList));
 
@@ -116,7 +116,7 @@ function sortByBirthDay(firstDate, secondDate)
 }
 
 function parseDateSeparatedByDots(date){
-    if(!/\d{2}.\d{2}.\d{4}/.test(date))
+    if(typeof date === 'string' && !/\d{2}\.\d{2}\.\d{4}/.test(date))
       return null;
     const [day, month, year] = date.split('.');
     return new Date(year, month, day)
