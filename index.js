@@ -106,8 +106,10 @@ function getMinimumPresentsPrice(phoneList) {
 
   let friendsPresentsList = { 
     friendsList: [], 
-    totalPrice: 0 
+    totalPrice: undefined 
   };
+
+  let totalPrice = 0;
 
   phoneList.forEach((e) => {
     if(e.hasOwnProperty('wishList') && Array.isArray(e.wishList) && e.wishList.length !== 0){
@@ -118,7 +120,7 @@ function getMinimumPresentsPrice(phoneList) {
       e.present = e.wishList[0];
       delete e.wishList;
       friendsPresentsList.friendsList.push(e);
-      friendsPresentsList.totalPrice += Number(e.present.price);
+      totalPrice += Number(e.present.price);
     }
     else {
       e.present = undefined;
@@ -127,6 +129,7 @@ function getMinimumPresentsPrice(phoneList) {
     }
   });
 
+  friendsPresentsList.totalPrice = totalPrice;
   return friendsPresentsList;
 }
 
