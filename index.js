@@ -38,6 +38,10 @@
       name: "Настя",
       birthdate: "21.05.2002",
     },
+    {
+      name: "Виктор",
+      birthdate: "20.08.1977",
+    }
   ];
   
 function getNextBirthdays(date, phoneList) { 
@@ -95,7 +99,7 @@ function getMonthsList(phoneList) {
   if(!Array.isArray(phoneList)) return [];
   const months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
   let result = [];
-  const sortedList = phoneList.sort((a,b) => {
+  const sortedList = phoneList.sort((a,b) => { 
     a = a.birthdate.split(".").reverse();
     b = b.birthdate.split(".").reverse();
     let date1 = new Date(+a[0], +a[1], +a[2]);
@@ -103,21 +107,20 @@ function getMonthsList(phoneList) {
     return date1.getMonth() - date2.getMonth();
   })
 
-  let passed = [];
+  let passed = []; 
   for(let i = 0; i < sortedList.length; i++) {
-    let month = +sortedList[i].birthdate.split(".")[1];
-    if(passed.indexOf(month) !== -1) {
-      result[i-1].friends.push(sortedList[i]);
+    let month = +sortedList[i].birthdate.split(".")[1]; 
+    if(passed.indexOf(month) !== -1) { 
+      result[result.length - 1].friends.push(sortedList[i]);
       continue;
     }
     passed.push(month);
     result.push({month: months[month-1], friends: [sortedList[i]]});
   }
-  return result;
+  return (JSON.stringify(result));
 };
 
 //console.log(getMonthsList(phoneList2));
-
 
 /**
  * @param {Array<{
