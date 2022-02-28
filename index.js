@@ -74,7 +74,7 @@ function getMonthsList(phoneList) {
         res.push({month, friends})
     });
 
-    return res
+    return JSON.stringify(res)
 };
 
 /**

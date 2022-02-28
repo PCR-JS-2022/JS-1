@@ -14,7 +14,7 @@ function parseMonth(month) {
         case 10: return 'октябрь';
         case 11: return 'ноябрь';
         case 12: return 'декабрь';
-        default: return null;
+        default: return 'null';
     }
 }
 

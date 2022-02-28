@@ -16,7 +16,39 @@ const phoneList = [
     },
     {
         name: "Василий",
-        birthdate: "27.02.1980",
+        birthdate: "27.01.1980",
+    },
+    {
+        name: "Вася",
+        birthdate: "20.03.1980",
+    },
+    {
+        name: "Вася",
+        birthdate: "20.04.1980",
+    },
+    {
+        name: "Вася",
+        birthdate: "20.10.1980",
+    },
+    {
+        name: "Вася",
+        birthdate: "20.06.1980",
+    },
+    {
+        name: "Вася",
+        birthdate: "20.07.1980",
+    },
+    {
+        name: "Вася",
+        birthdate: "20.09.1980",
+    },
+    {
+        name: "Вася",
+        birthdate: "20.11.1980",
+    },
+    {
+        name: "Вася",
+        birthdate: "20.12.1980",
     },
     {
         name: "Вася",
