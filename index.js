@@ -22,7 +22,7 @@ const { parseMonth } = require("./parseMonth");
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
 function getNextBirthdays(date, phoneList) {
-    if (!Array.isArray(phoneList) || validDate(date)) {
+    if (!Array.isArray(phoneList) || !validDate(date)) {
         return [];
     }
 

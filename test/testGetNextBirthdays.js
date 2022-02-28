@@ -24,7 +24,7 @@ const phoneList = [
 answer = getNextBirthdays('15.04.1980', phoneList);
 
 
-console.log(/^\d{2}.\d{2}.\d{4}$/.test('15.04.1980'))
+console.log(typeof('15.04.1980') === "string")
 
 
 console.log(answer)
