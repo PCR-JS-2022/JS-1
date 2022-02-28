@@ -77,14 +77,14 @@ function getMonthsList(phoneList) {
  */
 function getMinimumPresentsPrice(phoneList) {
 	if (!Array.isArray(phoneList)) return []
-	const tempPhoneList = phoneList.sort((a, b) => sortByBirthday(getDate(a.birthdate), getDate(b.birthdate)))
+	//const tempPhoneList = phoneList.sort((a, b) => sortByBirthday(getDate(a.birthdate), getDate(b.birthdate)))
 	let result = { totalPrice: 0, friendsList: [] }
 
-	for (const person of tempPhoneList) {
+	for (const person of phoneList) {
 		if (person.wishList) {
 			person.wishList.sort((a, b) => a.price - b.price)
 			result.totalPrice += person.wishList[0].price
-			result.friendsList.push({ name: person.name, birthdate: person.birthdate, present: person.wishList[0] })
+			result.friendsList.push({ ...person, present: person.wishList[0] })
 		} else {
 			result.friendsList.push({ ...person, present: undefined })
 		}
