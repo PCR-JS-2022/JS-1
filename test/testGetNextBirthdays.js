@@ -12,7 +12,7 @@ const phoneList = [
     },
     {
         name: "Роман",
-        birthdate: "14.04.2000",
+        birthdate: "14.04.1980",
     },
     {
         name: "Василий",
@@ -21,7 +21,7 @@ const phoneList = [
 ];
 
 
-answer = getNextBirthdays('28.02.1980', phoneList);
+answer = getNextBirthdays('13.04.1980', phoneList);
 
 
 console.log(answer)

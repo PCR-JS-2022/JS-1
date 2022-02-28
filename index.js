@@ -34,7 +34,7 @@ function getNextBirthdays(date, phoneList) {
 
     let listBirthday = phoneList.filter((phone) => {
         let birthday = parseDate(phone.birthdate)
-        let year = birthday.getFullYear() <= compareDateYear
+        let year = birthday.getFullYear() < compareDateYear
         let month = birthday.getMonth() > compareDateMonth
         let day = ((birthday.getMonth() == compareDateMonth) && (birthday.getDay() >= compareDateDay))
         return year && (month || day)
