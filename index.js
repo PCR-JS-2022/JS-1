@@ -70,7 +70,7 @@ function checkDate(dateStart, dateCurrent) {
     );
     
     if (current[1] > start[1] && current[1] <= 12) return true;
-    if (current[1] == start[1] && current[0] > start[0]) return true;
+    if (current[1] == start[1] && current[0] >= start[0]) return true;
 
     return false;
 }
