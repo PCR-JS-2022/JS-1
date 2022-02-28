@@ -120,6 +120,6 @@ function getMonthsList(phoneList) {
  *    totalPrice: number
  *  }}
  */
-//function getMinimumPresentsPrice(phoneList) {
+function getMinimumPresentsPrice(phoneList) {
 
-//};
+};
