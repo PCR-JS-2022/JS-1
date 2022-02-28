@@ -1,25 +1,64 @@
 /**
  * @typedef Person
  * @type {object}
- * @property {string} name - имя
- * @property {string} birthdate - дата рождения
+ * @property {string} name
+ * @property {string} birthdate
  */
 
 /**
  * @typedef Gift
  * @type {object}
- * @property {string} title - название подарка
- * @property {number} price - стоимость подарка
+ * @property {string} title
+ * @property {number} price
  */
 
 /**
- * @param {string} date - дата отсчета
- * @param {Array<Person>} phoneList - список друзей из телефонной книги
- * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
+ * @param {string} dateAsString
+ * @param {Array<Person>} friends
+ * @returns {Array<Person>}
  */
- export function getNextBirthdays(date, phoneList) {
+function getNextBirthdays(dateAsString, friends) {
+	if (getNextBirthdaysIsValid) {
+		return [];
+	}
 
-};
+	let birthDate = getBirthDate(dateAsString);
+	let birthday = getBirthday(birthDate);
+
+	return friends
+		.filter(friend => {
+			let friendBirthDate = getBirthDate(friend.birthdate);
+			let friendBirthday = getBirthday(friendBirthDate);
+			return birthDate - friendBirthDate <= 0 && friendBirthday - birthday <= 0;
+		})
+		.sort((a, b) => getBirthday(getBirthDate(a.birthdate)) - getBirthday(getBirthDate(b.birthdate)))
+}
+
+/**
+ * @param {string} dateAsString
+ * @param {Array<Person>} friends
+ * @returns {boolean}
+ */
+function getNextBirthdaysIsValid(dateAsString, friends) {
+	return !Array.isArray(friends) || typeof dateAsString !== "string" || /^\d{2}.\d{2}.\d{4}$/.test(dateAsString)
+}
+
+/**
+ * @param {Date} date
+ * @returns {number}
+ */
+function getBirthday(date) {
+	return date - new Date(date.getFullYear())
+}
+
+/**
+ * @param {string} dateAsString
+ * @returns {Date}
+ */
+function getBirthDate(dateAsString) {
+	return new Date(dateAsString.split(".").join("-"));
+}
+
 
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
@@ -28,7 +67,7 @@
  *    friends: Array<Person>,
  *  }>}
  */
-export function getMonthsList(phoneList) {
+function getMonthsList(phoneList) {
 
 };
 
@@ -47,7 +86,7 @@ export function getMonthsList(phoneList) {
  *    totalPrice: number
  *  }}
  */
-export function getMinimumPresentsPrice(phoneList) {
+function getMinimumPresentsPrice(phoneList) {
 
 };
 
