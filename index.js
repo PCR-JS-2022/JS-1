@@ -161,14 +161,14 @@ function getMonthNumber(date) {
 function getMinimumPresentsPrice(phoneList) {
   if (!(isArray(phoneList)) || phoneList.length === 0) return [];
   const presents = {
-    friendList: [],
+    friendsList: [],
     totalPrice: 0
   };
   phoneList.forEach((e) => {
     if (!(e.hasOwnProperty('wishList') && isArray(e.wishList)) || e.wishList.length === 0) {
       e.present = undefined;
       delete e.wishList;
-      return presents.friendList.push(e);
+      return presents.friendsList.push(e);
     }
     e.wishList.sort((a, b) => {
       return a.price - b.price;
@@ -176,7 +176,7 @@ function getMinimumPresentsPrice(phoneList) {
     e.present = e.wishList[0];
     delete e.wishList;
     presents.totalPrice += Number(e.present.price);
-    presents.friendList.push(e);
+    presents.friendsList.push(e);
   });
   return presents;
 };
