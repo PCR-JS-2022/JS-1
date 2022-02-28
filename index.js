@@ -60,7 +60,7 @@ function getMonthsList(phoneList) {
     }
     answer = {}
     phoneList.map((friend) => {
-        let month = parseInt(friend.birthdate.slice(3, 5))
+        let month = parseMonth(friend.birthdate.slice(3, 5))
         if (answer.hasOwnProperty(month)){
             answer[month].push(friend)
         } else {
@@ -69,8 +69,7 @@ function getMonthsList(phoneList) {
     });
 
     res = []
-    Object.entries(answer).forEach(([m, friends]) => {
-        let month = parseMonth(m)
+    Object.entries(answer).forEach(([month, friends]) => {
         res.push({month, friends})
     });
 
