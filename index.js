@@ -17,8 +17,14 @@
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
- export function getNextBirthdays(date, phoneList) {
-
+ 
+function checkDateCorrect(date){
+    const splitDate = date.split('.');
+    if ((typeof(date) !== "string") || (splitDate.length != 3) && (splitDate[0].length != 2) && (splitDate[1].length != 2) &&
+    (splitDate[2].length != 4)) return false;
+}
+function getNextBirthdays(date, phoneList) {
+    
 };
 
 /**
