@@ -19,40 +19,57 @@
  */
 export function getNextBirthdays(date, phoneList) {
   const splitedDate = date.split(".");
-  const year = splitedDate[2];
   if (
     !(
       splitedDate.length === 3 &&
       splitedDate[0].length === 2 &&
       splitedDate[1].length === 2 &&
-      year.length === 4
+      splitedDate[2].length === 4
     ) ||
     !Array.isArray(phoneList)
   ) {
     return [];
   }
 
+  const realDate = convertToDate(date);
+
   const nextBirthdays = phoneList
     .filter((person) => {
-      if (parseInt(person.birthdate.substring(person.birthdate.length - 4)) > parseInt(year))
-        return false;
+      const birthdate = convertToDate(person.birthdate);
+      if (birthdate.getFullYear() > realDate.getFullYear()) return false;
 
-      return toNumber(date.substring(0, date.length - 5)) <= toNumber(person.birthdate.substring(0, person.birthdate.length - 5));
+      return (
+        birthdate.getMonth() > realDate.getMonth() ||
+        (birthdate.getMonth() === realDate.getMonth() &&
+          birthdate.getDay() >= realDate.getDay())
+      );
     })
-    .sort((person1, person2) => sortByDate(person1.birthdate, person2.birthdate));
+    .sort((person1, person2) =>
+      sortByDate(person1.birthdate, person2.birthdate)
+    );
 
   return nextBirthdays;
 }
 
 function sortByDate(date1, date2) {
-  const number1 = toNumber(date1);
-  const number2 = toNumber(date2);
+  const number1 = convertToDate(date1);
+  const number2 = convertToDate(date2);
 
-  return number1 - number2;
+  return number1 > number2 ? 1 : -1;
 }
 
-function toNumber(date) {
-  return parseInt(date.split('.').reverse().reduce((acc, cur) => acc + `${cur}`));
+/**
+ *
+ * @param {string} date
+ * @returns {Date}
+ */
+function convertToDate(date) {
+  const splitedDate = date.split(".");
+  return new Date(
+    parseInt(splitedDate[2]),
+    parseInt(splitedDate[1]),
+    parseInt(splitedDate[0])
+  );
 }
 
 /**
@@ -82,21 +99,18 @@ export function getMonthsList(phoneList) {
 
   var monthList = [];
 
-  phoneList
-    .forEach((person) => {
-      const monthNumber = parseInt(person.birthdate.split(".")[1]);
-      const monthName = monthNames[monthNumber];
+  phoneList.forEach((person) => {
+    const monthNumber = parseInt(person.birthdate.split(".")[1]);
+    const monthName = monthNames[monthNumber];
 
-      if (monthList.some((month) => month.month === monthName))
-        monthList
-          .find((month) => month.month === monthName)
-          .friends.push(person);
-      else
-        monthList.push({
-          month: monthName,
-          friends: [person],
-        });
-    });
+    if (monthList.some((month) => month.month === monthName))
+      monthList.find((month) => month.month === monthName).friends.push(person);
+    else
+      monthList.push({
+        month: monthName,
+        friends: [person],
+      });
+  });
 
   monthList.sort((first, second) =>
     first.friends[0].birthdate.split(".")[1] >
@@ -104,7 +118,11 @@ export function getMonthsList(phoneList) {
       ? 1
       : -1
   );
-  monthList.forEach((month) => month.friends.sort((person1, person2) => sortByDate(person1.birthdate, person2.birthdate)));
+  monthList.forEach((month) =>
+    month.friends.sort((person1, person2) =>
+      sortByDate(person1.birthdate, person2.birthdate)
+    )
+  );
 
   return monthList;
 }
@@ -127,26 +145,23 @@ export function getMonthsList(phoneList) {
 export function getMinimumPresentsPrice(phoneList) {
   let totalPrice = 0;
 
-  const friendsList = phoneList
-    .map((person) => {
-      const cheapestWish = person.wishList?.sort(
-        (a, b) => a.price - b.price
-      )[0];
-      const present =
-        cheapestWish === undefined
-          ? undefined
-          : {
-              title: cheapestWish.title,
-              price: cheapestWish.price,
-            };
-      totalPrice += cheapestWish === undefined ? 0 : present.price;
+  const friendsList = phoneList.map((person) => {
+    const cheapestWish = person.wishList?.sort((a, b) => a.price - b.price)[0];
+    const present =
+      cheapestWish === undefined
+        ? undefined
+        : {
+            title: cheapestWish.title,
+            price: cheapestWish.price,
+          };
+    totalPrice += cheapestWish === undefined ? 0 : present.price;
 
-      return {
-        name: person.name,
-        birthdate: person.birthdate,
-        present: present,
-      };
-    });
+    return {
+      name: person.name,
+      birthdate: person.birthdate,
+      present: present,
+    };
+  });
 
   return {
     friendsList: friendsList,
