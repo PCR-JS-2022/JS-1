@@ -116,7 +116,7 @@ function sortByBirthDay(firstDate, secondDate)
 }
 
 function parseDateSeparatedByDots(date){
-    if(typeof date === 'string' && !/\d{2}\.\d{2}\.\d{4}/.test(date))
+    if(typeof date !== 'string' && !/\d{2}\.\d{2}\.\d{4}/.test(date))
       return null;
     const [day, month, year] = date.split('.');
     return new Date(year, month, day)
