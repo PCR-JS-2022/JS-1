@@ -84,7 +84,7 @@
     },
   ];
   
-//console.log(getNextBirthdays('26.02.1981', phoneList))
+// console.log(getNextBirthdays('26.02.1981', phoneList))
 // console.log(getMonthsList(phoneList))
 // console.log(getMinimumPresentsPrice(phoneListWithWishList));
 
@@ -95,7 +95,7 @@
  */
  function getNextBirthdays(date, phoneList) {
      const dateTimeFrom = parseDateSeparatedByDots(date);
-     if(dateTimeFrom === null || !phoneList instanceof Array)
+     if(dateTimeFrom === null || !Array.isArray(phoneList))
         return [];
      return phoneList
      .filter(person => filterByBirthday(dateTimeFrom, parseDateSeparatedByDots(person.birthdate)))
@@ -136,8 +136,10 @@ function filterByBirthday(dateFrom, birthdate)
  *  }>}
  */
 function getMonthsList(phoneList) {
+    if(!Array.isArray(phoneList))
+      return [];
     const months = 
-    ['январь', 'февраль', 'март', 'апрель', 'май', "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"]
+    ['январь', 'февраль', 'март', 'апрель', 'май', "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
      const personsSeparatedByMonth = new Map();
      const result = [];
     phoneList.forEach(person =>{
@@ -174,7 +176,7 @@ function getMonthsList(phoneList) {
  *  }}
  */
 function getMinimumPresentsPrice(phoneList) {
-    if(!phoneList instanceof Array)
+    if(!Array.isArray(phoneList))
         return [];
     const result = {
         friendsList: [],
