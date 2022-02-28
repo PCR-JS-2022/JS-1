@@ -294,4 +294,4 @@ function getMinimumPresentsPrice(phoneList) {
 
 getMinimumPresentsPrice(phoneList);
 
-// module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
+module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
