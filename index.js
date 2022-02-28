@@ -36,15 +36,15 @@ function getNextBirthdays(date, phoneList) {
         let birthday = parseDate(phone.birthdate)
         let year = birthday.getFullYear() < compareDateYear
         let month = birthday.getMonth() > compareDateMonth
-        let day = ((birthday.getMonth() == compareDateMonth) && (birthday.getDay() >= compareDateDay))
-        return year && (month || day)
+        let day = ((birthday.getMonth() === compareDateMonth) && (birthday.getDay() >= compareDateDay))
+        return year && (month || day) || date === phone.birthdate
     })
 
     return listBirthday.sort((a, b) => {
         let a_birthday = parseDate(a.birthdate)
         let b_birthday = parseDate(b.birthdate)
         return b_birthday - a_birthday
-    })[0]
+    })
 };
 
 /**
