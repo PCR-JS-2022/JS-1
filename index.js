@@ -45,21 +45,23 @@ export function getNextBirthdays(date, phoneList) {
       );
     })
     .sort((person1, person2) =>
-      sortByDate(person1.birthdate, person2.birthdate)
+      sortByMonthAndDate(person1.birthdate, person2.birthdate)
     );
 
   return nextBirthdays;
 }
 
 /**
- * 
- * @param {string} date1 
- * @param {string} date2 
+ *
+ * @param {string} date1
+ * @param {string} date2
  * @returns {number}
  */
-function sortByDate(date1, date2) {
+function sortByMonthAndDate(date1, date2) {
   const number1 = convertToDate(date1);
   const number2 = convertToDate(date2);
+  number1.setFullYear(0);
+  number2.setFullYear(0);
 
   return number1 > number2 ? 1 : -1;
 }
@@ -124,11 +126,6 @@ export function getMonthsList(phoneList) {
       ? 1
       : -1
   );
-  monthList.forEach((month) =>
-    month.friends.sort((person1, person2) =>
-      sortByDate(person1.birthdate, person2.birthdate)
-    )
-  );
 
   return monthList;
 }
@@ -176,3 +173,25 @@ export function getMinimumPresentsPrice(phoneList) {
 }
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
+
+const phoneList = [
+  {
+    name: "Александра",
+    birthdate: "21.05.2001",
+  },
+  {
+    name: "Егор",
+    birthdate: "06.08.1976",
+  },
+  {
+    name: "Роман",
+    birthdate: "14.04.2000",
+  },
+  {
+    name: "Василий",
+    birthdate: "28.02.1980",
+  },
+];
+
+const r = getNextBirthdays("28.02.1980", phoneList);
+console.log(r);
