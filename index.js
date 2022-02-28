@@ -18,7 +18,7 @@
  * @returns {Array<Person>}
  */
 export function getNextBirthdays(dateAsString, friends) {
-	if (!getNextBirthdaysIsValid) {
+	if (!getNextBirthdaysIsValid(dateAsString, friends)) {
 		return [];
 	}
 
@@ -123,7 +123,7 @@ export function getMinimumPresentsPrice(phoneList) {
 			birthdate: person.birthdate,
 			present: present
 		})
-		total += present?.price ?? 0;
+		total += present?.price;
 	})
 
 	return {
