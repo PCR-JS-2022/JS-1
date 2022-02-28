@@ -36,7 +36,7 @@ export function getNextBirthdays(date, phoneList) {
   const nextBirthdays = phoneList
     .filter((person) => {
       const birthdate = convertToDate(person.birthdate);
-      if (birthdate.getFullYear() > realDate.getFullYear()) return false;
+      if (birthdate > realDate) return false;
 
       return (
         birthdate.getMonth() > realDate.getMonth() ||
@@ -51,6 +51,12 @@ export function getNextBirthdays(date, phoneList) {
   return nextBirthdays;
 }
 
+/**
+ * 
+ * @param {string} date1 
+ * @param {string} date2 
+ * @returns {number}
+ */
 function sortByDate(date1, date2) {
   const number1 = convertToDate(date1);
   const number2 = convertToDate(date2);
