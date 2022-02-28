@@ -17,7 +17,7 @@
  * @param {Array<Person>} friends
  * @returns {Array<Person>}
  */
-function getNextBirthdays(dateAsString, friends) {
+export function getNextBirthdays(dateAsString, friends) {
 	if (!getNextBirthdaysIsValid) {
 		return [];
 	}
@@ -73,7 +73,7 @@ function getBirthdayComparer() {
  *    friends: Array<Person>,
  *  }>}
  */
-function getMonthsList(phoneList) {
+export function getMonthsList(phoneList) {
 	if (!Array.isArray(phoneList)) {
 		return [];
 	}
@@ -108,7 +108,7 @@ function getMonthsList(phoneList) {
  *    totalPrice: number
  *  }}
  */
-function getMinimumPresentsPrice(phoneList) {
+export function getMinimumPresentsPrice(phoneList) {
 	if (!Array.isArray(phoneList)) {
 		return [];
 	}
@@ -132,4 +132,4 @@ function getMinimumPresentsPrice(phoneList) {
 	}
 }
 
-module.exports = {getNextBirthdays, getMonthsList, getMinimumPresentsPrice};
+module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
