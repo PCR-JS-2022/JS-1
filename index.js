@@ -1,24 +1,3 @@
-const phoneList = [
-	{
-		name: "Александра",
-		birthdate: "21.05.2001",
-	},
-	{
-		name: "Егор",
-		birthdate: "06.08.1976",
-	},
-	{
-		name: "Роман",
-		birthdate: "14.04.2000",
-	},
-	{
-		name: "Василий",
-		birthdate: "27.02.1980",
-	},
-];
-// console.log(JSON.stringify(getNextBirthdays('1.1.2200', phoneList)));
-console.log(JSON.stringify(getMonthsList(phoneList)));
-
 /**
  * @typedef Person
  * @type {object}
@@ -130,7 +109,27 @@ function getMonthsList(phoneList) {
  *  }}
  */
 function getMinimumPresentsPrice(phoneList) {
+	if (!Array.isArray(phoneList)) {
+		return [];
+	}
 
+	let total = 0;
+	let presents = []
+
+	phoneList.forEach(person => {
+		let present = person.wishList?.sort((a, b) => a.price - b.price)[0];
+		presents.push({
+			name: person.name,
+			birthdate: person.birthdate,
+			present: present
+		})
+		total += present?.price ?? 0;
+	})
+
+	return {
+		friendsList: presents,
+		totalPrice: total ?? undefined
+	}
 }
 
 module.exports = {getNextBirthdays, getMonthsList, getMinimumPresentsPrice};
