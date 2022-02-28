@@ -58,22 +58,22 @@ function getMonthsList(phoneList) {
     if (!Array.isArray(phoneList) || phoneList.length === 0) {
         return [];
     }
-    answer = {}
-    phoneList.map((friend) => {
-        let month = parseMonth(friend.birthdate.slice(3, 5))
-        if (answer.hasOwnProperty(month)){
-            answer[month].push(friend)
+    phoneList.sort((a, b) => {
+        return a.birthdate.slice(3, 5) - b.birthdate.slice(3, 5)
+    })
+    let prevMonth = "00"
+    let res = []
+    phoneList.map((phone) => {
+        let month = parseMonth(phone.birthdate.slice(3, 5))
+        if (month === prevMonth) {
+            res[res.findIndex(m => m.month === prevMonth)].friends.push(phone);
         } else {
-            answer[month] = [friend]
+            res.push({month: month, friends: [phone]})
         }
-    });
+        prevMonth = month
+    })
 
-    res = []
-    Object.entries(answer).forEach(([month, friends]) => {
-        res.push({month, friends})
-    });
-
-    return JSON.stringify(res)
+    return res
 };
 
 /**
