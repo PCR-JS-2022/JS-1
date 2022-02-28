@@ -1,4 +1,4 @@
-const { parseDate } = require("./parseData");
+const { parseDate, validDate } = require("./parseData");
 const { parseMonth } = require("./parseMonth");
 
 
@@ -22,11 +22,11 @@ const { parseMonth } = require("./parseMonth");
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
 function getNextBirthdays(date, phoneList) {
-    let compareDate = parseDate(date)
-
-    if (!Array.isArray(phoneList) || compareDate === null) {
+    if (!Array.isArray(phoneList) || validDate(date)) {
         return [];
     }
+
+    let compareDate = parseDate(date)
 
     let compareDateYear = compareDate.getFullYear()
     let compareDateMonth = compareDate.getMonth()
