@@ -49,12 +49,13 @@ function getMonthsList(phoneList) {
 
 	for (const person of tempPhoneList) {
 		const birthdate = getDate(person.birthdate)
-		const month = birthdate.toLocaleString('ru-RU', { month: 'long' })
-		let monthItem = monthsList.find(item => item.month === month)
+		const month = birthdate.toLocaleString('ru-RU', {month: 'long'})
+		const monthItem = monthsList.find(item => item.month === month)
+
 		if (monthItem) {
 			monthItem.friends.push(person)
 		} else {
-			monthsList.push({ month, friends: [person] })
+			monthsList.push({month, friends: [person]})
 		}
 	}
 	return monthsList
@@ -77,20 +78,17 @@ function getMonthsList(phoneList) {
  */
 function getMinimumPresentsPrice(phoneList) {
 	if (!Array.isArray(phoneList)) return []
-	//const tempPhoneList = phoneList.sort((a, b) => sortByBirthday(getDate(a.birthdate), getDate(b.birthdate)))
-	let result = { totalPrice: 0, friendsList: [] }
 
-	for (const person of phoneList) {
+	return phoneList.reduce((result, person) => {
 		if (person.wishList) {
 			person.wishList.sort((a, b) => a.price - b.price)
 			result.totalPrice += person.wishList[0].price
-			result.friendsList.push({ name: person.name, birthdate: person.birthdate, present: person.wishList[0] })
+			result.friendsList.push({name: person.name, birthdate: person.birthdate, present: person.wishList[0]})
 		} else {
 			result.friendsList.push({ ...person, present: undefined })
 		}
-	}
-
-	return result
+		return result
+	}, { totalPrice: 0, friendsList: [] })
 }
 
 /**
