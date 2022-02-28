@@ -84,7 +84,7 @@
     },
   ];
   
-// console.log(getNextBirthdays('26.02.1981', phoneList))
+//console.log(getNextBirthdays('26.02.1981', phoneList))
 // console.log(getMonthsList(phoneList))
 // console.log(getMinimumPresentsPrice(phoneListWithWishList));
 
@@ -95,7 +95,7 @@
  */
  function getNextBirthdays(date, phoneList) {
      const dateTimeFrom = parseDateSeparatedByDots(date);
-     if(dateTimeFrom.getDay() === NaN || !phoneList instanceof Array)
+     if(dateTimeFrom === null || !phoneList instanceof Array)
         return [];
      return phoneList
      .filter(person => filterByBirthday(dateTimeFrom, parseDateSeparatedByDots(person.birthdate)))
@@ -116,6 +116,8 @@ function sortByBirthDay(firstDate, secondDate)
 }
 
 function parseDateSeparatedByDots(date){
+    if(!/\d{2}.\d{2}.\d{4}/.test(date))
+      return null;
     const [day, month, year] = date.split('.');
     return new Date(year, month, day)
 }
@@ -123,7 +125,7 @@ function parseDateSeparatedByDots(date){
 function filterByBirthday(dateFrom, birthdate)
 {   
     return birthdate <= dateFrom
-    && new Date(0, dateFrom.getMonth(), dateFrom.getDate()) <= new Date(0, dateFrom.getMonth(), dateFrom.getDate());
+    && new Date(0, dateFrom.getMonth(), dateFrom.getDate()) <= new Date(0, birthdate.getMonth(), birthdate.getDate());
 }
 
 /**
