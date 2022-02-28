@@ -34,7 +34,7 @@ export function getNextBirthdays(date, phoneList) {
 
   const nextBirthdays = phoneList
     .filter((person) => {
-      if (parseInt(person.birthdate.substring(person.birthdate.length - 4)) >= parseInt(year))
+      if (parseInt(person.birthdate.substring(person.birthdate.length - 4)) > parseInt(year))
         return false;
 
       return toNumber(date.substring(0, date.length - 5)) <= toNumber(person.birthdate.substring(0, person.birthdate.length - 5));
