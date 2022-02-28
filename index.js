@@ -123,7 +123,7 @@ export function getMinimumPresentsPrice(phoneList) {
 			birthdate: person.birthdate,
 			present: present
 		})
-		total += present?.price;
+		total += present?.price ?? 0;
 	})
 
 	return {
