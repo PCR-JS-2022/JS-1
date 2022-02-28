@@ -18,6 +18,9 @@
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
 export function getNextBirthdays(date, phoneList) {
+  if (date === undefined)
+    return [];
+
   const splitedDate = date.split(".");
   if (
     !(
