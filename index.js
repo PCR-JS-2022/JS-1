@@ -102,14 +102,12 @@ function getMonthsList(phoneList) {
  */
 
 function getMinimumPresentsPrice(phoneList) {
-  if(!Array.isArray(phoneList) || phoneList.length === 0) return [];
+  if(!Array.isArray(phoneList)) return [];
 
   let friendsPresentsList = { 
     friendsList: [], 
-    totalPrice: undefined 
+    totalPrice: 0
   };
-
-  let totalPrice = 0;
 
   phoneList.forEach((e) => {
     if(e.hasOwnProperty('wishList') && Array.isArray(e.wishList) && e.wishList.length !== 0){
@@ -120,7 +118,7 @@ function getMinimumPresentsPrice(phoneList) {
       e.present = e.wishList[0];
       delete e.wishList;
       friendsPresentsList.friendsList.push(e);
-      totalPrice += Number(e.present.price);
+      friendsPresentsList.totalPrice += Number(e.present.price);
     }
     else {
       e.present = undefined;
@@ -128,8 +126,7 @@ function getMinimumPresentsPrice(phoneList) {
       friendsPresentsList.friendsList.push(e);
     }
   });
-
-  friendsPresentsList.totalPrice = totalPrice;
+  
   return friendsPresentsList;
 }
 
