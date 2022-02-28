@@ -84,9 +84,9 @@
     },
   ];
   
-console.log(getNextBirthdays("01.01.3000", phoneList))
+// console.log(getNextBirthdays("01.01.3000", phoneList))
 // console.log(getMonthsList(phoneList))
-// console.log(getMinimumPresentsPrice(phoneListWithWishList));
+console.log(getMinimumPresentsPrice(phoneListWithWishList));
 
 /**
  * @param {string} date - дата отсчета
@@ -98,12 +98,19 @@ console.log(getNextBirthdays("01.01.3000", phoneList))
      if(dateTimeFrom === null || !Array.isArray(phoneList))
         return [];
      return phoneList
-     .filter(person => filterByBirthday(dateTimeFrom, parseDateSeparatedByDots(person.birthdate)))
-     .sort((a,b) => sortByBirthDay(parseDateSeparatedByDots(a.birthdate),parseDateSeparatedByDots(b.birthdate)));
+     .filter(person => {
+       const personBirthDate = parseDateSeparatedByDots(person.birthdate);
+       return checkBirthday(dateTimeFrom, personBirthDate);
+     })
+     .sort((firstPerson,secondPerson) => {
+       const firstPersonBirthDate = parseDateSeparatedByDots(firstPerson.birthdate);
+       const secondPersonBirthDate = parseDateSeparatedByDots(secondPerson.birthdate);
+       return compareBirthDate(firstPersonBirthDate, secondPersonBirthDate);
+      });
 };
 
 
-function sortByBirthDay(firstDate, secondDate)
+function compareBirthDate(firstDate, secondDate)
 {
     const firstDateWithoutYear = new Date(0, firstDate.getMonth(), firstDate.getDate())
     const secondDateWithoutYear = new Date(0, secondDate.getMonth(), secondDate.getDate())
@@ -116,13 +123,14 @@ function sortByBirthDay(firstDate, secondDate)
 }
 
 function parseDateSeparatedByDots(date){
-    if(typeof date !== 'string' && !/\d{2}\.\d{2}\.\d{4}/.test(date))
+  const dateCheckPattern = /\d{2}\.\d{2}\.\d{4}/;
+    if(typeof date !== 'string' && !dateCheckPattern.test(date))
       return null;
     const [day, month, year] = date.split('.');
     return new Date(year, month, day)
 }
 
-function filterByBirthday(dateFrom, birthdate)
+function checkBirthday(dateFrom, birthdate)
 {   
     return birthdate <= dateFrom
     && new Date(0, dateFrom.getMonth(), dateFrom.getDate()) <= new Date(0, birthdate.getMonth(), birthdate.getDate());
@@ -139,7 +147,18 @@ function getMonthsList(phoneList) {
     if(!Array.isArray(phoneList))
       return [];
     const months = 
-    ['январь', 'февраль', 'март', 'апрель', 'май', "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
+    ['январь',
+     'февраль',
+     'март',
+     'апрель',
+     'май',
+     "июнь",
+     "июль",
+     "август",
+     "сентябрь",
+     "октябрь",
+     "ноябрь",
+     "декабрь"];
      const personsSeparatedByMonth = new Map();
      const result = [];
     phoneList.forEach(person =>{
@@ -183,23 +202,22 @@ function getMinimumPresentsPrice(phoneList) {
         totalPrice: 0,
     };
     phoneList.forEach(person =>{
-        const cheapestGift = person.wishList !== undefined 
-        ? person.wishList.sort((a,b) => {
+        const cheapestGift = person.wishList 
+        && person.wishList.sort((a,b) => {
             if(a.price < b.price)
                 return -1;
             else if(a.price > b.price)
                 return 1;
             else
                 return 0;
-        })[0]
-        : null;
+        })[0];
         const personInfo = {
             name: person.name,
             birthdate: person.birthdate,
-            present: cheapestGift === null ? undefined : cheapestGift,
+            present: cheapestGift,
         }
         result.friendsList.push(personInfo);
-        result.totalPrice += cheapestGift !== null ? cheapestGift.price : 0;
+        result.totalPrice += cheapestGift ? cheapestGift.price : 0;
     })
     return result;
 };
