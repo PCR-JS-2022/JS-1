@@ -24,7 +24,7 @@ function getNextBirthdays(date, phoneList) {
     console.log(phoneList.values);
     phoneList.forEach(
         (el, ind) => {
-            if (checkDateIsAfter(date, el.birthdate) && checkYearIsBefore(el.birthdate, getLastDayOfYear(date))) {
+            if (checkDate(date, el.birthdate) && checkYearIsBefore(el.birthdate, getLastDayOfYear(date))) {
                 result.push(el);
             }
         }   
@@ -44,10 +44,10 @@ function comareBirthDate(date1, date2) {
         (el, ind) => Number(el)
     );
 
-    if (d1[2] > d2[2]) return 1;
-    if (d1[2] == d2[2] && d1[1] > d2[1]) return 1;
-    if (d1[2] == d2[2] && d1[1] == d2[1] && d1[0] >= d2[0]) return 1;
-    if (d1[2] == d2[2] && d1[1] == d2[1] && d1[0] == d2[0]) return 0;
+    //if (d1[2] > d2[2]) return 1;
+    if (d1[1] > d2[1]) return 1;
+    if (d1[1] == d2[1] && d1[0] >= d2[0]) return 1;
+    if (d1[1] == d2[1] && d1[0] == d2[0]) return 0;
 
     return -1;
 }
@@ -61,7 +61,7 @@ function checkDateFormat (date) {
     return splitDate.every((el) => !isNaN(el));
 }
 
-function checkDateIsAfter(dateStart, dateCurrent) {
+function checkDate(dateStart, dateCurrent) {
     let start = dateStart.split('.').map(
         (el, ind) => Number(el)
     );
@@ -69,8 +69,8 @@ function checkDateIsAfter(dateStart, dateCurrent) {
         (el, ind) => Number(el)
     );
     
-    if (current[1] > start[1]) return true;
-    if (current[1] == start[1] && current[0] >= start[0]) return true;
+    if (current[1] > start[1] && current[1] <= 12) return true;
+    if (current[1] == start[1] && current[0] > start[0]) return true;
 
     return false;
 }
@@ -217,9 +217,28 @@ const phoneList = [
     {
         name: 'test2',
         birthdate: '03.08.1976'
+    },
+    {
+        name: 'test3',
+        birthdate: '01.03.1980'
+    },
+    {
+        name: 'test4',
+        birthdate: '27.02.1980'
+    },
+    {
+        name: 'test5',
+        birthdate: '29.02.1977'
+    },
+    {
+        name: 'test6',
+        birthdate: '01.01.1977'
+    },
+    {
+        name: 'test7',
+        birthdate: '04.09.1976'
     }
   ];
-
 */
 
 //getNextBirthdays('28.02.1980', phoneList);
