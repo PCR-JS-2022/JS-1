@@ -19,12 +19,12 @@
  */
 
 function getNextBirthdays(date, phoneList) {
-  if(!Array.isArray(phoneList) || !CheckDateIsCorrect(date) || phoneList.length === 0) return [];
+  if(!Array.isArray(phoneList) || !checkDateIsCorrect(date) || phoneList.length === 0) return [];
 
-  let keyDate = GetDateObject(date);
+  const keyDate = getDateObject(date);
 
   let sortedPhoneList = phoneList.filter((e) => {
-    let friendDate = GetDateObject(e.birthdate);
+    const friendDate = getDateObject(e.birthdate);
 
     if(friendDate.getFullYear() <= keyDate.getFullYear()){
       if(friendDate.getMonth() > keyDate.getMonth()) return e;
@@ -35,22 +35,22 @@ function getNextBirthdays(date, phoneList) {
   });
 
   return sortedPhoneList.sort((a, b) => {
-    let friend1 = GetDateObject(a.birthdate);
-    let friend2 = GetDateObject(b.birthdate);
+    const friend1 = getDateObject(a.birthdate);
+    const friend2 = getDateObject(b.birthdate);
 
     return friend2 - friend1;
   });
 }
 
-function GetDateObject(date){
-  let splittedDate = date.split('.');
+function getDateObject(date){
+  const splittedDate = date.split('.');
   return new Date(splittedDate[2], splittedDate[1] - 1, splittedDate[0]);
 }
 
-function CheckDateIsCorrect(date){
+function checkDateIsCorrect(date){
   if(typeof date !== 'string')
     return false;
-  let splitDateElements = date.split('.');
+  const splitDateElements = date.split('.');
 
   return splitDateElements[0].length === 2 
     && splitDateElements[1].length === 2 
@@ -71,12 +71,12 @@ function getMonthsList(phoneList) {
 
   const months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
 
-  let birthdaysList = months.map((e) => {
+  const birthdaysList = months.map((e) => {
     return {month: e, friends: []}
   });
   
   phoneList.forEach((e) => {
-    let month = GetDateObject(e.birthdate).getMonth();
+    const month = getDateObject(e.birthdate).getMonth();
     birthdaysList[+month].friends.push(e);
   })
 
