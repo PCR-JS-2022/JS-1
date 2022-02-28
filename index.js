@@ -1,3 +1,25 @@
+const phoneList = [
+	{
+		name: "Александра",
+		birthdate: "21.05.2001",
+	},
+	{
+		name: "Егор",
+		birthdate: "06.08.1976",
+	},
+	{
+		name: "Роман",
+		birthdate: "14.04.2000",
+	},
+	{
+		name: "Василий",
+		birthdate: "27.02.1980",
+	},
+];
+
+let res = getNextBirthdays('1.1.2200', phoneList);
+console.log(JSON.stringify(res));
+
 /**
  * @typedef Person
  * @type {object}
@@ -18,7 +40,7 @@
  * @returns {Array<Person>}
  */
 function getNextBirthdays(dateAsString, friends) {
-	if (getNextBirthdaysIsValid) {
+	if (!getNextBirthdaysIsValid) {
 		return [];
 	}
 
@@ -29,9 +51,9 @@ function getNextBirthdays(dateAsString, friends) {
 		.filter(friend => {
 			let friendBirthDate = getBirthDate(friend.birthdate);
 			let friendBirthday = getBirthday(friendBirthDate);
-			return birthDate - friendBirthDate <= 0 && friendBirthday - birthday <= 0;
+			return friendBirthDate < birthDate && friendBirthday > birthday;
 		})
-		.sort((a, b) => getBirthday(getBirthDate(a.birthdate)) - getBirthday(getBirthDate(b.birthdate)))
+		.sort(getBirthdayComparer())
 }
 
 /**
@@ -40,15 +62,15 @@ function getNextBirthdays(dateAsString, friends) {
  * @returns {boolean}
  */
 function getNextBirthdaysIsValid(dateAsString, friends) {
-	return !Array.isArray(friends) || typeof dateAsString !== "string" || /^\d{2}.\d{2}.\d{4}$/.test(dateAsString)
+	return Array.isArray(friends) && typeof dateAsString === "string" && /^\d{2}.\d{2}.\d{4}$/.test(dateAsString)
 }
 
 /**
  * @param {Date} date
- * @returns {number}
+ * @returns {Date}
  */
 function getBirthday(date) {
-	return date - new Date(date.getFullYear())
+	return new Date(0, date.getMonth(), date.getDay())
 }
 
 /**
@@ -56,19 +78,28 @@ function getBirthday(date) {
  * @returns {Date}
  */
 function getBirthDate(dateAsString) {
-	return new Date(dateAsString.split(".").join("-"));
+	return new Date(dateAsString.split(".").reverse().join("-"));
+}
+
+/**
+ * @returns {function(Person, Person)}
+ */
+function getBirthdayComparer() {
+	return (a, b) => getBirthday(getBirthDate(a.birthdate)) - getBirthday(getBirthDate(b.birthdate))
 }
 
 
 /**
- * @param {Array<Person>} phoneList - список друзей из телефонной книги
+ * @param {Array<Person>} phoneList
  * @returns {Array<{
  *    month: string,
  *    friends: Array<Person>,
  *  }>}
  */
 function getMonthsList(phoneList) {
-
+	if (Array.isArray(phoneList)) {
+		return [];
+	}
 };
 
 /**
@@ -90,4 +121,4 @@ function getMinimumPresentsPrice(phoneList) {
 
 };
 
-module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
+module.exports = {getNextBirthdays, getMonthsList, getMinimumPresentsPrice};
