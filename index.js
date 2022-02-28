@@ -29,9 +29,28 @@ function getNextBirthdays(date, phoneList) {
             }
         }   
     );
+    result.sort(
+        (first, second) => comareBirthDate(first.birthdate, second.birthdate)
+    );
 
     return result;
 };
+
+function comareBirthDate(date1, date2) {
+    let d1 = date1.split('.').map(
+        (el, ind) => Number(el)
+    );
+    let d2 = date2.split('.').map(
+        (el, ind) => Number(el)
+    );
+
+    if (d1[2] > d2[2]) return 1;
+    if (d1[2] == d2[2] && d1[1] > d2[1]) return 1;
+    if (d1[2] == d2[2] && d1[1] == d2[1] && d1[0] >= d2[0]) return 1;
+    if (d1[2] == d2[2] && d1[1] == d2[1] && d1[0] == d2[0]) return 0;
+
+    return -1;
+}
 
 function checkDateFormat (date) {
     if (typeof date != 'string') return false;
@@ -191,7 +210,16 @@ const phoneList = [
       name: "Василий",
       birthdate: "27.02.1980",
     },
+    {
+        name: 'test',
+        birthdate: '28.02.1980'
+    },
+    {
+        name: 'test2',
+        birthdate: '03.08.1976'
+    }
   ];
+
 */
 
 //getNextBirthdays('28.02.1980', phoneList);
