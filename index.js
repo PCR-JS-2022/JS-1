@@ -29,7 +29,7 @@ export function getNextBirthdays(dateAsString, friends) {
 		.filter(friend => {
 			let friendBirthDate = getBirthDate(friend.birthdate);
 			let friendBirthday = getBirthday(friendBirthDate);
-			return friendBirthDate < birthDate && friendBirthday > birthday;
+			return friendBirthDate <= birthDate && friendBirthday >= birthday;
 		})
 		.sort(getBirthdayComparer())
 }
@@ -128,7 +128,7 @@ export function getMinimumPresentsPrice(phoneList) {
 
 	return {
 		friendsList: presents,
-		totalPrice: total ?? undefined
+		totalPrice: total
 	}
 }
 
