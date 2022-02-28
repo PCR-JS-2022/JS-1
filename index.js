@@ -155,7 +155,7 @@ function getCheapiestPresent(presentList) {
     return {'title' : title, 'price' : price };
 }
 
-// module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
+module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
 
 /*
 console.log(checkDateFormat('12.12.2001'))
