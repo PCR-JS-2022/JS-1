@@ -18,8 +18,7 @@
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
 export function getNextBirthdays(date, phoneList) {
-  if (typeof date !== 'string')
-    return [];
+  if (typeof date !== "string") return [];
 
   const splitedDate = date.split(".");
   if (
@@ -149,6 +148,8 @@ export function getMonthsList(phoneList) {
  *  }}
  */
 export function getMinimumPresentsPrice(phoneList) {
+  if (!Array.isArray(phoneList)) return [];
+
   let totalPrice = 0;
 
   const friendsList = phoneList.map((person) => {
