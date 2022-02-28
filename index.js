@@ -84,7 +84,7 @@ function getMinimumPresentsPrice(phoneList) {
 		if (person.wishList) {
 			person.wishList.sort((a, b) => a.price - b.price)
 			result.totalPrice += person.wishList[0].price
-			result.friendsList.push({ ...person, present: person.wishList[0] })
+			result.friendsList.push({ name: person.name, birthdate: person.birthdate, present: person.wishList[0] })
 		} else {
 			result.friendsList.push({ ...person, present: undefined })
 		}
