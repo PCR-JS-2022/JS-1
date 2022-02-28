@@ -1,3 +1,5 @@
+module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
+
 /**
  * @typedef Person
  * @type {object}
@@ -122,5 +124,3 @@ function getMonthsList(phoneList) {
 //function getMinimumPresentsPrice(phoneList) {
 
 //};
-
-//module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice }; */
