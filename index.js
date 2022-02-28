@@ -16,9 +16,8 @@ const phoneList = [
 		birthdate: "27.02.1980",
 	},
 ];
-
-let res = getNextBirthdays('1.1.2200', phoneList);
-console.log(JSON.stringify(res));
+// console.log(JSON.stringify(getNextBirthdays('1.1.2200', phoneList)));
+console.log(JSON.stringify(getMonthsList(phoneList)));
 
 /**
  * @typedef Person
@@ -88,7 +87,6 @@ function getBirthdayComparer() {
 	return (a, b) => getBirthday(getBirthDate(a.birthdate)) - getBirthday(getBirthDate(b.birthdate))
 }
 
-
 /**
  * @param {Array<Person>} phoneList
  * @returns {Array<{
@@ -97,17 +95,31 @@ function getBirthdayComparer() {
  *  }>}
  */
 function getMonthsList(phoneList) {
-	if (Array.isArray(phoneList)) {
+	if (!Array.isArray(phoneList)) {
 		return [];
 	}
-};
+
+	let monthsList = [];
+	phoneList
+		.sort(getBirthdayComparer())
+		.forEach(person => {
+			let date = getBirthDate(person.birthdate);
+			let month = date.toLocaleString("ru", {month: "long"});
+			if (monthsList.some(m => m.month === month)) {
+				monthsList[monthsList.findIndex(m => m.month === month)].friends.push(person);
+			} else {
+				monthsList.push({month: month, friends: [person]});
+			}
+		})
+	return monthsList;
+}
 
 /**
  * @param {Array<{
  *    name: string,
  *    birthdate: string,
  *    wishList: Array<Gift>
- *  }>} phoneList - список друзей из телефонной книги
+ *  }>} phoneList
  * @returns {{
  *    friendsList: Array<{
  *      name: string,
@@ -119,6 +131,6 @@ function getMonthsList(phoneList) {
  */
 function getMinimumPresentsPrice(phoneList) {
 
-};
+}
 
 module.exports = {getNextBirthdays, getMonthsList, getMinimumPresentsPrice};
