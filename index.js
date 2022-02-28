@@ -59,26 +59,57 @@ function isArray(phoneList) {
 
 const phoneList = [
   {
-    name: "Александра",
-    birthdate: "21.05.2001",
+    name: 'Александра',
+    birthdate: '21.05.2001',
+    wishList: [
+      {
+        title: 'Книга "Изучаем программирование на JavaScript"',
+        price: 250,
+      },
+      {
+        title: 'Билет на концерт Макса Коржа',
+        price: 1500,
+      },
+      {
+        title: 'Книга "Чистый код. Создание, анализ и рефакторинг"',
+        price: 200,
+      },
+    ],
   },
   {
-    name: "Егор",
-    birthdate: "06.08.1976",
+    name: 'Егор',
+    birthdate: '06.08.1976',
+    wishList: [
+      {
+        title: 'Годовой абонимент в библиотеку',
+        price: 400,
+      },
+      {
+        title: 'Шариковая ручка',
+        price: 750,
+      },
+    ],
   },
   {
-    name: "Роман",
-    birthdate: "14.04.2000",
+    name: 'Роман',
+    birthdate: '14.05.2000',
   },
   {
-    name: "Василий",
-    birthdate: "27.02.1952",
-  },
-  {
-    name: "John",
-    birthdate: "14.05.2000"
+    name: 'Василий',
+    birthdate: '27.02.1980',
+    wishList: [
+      {
+        title: 'Годовой курс обучения на ИРИТ-РтФ',
+        price: 100500,
+      },
+      {
+        title: 'Путешествие на Марс',
+        price: 999999999,
+      },
+    ],
   },
 ];
+
 
 
 /**
@@ -135,7 +166,25 @@ function getMonthNumber(date) {
  *  }}
  */
 function getMinimumPresentsPrice(phoneList) {
-
+  if (!(isArray(phoneList))) return [];
+  const presents = {
+    friendList: [],
+    totalPrice: 0
+  };
+  phoneList.forEach((e) => {
+    if (!(e.hasOwnProperty('wishList')) || e.wishList.length === 0) {
+      e.present = undefined;
+      return presents.friendList.push(e);
+    }
+    e.wishList.sort((a, b) => {
+      return a.price - b.price;
+    })
+    e.present = e.wishList[0];
+    delete e.wishList;
+    presents.totalPrice += Number(e.present.price);
+    presents.friendList.push(e);
+  });
+  return presents;
 };
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
