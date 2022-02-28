@@ -60,11 +60,12 @@ function getNextBirthdays(date, phoneList) {
       if (contactBirthdate.getFullYear() < endOfTheYear) {
         if (dateTime.getFullYear() > contactBirthdate.getFullYear()) {
           newPhoneList.push(contact);
-        } else if (dateTime.getFullYear() === contactBirthdate.getFullYear() && dateTime.getMonth() < contactBirthdate.getMonth()) {
-          newPhoneList.push(contact);
-        } else if (dateTime.getFullYear() === contactBirthdate.getFullYear() && dateTime.getMonth() === contactBirthdate.getMonth() && dateTime.getDate() < contactBirthdate.getDate()) {
-          newPhoneList.push(contact);
         }
+        //  else if (dateTime.getFullYear() === contactBirthdate.getFullYear() && dateTime.getMonth() < contactBirthdate.getMonth()) {
+        //   newPhoneList.push(contact);
+        // } else if (dateTime.getFullYear() === contactBirthdate.getFullYear() && dateTime.getMonth() === contactBirthdate.getMonth() && dateTime.getDate() < contactBirthdate.getDate()) {
+        //   newPhoneList.push(contact);
+        // }
       }
 
       newPhoneList.sort((a, b) => {
