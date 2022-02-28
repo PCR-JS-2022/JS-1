@@ -55,7 +55,7 @@ function getNextBirthdays(date, phoneList) {
  *  }>}
  */
 function getMonthsList(phoneList) {
-    if (!Array.isArray(phoneList)) {
+    if (!Array.isArray(phoneList) || phoneList.length === 0) {
         return [];
     }
     answer = {}
