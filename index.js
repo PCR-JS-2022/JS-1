@@ -20,8 +20,8 @@
  */
 function getNextBirthdays(date, phoneList) {
     const result = [];
-    if (!Array.isArray(phoneList) || (date !== undefined && !date.match(/\d{2}(.)\d{2}(.)\d{4}/g))
-        || date === undefined)
+    if (!Array.isArray(phoneList) || (typeof date === "string" && !date.match(/\d{2}(.)\d{2}(.)\d{4}/g))
+        || typeof date !== "string")
         return result
     else {
         const current_day = date.split('.')[0];
