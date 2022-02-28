@@ -58,49 +58,7 @@ function isArray(phoneList) {
 }
 
 const phoneList = [
-  {
-    name: 'Александра',
-    birthdate: '21.05.2001',
-    wishList: [
-      {
-        title: 'Книга "Изучаем программирование на JavaScript"',
-        price: 250,
-      },
-      {
-        title: 'Билет на концерт Макса Коржа',
-        price: 1500,
-      },
-      {
-        title: 'Книга "Чистый код. Создание, анализ и рефакторинг"',
-        price: 200,
-      },
-    ],
-  },
-  {
-    name: 'Егор',
-    birthdate: '06.08.1976',
-    wishList: [
-      {
-        title: 'Годовой абонимент в библиотеку',
-        price: 400,
-      },
-      {
-        title: 'Шариковая ручка',
-        price: 750,
-      },
-    ],
-  },
-  {
-    name: 'Роман',
-    birthdate: '14.05.2000',
-  },
-  {
-    name: 'Василий',
-    birthdate: '27.02.1980',
-    wishList: [
 
-    ],
-  },
 ];
 
 
@@ -159,7 +117,7 @@ function getMonthNumber(date) {
  *  }}
  */
 function getMinimumPresentsPrice(phoneList) {
-  if (!(isArray(phoneList)) || phoneList.length === 0) return [];
+  if (!(isArray(phoneList))) return [];
   const presents = {
     friendsList: [],
     totalPrice: 0
