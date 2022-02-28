@@ -59,7 +59,6 @@ function getMonthsList(phoneList) {
         return [];
     }
     answer = {}
-    console.log("text")
     phoneList.map((friend) => {
         let month = parseInt(friend.birthdate.slice(3, 5))
         if (answer.hasOwnProperty(month)){
@@ -75,7 +74,7 @@ function getMonthsList(phoneList) {
         res.push({month, friends})
     });
 
-    return JSON.stringify(res)
+    return res
 };
 
 /**
