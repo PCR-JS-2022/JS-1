@@ -117,7 +117,7 @@ function getMonthsList(phoneList) {
     passed.push(month);
     result.push({month: months[month-1], friends: [sortedList[i]]});
   }
-  return (JSON.stringify(result));
+  return result;
 };
 
 //console.log(getMonthsList(phoneList2));
