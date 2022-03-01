@@ -21,7 +21,6 @@
 
 
  function getNextBirthdays(date, phoneList) {
-  date = date.split('.');
   if(!Array.isArray(phoneList) || !checkDate(date) || phoneList.length === 0) return [];
   let dateYear = +date[2];
   let dateMonth = +date[1];
@@ -47,12 +46,14 @@
 };
 
 function getDate(date){
+  date = date.split('.');
   let corrDate = new Date();
   corrDate.setFullYear(date[2], date[1] - 1 ,date[0]);
   return corrDate;
 }
 
 function checkDate(date){
+  date = date.split('.');
   if(typeof date !== 'string')
     return false;
   return (date.length === 3 && date[0].length === 2 &&
