@@ -39,19 +39,19 @@
   let friendYear = friendDate[2];
   let friendMonth = friendDate[1] * 10 / 10;
   let friendDays = friendDate[0] * 10 / 10;
-  if (friendYear <= dateYear) 
+  if (friendYear <= dateYear){ 
     if (friendMonth > dateMonth)
         return e;
     if (friendMonth == dateMonth) 
-      if (friendDays > dateDay) 
-        return e;
+      if (friendDays >= dateDay) 
+        return e;}
   })
   // console.log(arr);
   return sortedPhoneList.sort((a, b) => {
     const friend1 = getDateObject(a.birthdate);
     const friend2 = getDateObject(b.birthdate);
 
-    return friend2 - friend1;
+    return friend1 - friend2;
   })
 };
 
@@ -74,7 +74,7 @@ const phoneList = [
 },
 {
   name: "Егор",
-  birthdate: "06.08.1976",
+  birthdate: "25.02.1980",
 },
 {
   name: "Роман",
