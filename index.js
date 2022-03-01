@@ -98,7 +98,7 @@ function getNextBirthdays(date, phoneList) {
             dateParse(x.birthdate).getYear() < newdate.getYear() &&
             (dateParse(x.birthdate).getMonth() > newdate.getMonth() ||
                 (dateParse(x.birthdate).getMonth() === newdate.getMonth() &&
-                    dateParse(x.birthdate).getDay() > newdate.getDay()))
+                    dateParse(x.birthdate).getDay() >= newdate.getDay()))
         ) {
             people.push({ name: x.name, birthdate: x.birthdate });
             console.log({ name: x.name, birthdate: x.birthdate });
