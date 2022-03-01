@@ -22,6 +22,7 @@
 
  function getNextBirthdays(date, phoneList) {
   if(!Array.isArray(phoneList) || !checkDate(date) || phoneList.length === 0) return [];
+  date = date.split('.');
   let dateYear = +date[2];
   let dateMonth = +date[1];
   let dateDay = +date[0];
@@ -67,7 +68,7 @@ const phoneList = [
   },
   {
     name: "Егор",
-    birthdate: "12.04.1976",
+    birthdate: "12.07.1976",
   },
   {
     name: "Роман",
@@ -75,7 +76,7 @@ const phoneList = [
   },
   {
     name: "Василий",
-    birthdate: "27.05.1940",
+    birthdate: "29.05.1940",
   },
 ];
 
