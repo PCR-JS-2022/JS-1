@@ -46,11 +46,35 @@ function getNextBirthdays(date, phoneList) {
         if (currDate[1] > date[2]){
             result.push(phoneList[i]);
         }
+        if(currDate[2] > date[2]) continue;
         if(currDate[1] === date[1] && currDate[0] >= date[0]){
             result.push(phoneList[i]);
         }
+
     }
-    return result;
+    return result.sort((e1, e2) => {
+      const DateE1 = a.birthdate.split('.');
+      const DateE2 = a.birthdate.split('.');
+      const [dayE1, monthE1, yearE1] = DateE1;
+      const [dayE2, monthE2, yearE2] = DateE2;
+
+      if(monthE1 > monthE2) {
+        return 1;
+      }
+      
+      if(monthE1 < monthE2) {
+        return -1;
+      } 
+      
+      if(monthE1 === monthE2) {
+        if(dayE1 > dayE2) {
+          return 1;
+        } 
+        if(dayE1 === dayE2) {
+          return yearE1 - yearE2;
+        }
+      }
+    });
 };
 
 function checkData(date){
