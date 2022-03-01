@@ -82,12 +82,15 @@ function getNextBirthdays(date, phoneList) {
     if (!Array.isArray(phoneList)) return [];
     let people = [];
     phoneList.forEach((x) => {
-        if (dateParse(x.birthdate) < newdate) {
+        if (
+            dateParse(x.birthdate) < newdate &&
+            dateParse(x.birthdate) < dateParse('01.03.2022')
+        ) {
             people.push({ name: x.name, birthdate: x.birthdate });
             console.log({ name: x.name, birthdate: x.birthdate });
         }
     });
-    people.sort(mySort);
+    //people.sort(mySort);
     return people;
 }
 function getMonthName(monthN) {
