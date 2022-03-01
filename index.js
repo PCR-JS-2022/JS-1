@@ -50,17 +50,20 @@
           if (listBird.getMonth() < endYearDate.getMonth() && listBird.getMonth() > compareDate.getMonth()) {
             return el;
           }
-          if (listBird.getMonth() === compareDate.getMonth() || listBird.getMonth() === endYearDate.getMonth())
-            if (listBird.getDate() >= compareDate.getDate())
+          if (listBird.getMonth() === compareDate.getMonth()) 
+            if (listBird.getDate() > compareDate.getDate())
+              return el;
+          if (listBird.getMonth() === endYearDate.getMonth())
+            if (listBird.getDate() < endYearDate.getDate())
               return el;
         }
-        
-        }
+      }
     );
     return listBirthdate.sort((a,b) => {
       return sortData(a.birthdate,b.birthdate);
     });
   };
+
 
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
