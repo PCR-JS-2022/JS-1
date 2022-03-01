@@ -46,7 +46,7 @@ function getNextBirthdays(date, phoneList) {
 };
 
 function checkDateCorrect(date){
-    if(typeof(date) !== "string") return false; 
+    if(typeof(date) !== "string" || date.length === 0) return false; 
     
     const splitedDate = date.split('.');
     if (splitedDate.length != 3 && splitedDate[0].length != 2 && splitedDate[1].length != 2 &&
