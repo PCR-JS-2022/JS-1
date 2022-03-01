@@ -36,11 +36,11 @@ function getNextBirthdays(date, phoneList) {
 
     const splitDate = date.split('.');
     const startDate = getObjectDate(date);
-    const sortedPhoneList = undefined;
+
 
     if(checkDateCorrect == false || !Array.isArray(phoneList) || phoneList.length === 0) return [];
     
-    sortedPhoneList = phoneList.filter((e) => {
+    const sortedPhoneList = phoneList.filter((e) => {
         const friendDate = getObjectDate(e.birthdate);
 
         if(friendDate.getFullYear() < startDate.getFullYear()){
