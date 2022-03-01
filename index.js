@@ -20,9 +20,9 @@
 
 
 function checkDateCorrect(date){
-    const splitDate = date.split('.');
-    if (typeof(date) !== "string" || splitDate.length != 3 && splitDate[0].length != 2 && splitDate[1].length != 2 &&
-    splitDate[2].length != 4) return false;
+    const splitedDate = date.split('.');
+    if (typeof(date) !== "string" || splitedDate.length != 3 && splitedDate[0].length != 2 && splitedDate[1].length != 2 &&
+    splitedDate[2].length != 4) return false;
 }
 
 
