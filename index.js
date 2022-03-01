@@ -54,9 +54,11 @@ function getDate(date){
 }
 
 function checkDate(date){
-  let newdate = date.split('.');
-  return (newdate.length === 3 && newdate[0].length === 2 &&
-    newdate[1].length === 2 && newdate[2].length === 4);
+  if(typeof date !== 'string')
+    return false;
+  let = date.split('.');
+  return (date.length === 3 && date[0].length === 2 &&
+    date[1].length === 2 && date[2].length === 4);
 }
 
 const phoneList = [
