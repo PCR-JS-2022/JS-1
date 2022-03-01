@@ -74,8 +74,7 @@ function getNextBirthdays(date, phoneList) {
     if (!Array.isArray(phoneList)) return [];
     let people = [];
     phoneList.forEach((x) => {
-        if (dateParse(x.birthdate) < newdate &&
-            dateParse(x.birthdate) < Date.now) {
+        if (dateParse(x.birthdate) <= newdate) {
             people.push({ name: x.name, birthdate: x.birthdate });
             console.log({ name: x.name, birthdate: x.birthdate });
         }
