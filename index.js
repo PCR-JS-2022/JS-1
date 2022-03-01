@@ -62,6 +62,32 @@ function getNextBirthdays(date, phoneList) {
  *    friends: Array<Person>,
  *  }>}
  */
+ const phoneList2 = [
+  {
+    name: "Александра",
+    birthdate: "21.05.2001",
+  },
+  {
+    name: "Егор",
+    birthdate: "06.08.1976",
+  },
+  {
+    name: "Роман",
+    birthdate: "14.04.2000",
+  },
+  {
+    name: "Василий",
+    birthdate: "27.02.1980",
+  },
+  {
+    name: "Настя",
+    birthdate: "21.05.2002",
+  },
+  {
+    name: "Виктор",
+    birthdate: "20.08.1977",
+  }
+];
 
 function getMonthsList(phoneList) {
   if(!Array.isArray(phoneList)) return [];
@@ -76,16 +102,17 @@ function getMonthsList(phoneList) {
   })
 
   const passed = []; 
-  for(let i = 0; i < sortedList.length; i++) {
-    let month = +sortedList[i].birthdate.split(".")[1]; 
-    if(passed.indexOf(month) !== -1) {  
-      result[result.length - 1].friends.push(sortedList[i]); 
-      continue;
-    }
-    passed.push(month); 
-    result.push({month: months[month-1], friends: [sortedList[i]]}); 
-  }
-  return result;
+
+  return sortedList.reduce((res, current) => {
+      let month = +current.birthdate.split(".")[1];  
+      if(passed.indexOf(month) !== -1) {  
+        res[res.length - 1].friends.push(current); 
+      } else {
+        passed.push(month); 
+        res.push({month: months[month-1], friends: [current]}); 
+      }
+      return res;
+  }, [])
 };
 
 /**
@@ -114,20 +141,22 @@ function findIndexMin(arr) {
 
 function getMinimumPresentsPrice(phoneList) {
   if(!Array.isArray(phoneList)) return [];
-  const friendsList = [];
   let totalPrice = 0;
-  for(let i = 0; i < phoneList.length; i++) {
-    friendsList.push({ name: phoneList[i].name, birthdate: phoneList[i].birthdate, present: undefined });
+
+  const friendsList = phoneList.reduce((res, current) => {
+    res.push({ name: current.name, birthdate: current.birthdate, present: undefined });
     const prices = [];
-    if("wishList" in phoneList[i]) {
-      phoneList[i].wishList.forEach(element => {
-          prices.push(element.price)
+    if("wishList" in current) {
+      current.wishList.forEach(element => {
+        prices.push(element.price)
       });
       let indexMin = findIndexMin(prices);
-      friendsList[i].present = phoneList[i].wishList[indexMin];
-      totalPrice += phoneList[i].wishList[indexMin].price;
+      res[phoneList.indexOf(current)].present = current.wishList[indexMin];
+      totalPrice += current.wishList[indexMin].price;
     }
-  }
+    return res;
+  }, []);
+
   return {
     friendsList,
     totalPrice,
