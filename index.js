@@ -20,7 +20,8 @@
 
 
 function getNextBirthdays(date, phoneList) {
-    if(checkDateCorrect == false || !Array.isArray(phoneList) || phoneList.length === 0) return [];
+    if(checkDateCorrect(date) == false || !Array.isArray(phoneList) || phoneList.length === 0) return [];
+    
     const splitDate = date.split('.');
     const startDate = getObjectDate(date);
      
