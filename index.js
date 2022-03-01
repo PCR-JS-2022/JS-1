@@ -91,7 +91,7 @@ function convertToDate(date) {
 export function getMonthsList(phoneList) {
   if (!Array.isArray(phoneList)) return [];
 
-  var monthNames = {
+  const monthNames = {
     1: "январь",
     2: "февраль",
     3: "март",
@@ -106,7 +106,7 @@ export function getMonthsList(phoneList) {
     12: "декабрь",
   };
 
-  var monthList = [];
+  const monthList = [];
 
   phoneList.forEach((person) => {
     const monthNumber = parseInt(person.birthdate.split(".")[1]);
