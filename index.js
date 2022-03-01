@@ -21,10 +21,13 @@
 
 function checkDateCorrect(date){
     if(typeof(date) !== "string") return false; 
-    const splitedDate = date.split('.');
-    if (splitedDate.length != 3 && splitedDate[0].length != 2 && splitedDate[1].length != 2 &&
-    splitedDate[2].length != 4) return false;
+    else {
+        const splitedDate = date.split('.');
+            if (splitedDate.length != 3 && splitedDate[0].length != 2 && splitedDate[1].length != 2 &&
+            splitedDate[2].length != 4) return false;
+    }
 }
+
 
 
 function getObjectDate(date) {
