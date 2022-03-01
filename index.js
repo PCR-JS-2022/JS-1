@@ -63,7 +63,7 @@ function getNextBirthdays(date, phoneList) {
  *    friends: Array<Person>,
  *  }>}
  */
-export function getMonthsList(phoneList) {
+function getMonthsList(phoneList) {
     const months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
   
     const birthdaysList = months.map((e) => {
@@ -96,8 +96,35 @@ export function getMonthsList(phoneList) {
  *    totalPrice: number
  *  }}
  */
-export function getMinimumPresentsPrice(phoneList) {
 
+
+function getMinimumPresentsPrice(phoneList) {
+    if(!Array.isArray(phoneList)) return [];
+
+    const friendsPresentsList = { 
+    friendsList: [], 
+    totalPrice: 0
+  };
+
+  phoneList.forEach((e) => {
+    if(e.hasOwnProperty('wishList') && Array.isArray(e.wishList) && e.wishList.length !== 0){
+      e.wishList.sort((a, b) => {
+        return a.price - b.price;
+      });
+
+      e.present = e.wishList[0];
+      delete e.wishList;
+      friendsPresentsList.friendsList.push(e);
+      friendsPresentsList.totalPrice += Number(e.present.price);
+    }
+    else {
+      e.present = undefined;
+      delete e.wishList;
+      friendsPresentsList.friendsList.push(e);
+    }
+  });
+  
+  return friendsPresentsList;
 };
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
