@@ -27,6 +27,7 @@ function checkDateCorrect(date){
 
 
 function getObjectDate(date) {
+    const splitDate = date.split('.');
     return new Date(splitDate[2], splitDate[1] - 1, splitDate[0]);
   }
 
