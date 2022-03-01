@@ -50,6 +50,9 @@ const sortData = (a, b) => {
 }
 
 function getNextBirthdays(date, phoneList) {
+
+  newPhoneList = [];
+
   if (dateFormat.test(date) && Array.isArray(phoneList)) {
     phoneList.map((contact) => {
       
@@ -57,14 +60,10 @@ function getNextBirthdays(date, phoneList) {
       const dateTime = transformDate(date);
       const contactBirthdate = transformDate(contact.birthdate);
       
-      if (contactBirthdate.getFullYear() < endOfTheYear) {
-        if (dateTime.getFullYear() > contactBirthdate.getFullYear()) {
+      if (contactBirthdate.getFullYear() < endOfTheYear && dateTime.getFullYear() > contactBirthdate.getFullYear()) {
+        if (dateTime.getMonth() < contactBirthdate.getMonth()) {
           newPhoneList.push(contact);
-        }
-        else if (dateTime.getFullYear() === contactBirthdate.getFullYear() && dateTime.getMonth() < contactBirthdate.getMonth() && dateTime.getMonth() > contactBirthdate.getMonth()) {
-          newPhoneList.push(contact);
-        } 
-        else if (dateTime.getFullYear() === contactBirthdate.getFullYear() && dateTime.getMonth() === contactBirthdate.getMonth() && dateTime.getDate() < contactBirthdate.getDate()) {
+        } else if (dateTime.getMonth() === contactBirthdate.getMonth() && dateTime.getDate() < contactBirthdate.getDate()) {
           newPhoneList.push(contact);
         }
       }
@@ -82,7 +81,7 @@ function getNextBirthdays(date, phoneList) {
 };
 
 getNextBirthdays('28.02.1980', phoneList);
-newPhoneList.length = 0;
+
 /**
 * @param {Array<Person>} phoneList - список друзей из телефонной книги
 * @returns {Array<{
@@ -141,8 +140,11 @@ const result = [
   },
 ]
 
-
+let finalRes = [];
 function getMonthsList(phoneList) {
+
+  finalRes = [];
+
   if (Array.isArray(phoneList)) { 
     const sortPhoneList = phoneList.sort((a, b) => {
       return sortData(a, b);
@@ -161,7 +163,6 @@ function getMonthsList(phoneList) {
     newPhoneList = [];
   }
 
-  const finalRes = [];
   Object.keys(result).map((item) => {
     if ((result[item].friends).length > 0) {
       finalRes.push(result[item]);
@@ -173,7 +174,6 @@ function getMonthsList(phoneList) {
 };
 
 getMonthsList(phoneList);
-phoneList.length = 0;
 
 
 /**
@@ -245,12 +245,18 @@ const phoneList3 = [
   },
 ];
 
-const minPresentsPrice = {
+let minPresentsPrice = {
   friendsList : [],
   totalPrice: 0,
 };
 
 function getMinimumPresentsPrice(phoneList) {
+
+  minPresentsPrice = {
+    friendsList : [],
+    totalPrice: 0,
+  }
+
   if (Array.isArray(phoneList3)) { 
       phoneList3.map(data => {
         let minPriceArray = [];
@@ -296,7 +302,5 @@ function getMinimumPresentsPrice(phoneList) {
 };
 
 getMinimumPresentsPrice(phoneList);
-phoneList.length = 0;
-
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
