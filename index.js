@@ -40,13 +40,13 @@ function getNextBirthdays(date, phoneList) {
 };
 
 function getObjectDate(date) {
-  let splitedDate = date.split(".");
+  const splitedDate = date.split(".");
   return new Date(splitedDate[2], splitedDate[1] - 1, splitedDate[0]);
 }
 
 function checkValidDate(date) {
   if (typeof date !== "string") return false;
-  let splitedDate = date.split(".");
+  const splitedDate = date.split(".");
   return (splitedDate.length === 3 &&
     splitedDate[0].length === 2 &&
     splitedDate[1].length === 2 &&
