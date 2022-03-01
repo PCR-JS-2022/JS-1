@@ -13,7 +13,7 @@ function getNextBirthdays(date, phoneList) {
 };
 
 function getNextBirthdaysIsValid(date, friends) {
-	return Array.isArray(friends) && /^\d{2}.\d{2}.\d{4}$/.test(date);
+	return Array.isArray(friends) && /^\d{2}.\d{2}.\d{4}$/.test(date) && typeof date === "string";
 };
 
 function getBirthday(date) {
