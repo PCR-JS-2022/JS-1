@@ -17,18 +17,26 @@
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
+// function dateParse(date) {
+//     if (typeof date !== "string")
+//         return [];
+//     let newdate = date.split('.');
+//     if (newdate[0].length != 2)
+//         return [];
+//     if (newdate[1].length != 2)
+//         return [];
+//     if (newdate[2].length != 4)
+//         return [];
+//     return newdate;
+// };
 function dateParse(date) {
-    if (typeof date !== "string")
-        return [];
+    if (typeof date !== 'string') return [];
     let newdate = date.split('.');
-    if (newdate[0].length != 2)
-        return [];
-    if (newdate[1].length != 2)
-        return [];
-    if (newdate[2].length != 4)
-        return [];
-    return newdate;
-};
+    if (newdate[0].length != 2) return [];
+    if (newdate[1].length != 2) return [];
+    if (newdate[2].length != 4) return [];
+    return new Date(newdate[2], newdate[1], newdate[0]);
+}
 
 function mySort(a, b) {
     if (dateParse(a.birthdate)[2] > dateParse(b.birthdate)[2] ||
@@ -74,7 +82,7 @@ function getNextBirthdays(date, phoneList) {
     if (!Array.isArray(phoneList)) return [];
     let people = [];
     phoneList.forEach((x) => {
-        if (dateParse(x.birthdate) <= newdate) {
+        if (dateParse(x.birthdate) < newdate) {
             people.push({ name: x.name, birthdate: x.birthdate });
             console.log({ name: x.name, birthdate: x.birthdate });
         }
