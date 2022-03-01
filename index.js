@@ -57,12 +57,35 @@
         
         }
     );
+    console.log(JSON.stringify(listBirthdate.sort((a,b) => {
+      return sortData(a.birthdate,b.birthdate);
+    })));
     
     return listBirthdate.sort((a,b) => {
       return sortData(a.birthdate,b.birthdate);
     });
   };
 
+  const phoneList = [
+    {
+      name: "Александра",
+      birthdate: "21.05.2001",
+    },
+    {
+      name: "Егор",
+      birthdate: "06.08.1976",
+    },
+    {
+      name: "Роман",
+      birthdate: "14.04.2000",
+    },
+    {
+      name: "Василий",
+      birthdate: "27.02.1980",
+    },
+  ];
+  
+  getNextBirthdays('28.02.1980', phoneList);
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<{
@@ -118,3 +141,4 @@ function getMinimumPresentsPrice(phoneList) {
 
 };
 
+module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
