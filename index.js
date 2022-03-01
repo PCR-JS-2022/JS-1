@@ -18,25 +18,7 @@
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
 
-const phoneList = [
-    {
-        name: "Александра",
-        birthdate: "21.05.2001",
-      },
-      {
-        name: "Егор",
-        birthdate: "06.08.1976",
-      },
-      {
-        name: "Роман",
-        birthdate: "14.04.2000",
-      },
-      {
-        name: "Василий",
-        birthdate: "27.02.1980",
-      },
-];
-let date = '28.02.1980';
+
 function getNextBirthdays(date, phoneList) {
     if (!(Array.isArray(phoneList) && checkData(date)) || phoneList.length === 0) return []; 
     const result = [];
@@ -53,8 +35,8 @@ function getNextBirthdays(date, phoneList) {
 
     }
     return result.sort((e1, e2) => {
-      const DateE1 = a.birthdate.split('.');
-      const DateE2 = a.birthdate.split('.');
+      const DateE1 = e1.birthdate.split('.');
+      const DateE2 = e2.birthdate.split('.');
       const [dayE1, monthE1, yearE1] = DateE1;
       const [dayE2, monthE2, yearE2] = DateE2;
 
