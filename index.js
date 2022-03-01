@@ -19,23 +19,6 @@
  */
 
 
-function checkDateCorrect(date){
-    if(typeof(date) !== "string") return false; 
-    
-    const splitedDate = date.split('.');
-    if (splitedDate.length != 3 && splitedDate[0].length != 2 && splitedDate[1].length != 2 &&
-    splitedDate[2].length != 4) return false;
-    }
-
-
-
-
-function getObjectDate(date) {
-    const splitDate = date.split('.');
-    return new Date(splitDate[2], splitDate[1] - 1, splitDate[0]);
-  }
-
-
 function getNextBirthdays(date, phoneList) {
     if(checkDateCorrect == false || !Array.isArray(phoneList) || phoneList.length === 0) return [];
     const splitDate = date.split('.');
@@ -60,6 +43,22 @@ function getNextBirthdays(date, phoneList) {
     
     
 };
+
+function checkDateCorrect(date){
+    if(typeof(date) !== "string") return false; 
+    
+    const splitedDate = date.split('.');
+    if (splitedDate.length != 3 && splitedDate[0].length != 2 && splitedDate[1].length != 2 &&
+    splitedDate[2].length != 4) return false;
+    }
+
+
+
+
+function getObjectDate(date) {
+    const splitDate = date.split('.');
+    return new Date(splitDate[2], splitDate[1] - 1, splitDate[0]);
+    }
 
 
 /**
