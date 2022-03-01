@@ -44,29 +44,43 @@ function mySort(a, b) {
             dateParse(b.birthdate)[0] > dateParse(a.birthdate)[0])) return -1;
 };
 
+// function getNextBirthdays(date, phoneList) {
+//     const newdate = dateParse(date);
+//     if (!Array.isArray(phoneList))
+//         return [];
+//     if (newdate[0].length != 2)
+//         return [];
+//     if (newdate[1].length != 2)
+//         return [];
+//     if (newdate[2].length != 4)
+//         return [];
+//     let people = [];
+//     phoneList.forEach(x => {
+//         if ((dateParse(x.birthdate)[2] < newdate[2] &&
+//             ((dateParse(x.birthdate)[1] = newdate[1] &&
+//                 dateParse(x.birthdate)[0] >= newdate[0]) ||
+//                 dateParse(x.birthdate)[1] > newdate[1]))
+//                 || (dateParse(x.birthdate)[2] == newdate[2] && (dateParse(x.birthdate)[1] == newdate[1] &&
+//                 dateParse(x.birthdate)[0] >= newdate[0] ||
+//                 dateParse(x.birthdate)[1] > newdate[1])) people.push({ name: x.name, birthdate: x.birthdate })
+//     });
+//     people.sort(mySort);
+//     return people;
+// };
 function getNextBirthdays(date, phoneList) {
     const newdate = dateParse(date);
-    if (!Array.isArray(phoneList))
-        return [];
-    if (newdate[0].length != 2)
-        return [];
-    if (newdate[1].length != 2)
-        return [];
-    if (newdate[2].length != 4)
-        return [];
+    if (newdate == []) return [];
+    if (!Array.isArray(phoneList)) return [];
     let people = [];
-    phoneList.forEach(x => {
-        if ((dateParse(x.birthdate)[2] < newdate[2] &&
-            ((dateParse(x.birthdate)[1] = newdate[1] &&
-                dateParse(x.birthdate)[0] >= newdate[0]) ||
-                dateParse(x.birthdate)[1] > newdate[1]))
-                || dateParse(x.birthdate)[2] == newdate[2] && (dateParse(x.birthdate)[1] == newdate[1] &&
-                dateParse(x.birthdate)[0] >= newdate[0] ||
-                dateParse(x.birthdate)[1] > newdate[1])) people.push({ name: x.name, birthdate: x.birthdate })
+    phoneList.forEach((x) => {
+        if (dateParse(x.birthdate) < newdate) {
+            people.push({ name: x.name, birthdate: x.birthdate });
+            console.log({ name: x.name, birthdate: x.birthdate });
+        }
     });
-    people.sort(mySort);
+    //people.sort(mySort);
     return people;
-};
+}
 function getMonthName(monthN) {
     if (monthN == 1) return "январь";
     if (monthN == 2) return "февраль";
