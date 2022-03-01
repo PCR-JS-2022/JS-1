@@ -19,7 +19,7 @@
  */
 export function getNextBirthdays(date, phoneList) {
     let today = date.split('.');
-    nextBirthdays = []
+    let nextBirthdays = []
     if (today[0] < 1 || today[0] > 31 || today[1] < 1 || today[1] > 12 || today[2] < 1000 || today[2] > 9999 || !(Array.isArray(phoneList)))
         return []
     else phoneList.forEach(element => {
