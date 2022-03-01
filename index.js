@@ -22,7 +22,7 @@
 
  function getNextBirthdays(date, phoneList) {
   date = date.split('.');
-  if(!Array.isArray(phoneList) || !checkDate(date) || phoneList.length === 0) return [];
+  if(!Array.isArray(phoneList) || checkDate(date) || phoneList.length === 0) return [];
   let dateYear = +date[2];
   let dateMonth = +date[1];
   let dateDay = +date[0];
@@ -47,7 +47,6 @@
 };
 
 function getDate(date){
-  date = date.split('.');
   let corrDate = new Date();
   corrDate.setFullYear(date[2], date[1] - 1 ,date[0]);
   return corrDate;
@@ -61,11 +60,11 @@ function checkDate(date){
 const phoneList = [
   {
     name: "Александра",
-    birthdate: "21.5.2001",
+    birthdate: "291.06.1977",
   },
   {
     name: "Егор",
-    birthdate: "12.4.1976",
+    birthdate: "12.04.1976",
   },
   {
     name: "Роман",
@@ -73,12 +72,12 @@ const phoneList = [
   },
   {
     name: "Василий",
-    birthdate: "28.5.1940",
+    birthdate: "27.05.1940",
   },
 ];
 
 
-console.log(getNextBirthdays('28.10.1980', phoneList));
+console.log(getNextBirthdays('28.05.1980', phoneList));
 
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
