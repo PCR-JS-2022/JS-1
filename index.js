@@ -28,6 +28,7 @@
 
   let arr = [];
 
+  if(!Array.isArray(phoneList) || !checkDate(date) || phoneList.length === 0) return [];
 
   let dateYear = date[2];
   let dateMonth = date[1] * 10 / 10;
@@ -59,6 +60,11 @@ function getDateObject(date){
   let firstDate = new Date();
   firstDate.setFullYear(date[2], date[1] - 1 ,date[0]);
   return firstDate;
+}
+
+function checkDate(date){
+  return (date.length === 3 & date[0].length === 2 &
+    date[1].length === 2 & date[2].length === 4);
 }
 
 const phoneList = [
