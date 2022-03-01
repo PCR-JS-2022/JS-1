@@ -51,7 +51,7 @@
     const friend1 = getDateObject(a.birthdate);
     const friend2 = getDateObject(b.birthdate);
 
-    return friend1 - friend2;
+    return friend2 - friend1;
   })
 };
 
