@@ -37,18 +37,30 @@ function getNextBirthdays(date, phoneList) {
     let sortedPhoneList = phoneList.filter((e) => {
         const friendDate = getObjectDate(e.birthdate);
 
-    return phoneList.filter(phone => {
-        const birthdate = getObjectDate(phone.birthdate);
-        dates[phone.birthdate] = birthdate;
-        const whenBirthdateLessStartDate = birthdate <= startDate;
-        birthdate.setFullYear(startDayYear);
-        return birthdateSmallerThanStartDate && birthdate >= startDate;
-    }).sort((a, b) => {
-        return dates[a.birthdate] - dates[b.birthdate]
+        if(friendDate.getFullYear() <= startDate.getFullYear()){
+            if(friendDate.getMonth() > startDate.getMonth()) return e;
+      
+            if(friendDate.getMonth() === startDate.getMonth())
+              if(friendDate.getDate() >= startDate.getDate()) return e;
+          }
+
+    return sortedPhoneList.sort((a, b) => {
+    const friend1 = getObjectDate(a.birthdate);
+    const friend2 = getObjectDate(b.birthdate);
+
+    return friend2 - friend1;
+    });
     })
     
 };
+function getMonthsList(phoneList) {  
+    const months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
+  
+    const birthdaysList = months.map((e) => {
+      return {month: e, friends: []}
+    });
 
+    
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<{
