@@ -50,15 +50,15 @@ function getNextBirthdays(date, phoneList) {
               if(friendDate.getDate() >= startDate.getDate()) return e;
           }
 
-    var sortedPhoneList = filterPhoneList.sort((a, b) => {
-    const friend1 = getObjectDate(a.birthdate);
-    const friend2 = getObjectDate(b.birthdate);
+    return sortedPhoneList.sort((a, b) => {
+    const friend1 = getDateObject(a.birthdate);
+    const friend2 = getDateObject(b.birthdate);
 
-        return friend2 - friend1;
+    return friend2 - friend1;
     });
-    })
     
-};
+    
+});
 
 
 /**
