@@ -17,9 +17,53 @@
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
- export function getNextBirthdays(date, phoneList) {
 
+
+function getNextBirthdays(date, phoneList) {
+    if (!(Array.isArray(phoneList) && checkData(date)) || phoneList.length === 0) return []; 
+    const result = [];
+    date = date.split('.').map(i => Number(i));
+    for(let i = 0; i < phoneList.length; i++){
+        let currDate = Number(phoneList[i].birthdate.split('.'));
+        if (currDate[1] > date[2]){
+            result.push(phoneList[i]);
+        }
+        if(currDate[2] > date[2]) continue;
+        if(currDate[1] === date[1] && currDate[0] >= date[0]){
+            result.push(phoneList[i]);
+        }
+
+    }
+    return result.sort((e1, e2) => {
+      const DateE1 = e1.birthdate.split('.');
+      const DateE2 = e2.birthdate.split('.');
+      const [dayE1, monthE1, yearE1] = DateE1;
+      const [dayE2, monthE2, yearE2] = DateE2;
+
+      if(monthE1 > monthE2) {
+        return 1;
+      }
+      
+      if(monthE1 < monthE2) {
+        return -1;
+      } 
+      
+      if(monthE1 === monthE2) {
+        if(dayE1 > dayE2) {
+          return 1;
+        } 
+        if(dayE1 === dayE2) {
+          return yearE1 - yearE2;
+        }
+      }
+    });
 };
+
+function checkData(date){
+    if (typeof date !== "string") return false;
+    let splDate = date.split('.');
+    return(splDate.length == 3 && splDate[0].length == 2 && splDate[1].length == 2 && splDate[2].length == 4)
+}
 
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
@@ -28,7 +72,7 @@
  *    friends: Array<Person>,
  *  }>}
  */
-export function getMonthsList(phoneList) {
+function getMonthsList(phoneList) {
 
 };
 
@@ -47,7 +91,7 @@ export function getMonthsList(phoneList) {
  *    totalPrice: number
  *  }}
  */
-export function getMinimumPresentsPrice(phoneList) {
+function getMinimumPresentsPrice(phoneList) {
 
 };
 
