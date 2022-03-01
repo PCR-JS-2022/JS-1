@@ -29,7 +29,7 @@ export function getNextBirthdays(date, phoneList) {
             nextBirthdays.push(element)
     });
     nextBirthdays.sort((a, b) => a.birthdate.split('.')[1] > b.birthdate.split('.')[1] ? 1 : -1)
-    return console.log(nextBirthdays)
+    return nextBirthdays
 };
 
 /**
