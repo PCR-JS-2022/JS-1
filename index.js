@@ -32,12 +32,18 @@
 function dateParse(date) {
     if (typeof date !== 'string') return [];
     let newdate = date.split('.');
-    if (newdate[0].length != 2) return [];
-    if (newdate[1].length != 2) return [];
-    if (parseInt(newdate[1] == 0)) {newdate[2] - 1;
-    newdate[1]='12'};
-    if (newdate[2].length != 4) return [];
-    return new Date(newdate[2], Number.parseInt(newdate[1]) + 1, newdate[0]);
+    if (newdate[0].length !== 2 || Number.parseInt(newdate[0]) <= 0)
+        return Number.MAX_VALUE;
+    console.log('month', Number.parseInt(newdate[1]), newdate[1].length);
+    if (newdate[1].length !== 2 || Number.parseInt(newdate[1]) <= 0)
+        return Number.MAX_VALUE;
+    if (newdate[2].length !== 4 || Number.parseInt(newdate[2]) <= 0)
+        return Number.MAX_VALUE;
+    return new Date(
+        Number.parseInt(newdate[2]),
+        Number.parseInt(newdate[1]) - 1,
+        Number.parseInt(newdate[0]),
+    );
 }
 
 function mySort(a, b) {
@@ -80,7 +86,7 @@ function mySort(a, b) {
 // };
 function getNextBirthdays(date, phoneList) {
     const newdate = dateParse(date);
-    if (newdate == []) return [];
+    if (newdate === Number.MAX_VALUE) return [];
     if (!Array.isArray(phoneList)) return [];
     let people = [];
     phoneList.forEach((x) => {
