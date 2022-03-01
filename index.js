@@ -1,8 +1,9 @@
 function getNextBirthdays(date, phoneList) {
+
+    if (!getNextBirthdaysIsValid(date, phoneList)) {return [];}
+    
     const referenceDate = getDateType(date);
 	const referenceDay = getBirthday(referenceDate);
-    
-	if (!getNextBirthdaysIsValid(date, phoneList)) {return [];}
 
 	return phoneList
 		.filter(friend => {
@@ -13,7 +14,7 @@ function getNextBirthdays(date, phoneList) {
 };
 
 function getNextBirthdaysIsValid(date, friends) {
-	return Array.isArray(friends) && /^\d{2}.\d{2}.\d{4}$/.test(date) && typeof date === "string";
+	return Array.isArray(friends) && a && /^\d{2}.\d{2}.\d{4}$/.test(date) && typeof date === "string";
 };
 
 function getBirthday(date) {
