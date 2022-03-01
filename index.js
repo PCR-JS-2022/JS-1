@@ -1,23 +1,4 @@
-/**
- * @typedef Person
- * @type {object}
- * @property {string} name
- * @property {string} birthdate
- */
-
-/**
- * @typedef Gift
- * @type {object}
- * @property {string} title
- * @property {number} price
- */
-
-/**
- * @param {string} date
- * @param {Array<Person>} phoneList
- * @returns {Array<Person>}
- */
- function getNextBirthdays(date, phoneList) {
+function getNextBirthdays(date, phoneList) {
     const referenceDate = getDateType(date);
 	const referenceDay = getBirthday(referenceDate);
     
@@ -31,44 +12,19 @@
 		}).sort((freind1, friend2) => getBirthday(getDateType(freind1.birthdate)) - getBirthday(getDateType(friend2.birthdate)))
 };
 
-/**
- * @param {string} date
- * @param {Array<Person>} friends
- * @returns {boolean}
- */
 function getNextBirthdaysIsValid(date, friends) {
 	return Array.isArray(friends) && /^\d{2}.\d{2}.\d{4}$/.test(date);
 };
 
-/**
- * @param {Date} date
- * @returns {Date}
- */
 function getBirthday(date) {
 	return new Date(0, date.getUTCMonth(), date.getUTCDay());
 };
 
-/**
- * @param {string} date
- * @returns {Date}
- */
 function getDateType(date) {
 	const [dd, mm, yyyy] = date.split('.');
     return new Date(`${mm}/${dd}/${yyyy}`);
 };
 
-/**
- * @returns {function(Person, Person)}
- */
-
-
-/**
- * @param {Array<Person>} phoneList
- * @returns {Array<{
- *    month: string,
- *    friends: Array<Person>,
- *  }>}
- */
 function getMonthsList(phoneList) {
 	if (!Array.isArray(phoneList)) {
 		return [];
@@ -94,21 +50,6 @@ function getMonthsList(phoneList) {
         []);
 };
 
-/**
- * @param {Array<{
- *    name: string,
- *    birthdate: string,
- *    wishList: Array<Gift>
- *  }>} phoneList
- * @returns {{
- *    friendsList: Array<{
- *      name: string,
- *      birthdate: string,
- *      present: Gift
- *    }>,
- *    totalPrice: number
- *  }}
- */
 function getMinimumPresentsPrice(phoneList) {
     if (!Array.isArray(phoneList)) {return [];}
 
