@@ -32,12 +32,12 @@
 };
 
 /**
- * @param {string} dateAsString
+ * @param {string} date
  * @param {Array<Person>} friends
  * @returns {boolean}
  */
-function getNextBirthdaysIsValid(dateAsString, friends) {
-	return Array.isArray(friends) && /^\d{2}.\d{2}.\d{4}$/.test(dateAsString);
+function getNextBirthdaysIsValid(date, friends) {
+	return Array.isArray(friends) && /^\d{2}.\d{2}.\d{4}$/.test(date);
 };
 
 /**
@@ -88,11 +88,10 @@ function getMonthsList(phoneList) {
               }
               else {
                   monthsList.push({ month, friends: [person] });
-              };
-  
-          };
-			return monthsList;
-		}, []);
+                };
+            };
+			return monthsList;}, 
+        []);
 };
 
 /**
