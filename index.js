@@ -35,7 +35,7 @@ function dateParse(date) {
     if (newdate[0].length != 2) return [];
     if (newdate[1].length != 2) return [];
     if (newdate[2].length != 4) return [];
-    return new Date(newdate[2], newdate[1], newdate[0]);
+    return new Date(newdate[2], newdate[1] - 1, newdate[0]);
 }
 
 function mySort(a, b) {
