@@ -40,7 +40,7 @@ function getNextBirthdays(date, phoneList) {
     let sortedPhoneList = phoneList.filter((e) => {
         const friendDate = getObjectDate(e.birthdate);
 
-        if(friendDate.getFullYear() <= startDate.getFullYear()){
+        if(friendDate.getFullYear() < startDate.getFullYear()){
             if(friendDate.getMonth() > startDate.getMonth()) return e;
       
             if(friendDate.getMonth() === startDate.getMonth())
