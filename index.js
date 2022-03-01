@@ -82,5 +82,39 @@ function getMonthsList(phoneList) {
         }, []);
 }
 
-function getMinimumPresentsPrice(phoneList) { }
+/**
+ * @param {Array<{
+ * name: string,
+ * birthdate: string,
+ * wishList: Array<Gift>
+ * }>} phoneList - список друзей из телефонной книги
+ * @returns {{
+ * friendsList: Array<{
+ * name: string,
+ * birthdate: string,
+ * present: Gift
+ * }>,
+ * totalPrice: number
+ * }}
+ */
+function getMinimumPresentsPrice(phoneList) {
+    if (!Array.isArray(phoneList)) {
+        return [];
+    }
+
+    const resultList = { friendsList: [], totalPrice: undefined };
+    let total = 0;
+    phoneList.map(person => {
+        const present = person.wishList.sort((gift1, gift2) => gift1.price - gift2.price)[0];
+        resultList.friendsList.push({
+            name: person.name,
+            birthdate: person.birthdate,
+            present
+        })
+        total += present[0]?.price ?? 0;
+    })
+    resultList.totalPrice = total;
+    return resultList;
+}
+
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
