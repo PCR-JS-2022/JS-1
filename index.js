@@ -52,20 +52,21 @@ const sortData = (a, b) => {
 function getNextBirthdays(date, phoneList) {
 
   newPhoneList = [];
+  
 
-  if (dateFormat.test(date) || Array.isArray(phoneList)) {
+  if (dateFormat.test(date) && Array.isArray(phoneList)) {
     phoneList.map((contact) => {
       
-      const endOfTheYear = new Date(new Date().getFullYear(), 11, 31);
       const dateTime = transformDate(date);
+      console.log(dateTime);
       const contactBirthdate = transformDate(contact.birthdate);
+
+      const dateTimeYear = dateTime.getFullYear();
       
-      if (dateTime.getFullYear() <= endOfTheYear.getFullYear() && dateTime.getFullYear() >= contactBirthdate.getFullYear() && contactBirthdate.getFullYear() < endOfTheYear.getFullYear()) {
-        if (dateTime.getMonth() < contactBirthdate.getMonth()) {
-          newPhoneList.push(contact);
-        } else if (dateTime.getMonth() === contactBirthdate.getMonth() && dateTime.getDate() <= contactBirthdate.getDate()) {
-          newPhoneList.push(contact);
-        }
+      const birthdateBeforeDateTime = contactBirthdate <= dateTime;
+      contactBirthdate.setFullYear(dateTimeYear)
+      if (birthdateBeforeDateTime && contactBirthdate >= dateTime) {
+        newPhoneList.push(contact);
       }
 
       newPhoneList.sort((a, b) => {
@@ -73,7 +74,7 @@ function getNextBirthdays(date, phoneList) {
       });
      
     })
-  } else {
+  } else if (!Array.isArray(phoneList) ||  phoneList.length === 0 || dateTime === null) {
       newPhoneList = [];
   }
   console.log(newPhoneList);
