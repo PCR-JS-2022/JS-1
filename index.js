@@ -22,7 +22,7 @@
 
  function getNextBirthdays(date, phoneList) {
   date = date.split('.');
-  if(Array.isArray(phoneList) || checkDate(date) || phoneList.length === 0) return [];
+  if(!Array.isArray(phoneList) || !checkDate(date) || phoneList.length === 0) return [];
   let dateYear = +date[2];
   let dateMonth = +date[1];
   let dateDay = +date[0];
@@ -42,7 +42,7 @@
     const friend1 = getDate(a.birthdate);
     const friend2 = getDate(b.birthdate);
 
-    return friend1 - friend2;
+    return friend2 - friend1;
   })
 };
 
@@ -60,7 +60,7 @@ function checkDate(date){
 const phoneList = [
   {
     name: "Александра",
-    birthdate: "291.06.1977",
+    birthdate: "29.06.1977",
   },
   {
     name: "Егор",
