@@ -18,7 +18,7 @@
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
 function getNextBirthdays(date, phoneList) {
-    let result = Array();
+    let result = [];
     if (!checkDateFormat(date) || !Array.isArray(phoneList)) return result;
 
     console.log(phoneList.values);
@@ -37,14 +37,13 @@ function getNextBirthdays(date, phoneList) {
 };
 
 function comareBirthDate(date1, date2) {
-    let d1 = date1.split('.').map(
+    const d1 = date1.split('.').map(
         (el, ind) => Number(el)
     );
-    let d2 = date2.split('.').map(
+    const d2 = date2.split('.').map(
         (el, ind) => Number(el)
     );
 
-    //if (d1[2] > d2[2]) return 1;
     if (d1[1] > d2[1]) return 1;
     if (d1[1] == d2[1] && d1[0] >= d2[0]) return 1;
     if (d1[1] == d2[1] && d1[0] == d2[0]) return 0;
@@ -55,17 +54,17 @@ function comareBirthDate(date1, date2) {
 function checkDateFormat (date) {
     if (typeof date != 'string') return false;
 
-    let splitDate = date.split('.');
+    const splitDate = date.split('.');
     if (splitDate.length != 3) return false;
 
     return splitDate.every((el) => !isNaN(el));
 }
 
 function checkDate(dateStart, dateCurrent) {
-    let start = dateStart.split('.').map(
+    const start = dateStart.split('.').map(
         (el, ind) => Number(el)
     );
-    let current = dateCurrent.split('.').map(
+    const current = dateCurrent.split('.').map(
         (el, ind) => Number(el)
     );
     
@@ -76,15 +75,15 @@ function checkDate(dateStart, dateCurrent) {
 }
 
 function getLastDayOfYear(date) {
-    let year = Number(date.split('.')[2])
+    const year = Number(date.split('.')[2])
     return "31.12." + year;
 }
 
 function checkYearIsBefore(dateCurrent, dateEnd) {
-    let end = dateEnd.split('.').map(
+    const end = dateEnd.split('.').map(
         (el, ind) => Number(el)
     );
-    let current = dateCurrent.split('.').map(
+    const current = dateCurrent.split('.').map(
         (el, ind) => Number(el)
     );
 
@@ -105,7 +104,7 @@ function getMonthsList(phoneList) {
 
     const monthNames = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь']
 
-    let result = Array();
+    let result = [];
     if (!Array.isArray(phoneList)) return result;
 
     phoneList.forEach(
@@ -141,23 +140,33 @@ function getBirthMonth(date) {
  *  }}
  */
 function getMinimumPresentsPrice(phoneList) {
-    let friendsList = Array();
+    let friendsList = [];
     let totalPrice = 0;
     if (!Array.isArray(phoneList)) return friendsList;
 
+  totalPrice = phoneList.reduce(
+    (acc, cur) => {
+      const present = getCheapiestPresent(cur.wishList);
+      friendsList.push({'name' : cur.name, 'birthdate' : cur.birthdate, 'present' : present});
+      return (acc += (present === undefined) ? 0 : present.price);
+    }
+  , totalPrice);
+
+  /*
     phoneList.forEach(
         (el, ind) => {
-            let present = getCheapiestPresent(el.wishList);
+            const present = getCheapiestPresent(el.wishList);
             friendsList.push({'name' : el.name, 'birthdate' : el.birthdate, 'present' : present});
-            totalPrice += (present == undefined) ? 0 : present.price;
+            totalPrice += (present === undefined) ? 0 : present.price;
         }
     );
+    */
 
-    return {'friendsList' : friendsList, 'totalPrice' : totalPrice};
+    return { friendsList, totalPrice };
 };
 
 function getCheapiestPresent(presentList) {
-    if (presentList == undefined) return undefined;
+    if (presentList === undefined) return undefined;
 
     let price = Number.MAX_SAFE_INTEGER;
     let title = '';
@@ -171,7 +180,7 @@ function getCheapiestPresent(presentList) {
         }
     );
 
-    return {'title' : title, 'price' : price };
+    return { title, price };
 }
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
@@ -348,10 +357,10 @@ const phoneList = [
       ],
     },
   ];
-
-  */
+*/
   
-// getMinimumPresentsPrice(phoneList);
+  
+ //getMinimumPresentsPrice(phoneList);
   /*
   {
      friendsList: [
