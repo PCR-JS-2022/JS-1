@@ -17,7 +17,8 @@
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
- 
+
+
 function checkDateCorrect(date){
     const splitDate = date.split('.');
     const startDate = getObjectDate(date)
@@ -30,6 +31,7 @@ function checkDateCorrect(date){
 function getObjectDate(date) {
     return new Date(splitDate[2], splitDate[1] - 1, splitDate[0]);
   }
+
 
 function getNextBirthdays(date, phoneList) {
     
@@ -63,6 +65,8 @@ function getNextBirthdays(date, phoneList) {
  *    friends: Array<Person>,
  *  }>}
  */
+
+
 function getMonthsList(phoneList) {
     const months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
   
@@ -104,27 +108,27 @@ function getMinimumPresentsPrice(phoneList) {
     const friendsPresentsList = { 
     friendsList: [], 
     totalPrice: 0
-  };
+    };
 
-  phoneList.forEach((e) => {
-    if(e.hasOwnProperty('wishList') && Array.isArray(e.wishList) && e.wishList.length !== 0){
-      e.wishList.sort((a, b) => {
-        return a.price - b.price;
-      });
+    phoneList.forEach((e) => {
+        if(e.hasOwnProperty('wishList') && Array.isArray(e.wishList) && e.wishList.length !== 0){
+            e.wishList.sort((a, b) => {
+            return a.price - b.price;
+        });
 
-      e.present = e.wishList[0];
-      delete e.wishList;
-      friendsPresentsList.friendsList.push(e);
-      friendsPresentsList.totalPrice += Number(e.present.price);
+        e.present = e.wishList[0];
+        delete e.wishList;
+        friendsPresentsList.friendsList.push(e);
+        friendsPresentsList.totalPrice += Number(e.present.price);
     }
-    else {
-      e.present = undefined;
-      delete e.wishList;
-      friendsPresentsList.friendsList.push(e);
-    }
-  });
+        else {
+            e.present = undefined;
+        delete e.wishList;
+        friendsPresentsList.friendsList.push(e);
+        }
+    });
   
-  return friendsPresentsList;
+    return friendsPresentsList;
 };
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
