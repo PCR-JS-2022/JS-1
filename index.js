@@ -68,8 +68,9 @@ function getMonthsList(phoneList) {
         11: "ноябрь",
         12: "декабрь",
     };
+
     return phoneList
-        .sort((date1, date2) => toDate(date1.birthdate) - toDate(date2.birthdate))
+        .sort((a, b) => getSortFunction(a.birthdate, b.birthdate))
         .reduce((result, person) => {
             const month = months[parseInt(person.birthdate.split(".")[1])];
             if (result.some(m => m.month === month)) {
