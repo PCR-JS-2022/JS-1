@@ -23,20 +23,14 @@
  function getNextBirthdays(date, phoneList) {
     if(!Array.isArray(phoneList) || !checkDate(date) || phoneList.length === 0) return [];
     date = date.split('.');
-    const dateYear = +date[2];
-    const dateMonth = +date[1];
-    const dateDay = +date[0];
     const sortedPhoneList = phoneList.filter(e => {
     const friendDate = (e.birthdate.split('.'));
-    const friendYear = +friendDate[2];
-    const friendMonth = +friendDate[1];
-    const friendDays = +friendDate[0];
-    if (friendYear <= dateYear){ 
-      if (friendMonth > dateMonth){
-          return e;}
-      if (friendMonth === dateMonth)
-        if (friendDays >= dateDay) 
-          return e;}
+    if (+friendDate[2] <= +date[2]){ 
+        if (+friendDate[1] > +date[1]){
+            return e;}
+        if (+friendDate[1] === +date[1])
+            if (+friendDate[0] >= +date[0]) 
+                return e;}
     })
     return sortedPhoneList.sort((a, b) => {
       const friend1 = getDate(a.birthdate);
@@ -123,6 +117,7 @@
             e.present = e.wishList[0];
             presentsList.friendsList.push(e);
             presentsList.totalPrice += (e.present.price);
+            delete e.wishList;
         }
         else {
           e.present = undefined;
