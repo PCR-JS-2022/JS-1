@@ -47,45 +47,21 @@
     let listBirthdate = phoneList.filter(el => {
         let listBird = parseDate(el.birthdate);
         if (listBird.getFullYear() <= compareDate.getFullYear()){
-          if (listBird.getMonth() <= endYearDate.getMonth() && listBird.getMonth() > compareDate.getMonth()) {
+          if (listBird.getMonth() < endYearDate.getMonth() && listBird.getMonth() > compareDate.getMonth()) {
             return el;
           }
-          if (listBird.getMonth() === compareDate.getMonth())
-            if (listBird.getDate() > compareDate.getDate())
+          if (listBird.getMonth() === compareDate.getMonth() || listBird.getMonth() === endYearDate.getMonth())
+            if (listBird.getDate() >= compareDate.getDate())
               return el;
         }
         
         }
     );
-    console.log(JSON.stringify(listBirthdate.sort((a,b) => {
-      return sortData(a.birthdate,b.birthdate);
-    })));
-    
     return listBirthdate.sort((a,b) => {
       return sortData(a.birthdate,b.birthdate);
     });
   };
 
-  const phoneList = [
-    {
-      name: "Александра",
-      birthdate: "21.05.2001",
-    },
-    {
-      name: "Егор",
-      birthdate: "06.08.1976",
-    },
-    {
-      name: "Роман",
-      birthdate: "14.04.2000",
-    },
-    {
-      name: "Василий",
-      birthdate: "27.02.1980",
-    },
-  ];
-  
-  getNextBirthdays('28.02.1980', phoneList);
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<{
