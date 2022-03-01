@@ -30,7 +30,7 @@
 //     return newdate;
 // };
 function dateParse(date) {
-    if (typeof date !== 'string') return [];
+    if (typeof date !== 'string') return Number.MAX_VALUE;
     let newdate = date.split('.');
     if (newdate[0].length !== 2 || Number.parseInt(newdate[0]) <= 0)
         return Number.MAX_VALUE;
@@ -75,7 +75,7 @@ function mySort(a, b) {
 //     phoneList.forEach(x => {
 //         if ((dateParse(x.birthdate)[2] < newdate[2] &&
 //             ((dateParse(x.birthdate)[1] = newdate[1] &&
-//                 dateParse(x.birthdate)[0] >= newdate[0]) ||
+//                 dateParse(x.birthdate)[0] > newdate[0]) ||
 //                 dateParse(x.birthdate)[1] > newdate[1]))
 //                 || (dateParse(x.birthdate)[2] == newdate[2] && (dateParse(x.birthdate)[1] == newdate[1] &&
 //                 dateParse(x.birthdate)[0] >= newdate[0] ||
@@ -85,13 +85,20 @@ function mySort(a, b) {
 //     return people;
 // };
 function getNextBirthdays(date, phoneList) {
+    console.log(phoneList);
     const newdate = dateParse(date);
     if (newdate === Number.MAX_VALUE) return [];
     if (!Array.isArray(phoneList)) return [];
     let people = [];
+    console.log(newdate);
     phoneList.forEach((x) => {
+        console.log(x);
+        console.log(dateParse(x.birthdate));
         if (
-            dateParse(x.birthdate) < newdate// dateParse(x.birthdate).year < newdate.year ||  dateParse(x.birthdate).year == newdate.year && dateParse(x.birthdate).month
+            dateParse(x.birthdate).getYear() < newdate.getYear() &&
+            (dateParse(x.birthdate).getMonth() > newdate.getMonth() ||
+                (dateParse(x.birthdate).getMonth() === newdate.getMonth() &&
+                    dateParse(x.birthdate).getDay() > newdate.getDay()))
         ) {
             people.push({ name: x.name, birthdate: x.birthdate });
             console.log({ name: x.name, birthdate: x.birthdate });
