@@ -61,30 +61,6 @@
       date[1].length === 2 && date[2].length === 4);
   }
   
-  
-  const phoneList = [
-    {
-      name: "Александра",
-      birthdate: "29.06.1977",
-    },
-    {
-      name: "Егор",
-      birthdate: "12.07.1976",
-    },
-    {
-      name: "Роман",
-      birthdate: "14.11.1975",
-    },
-    {
-      name: "Василий",
-      birthdate: "29.05.1940",
-    },
-  ];
-  
-  
-//   console.log(getNextBirthdays('28.05.1980', phoneList));
-  
-  
   /**
    * @param {Array<Person>} phoneList - список друзей из телефонной книги
    * @returns {Array<{
@@ -92,6 +68,7 @@
    *    friends: Array<Person>,
    *  }>}
    */
+
   function getMonthsList(phoneList){
     if (!Array.isArray(phoneList)) return [];
 
@@ -114,8 +91,6 @@
         if(e.friends.length !== 0) return e;
       });
     }
-
-   console.log(getMonthsList(phoneList));
   
   /**
    * @param {Array<{
@@ -133,7 +108,95 @@
    *  }}
    */
   function getMinimumPresentsPrice(phoneList) {
+    if(!Array.isArray(phoneList)) return [];
+
+    let presentsList = {
+        friendsList: [], 
+        totalPrice: 0
+    };
+
+    phoneList.forEach((e) => {
+        if(Array.isArray(e.wishList)){
+            e.wishList.sort((a, b) => {
+                return a.price - b.price;
+            });
+            // console.log(e.wishList);
+
+            e.present = e.wishList[0];
+            presentsList.friendsList.push(e);
+            presentsList.totalPrice += (e.present.price);
+            delete e.wishList;
+            // console.log(presentsList.friendsList);
+            // console.log(presentsList.totalPrice);
+        }
+        else {
+          e.present = undefined;
+          presentsList.friendsList.push(e);
+          delete e.wishList;
+        }
+      });
+      
+      return presentsList;
+    }
   
-  };
+
+
+
+
+
+  const phoneList = [
+    {
+      name: 'Александра',
+      birthdate: '21.05.2001',
+      wishList: [
+        {
+          title: 'Книга "Изучаем программирование на JavaScript"',
+          price: 250,
+        },
+        {
+          title: 'Билет на концерт Макса Коржа',
+          price: 1500,
+        },
+        {
+          title: 'Книга "Чистый код. Создание, анализ и рефакторинг"',
+          price: 200,
+        },
+      ],
+    },
+    {
+      name: 'Егор',
+      birthdate: '06.08.1976',
+      wishList: [
+        {
+          title: 'Годовой абонимент в библиотеку',
+          price: 400,
+        },
+        {
+          title: 'Шариковая ручка',
+          price: 750,
+        },
+      ],
+    },
+    {
+      name: 'Роман',
+      birthdate: '14.05.2000',
+    },
+    {
+      name: 'Василий',
+      birthdate: '27.02.1980',
+      wishList: [
+        {
+          title: 'Годовой курс обучения на ИРИТ-РтФ',
+          price: 100500,
+        },
+        {
+          title: 'Путешествие на Марс',
+          price: 999999999,
+        },
+      ],
+    },
+  ];
+  console.log(getMinimumPresentsPrice(phoneList));
+
   
   module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
