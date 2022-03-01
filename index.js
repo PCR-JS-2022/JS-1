@@ -43,11 +43,11 @@ function getNextBirthdays(date, phoneList) {
     const sortedPhoneList = phoneList.filter((e) => {
         const friendDate = getObjectDate(e.birthdate);
 
-        if(friendDate.getFullYear() < startDate.getFullYear()){
-            if(friendDate.getMonth() > startDate.getMonth()) return e;
-      
-            if(friendDate.getMonth() === startDate.getMonth())
-              if(friendDate.getDate() >= startDate.getDate()) return e;
+            if(friendDate.getFullYear() < startDate.getFullYear()){
+                if(friendDate.getMonth() > startDate.getMonth()) return e;
+        
+                if(friendDate.getMonth() === startDate.getMonth())
+                if(friendDate.getDate() >= startDate.getDate()) return e;
           }
 
     return sortedPhoneList.sort((a, b) => {
