@@ -17,38 +17,102 @@
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
- export function getNextBirthdays(date, phoneList) {
 
-};
 
-/**
- * @param {Array<Person>} phoneList - список друзей из телефонной книги
- * @returns {Array<{
- *    month: string,
- *    friends: Array<Person>,
- *  }>}
- */
-export function getMonthsList(phoneList) {
 
-};
-
-/**
- * @param {Array<{
- *    name: string,
- *    birthdate: string,
- *    wishList: Array<Gift>
- *  }>} phoneList - список друзей из телефонной книги
- * @returns {{
- *    friendsList: Array<{
- *      name: string,
- *      birthdate: string,
- *      present: Gift
- *    }>,
- *    totalPrice: number
- *  }}
- */
-export function getMinimumPresentsPrice(phoneList) {
-
-};
-
-module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
+ function getNextBirthdays(date, phoneList) {
+    if(!Array.isArray(phoneList) || !checkDate(date) || phoneList.length === 0) return [];
+    date = date.split('.');
+    let dateYear = +date[2];
+    let dateMonth = +date[1];
+    let dateDay = +date[0];
+    let sortedPhoneList = phoneList.filter(e => {
+    let friendDate = (e.birthdate.split('.'));
+    let friendYear = +friendDate[2];
+    let friendMonth = +friendDate[1];
+    let friendDays = +friendDate[0];
+    if (friendYear <= dateYear){ 
+      if (friendMonth > dateMonth){
+          return e;}
+      if (friendMonth === dateMonth)
+        if (friendDays >= dateDay) 
+          return e;}
+    })
+    return sortedPhoneList.sort((a, b) => {
+      const friend1 = getDate(a.birthdate);
+      const friend2 = getDate(b.birthdate);
+  
+      return friend2 - friend1;
+    })
+  };
+  
+  function getDate(date){
+    date = date.split('.');
+    let corrDate = new Date();
+    corrDate.setFullYear(date[2], date[1] - 1 ,date[0]);
+    return corrDate;
+  }
+  
+  function checkDate(date){
+    if(typeof date !== 'string')
+      return false;
+    let = date.split('.');
+    return (date.length === 3 && date[0].length === 2 &&
+      date[1].length === 2 && date[2].length === 4);
+  }
+  
+  
+  const phoneList = [
+    {
+      name: "Александра",
+      birthdate: "29.06.1977",
+    },
+    {
+      name: "Егор",
+      birthdate: "12.07.1976",
+    },
+    {
+      name: "Роман",
+      birthdate: "14.11.1975",
+    },
+    {
+      name: "Василий",
+      birthdate: "29.05.1940",
+    },
+  ];
+  
+  
+  console.log(getNextBirthdays('28.05.1980', phoneList));
+  
+  
+  /**
+   * @param {Array<Person>} phoneList - список друзей из телефонной книги
+   * @returns {Array<{
+   *    month: string,
+   *    friends: Array<Person>,
+   *  }>}
+   */
+  function getMonthsList(phoneList) {
+  
+  };
+  
+  /**
+   * @param {Array<{
+   *    name: string,
+   *    birthdate: string,
+   *    wishList: Array<Gift>
+   *  }>} phoneList - список друзей из телефонной книги
+   * @returns {{
+   *    friendsList: Array<{
+   *      name: string,
+   *      birthdate: string,
+   *      present: Gift
+   *    }>,
+   *    totalPrice: number
+   *  }}
+   */
+  function getMinimumPresentsPrice(phoneList) {
+  
+  };
+  
+  module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
