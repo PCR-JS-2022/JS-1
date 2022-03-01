@@ -17,12 +17,12 @@
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
-  
+
 function getNextBirthdays(date, phoneList) { 
     const reg = /^\d{2}\.\d{2}\.\d{4}$/;
     if(!Array.isArray(phoneList) || !reg.test(date)) return []; 
     date = date.split("."); 
-    let result = []; 
+    const result = []; 
     for(let i = 0; i < phoneList.length; i++) {
       let currentDate = phoneList[i].birthdate.split("."); 
       if(+currentDate[2] > +date[2]) continue; 
@@ -34,12 +34,10 @@ function getNextBirthdays(date, phoneList) {
       }
     }
     return result.sort((a, b) => {
-      let yearA = +a.birthdate.split(".")[2];
-      let yearB = +b.birthdate.split(".")[2];
-      let monthA = +a.birthdate.split(".")[1];
-      let monthB = +b.birthdate.split(".")[1];
-      let dayA = +a.birthdate.split(".")[0];
-      let dayB = +a.birthdate.split(".")[0];
+      const dateA = a.birthdate.split(".").map(i => Number(i));
+      const dateB = b.birthdate.split(".").map(i => Number(i));
+      const [dayA, monthA, yearA] = dateA;
+      const [dayB, monthB, yearB] = dateB;
       if(monthA < monthB) {
         return -1;
       } 
@@ -68,7 +66,7 @@ function getNextBirthdays(date, phoneList) {
 function getMonthsList(phoneList) {
   if(!Array.isArray(phoneList)) return [];
   const months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
-  let result = [];
+  const result = [];
   const sortedList = phoneList.sort((a,b) => { 
     a = a.birthdate.split(".").reverse();
     b = b.birthdate.split(".").reverse();
@@ -77,15 +75,15 @@ function getMonthsList(phoneList) {
     return date1.getMonth() - date2.getMonth();
   })
 
-  let passed = []; 
+  const passed = []; 
   for(let i = 0; i < sortedList.length; i++) {
     let month = +sortedList[i].birthdate.split(".")[1]; 
-    if(passed.indexOf(month) !== -1) { 
-      result[result.length - 1].friends.push(sortedList[i]);
+    if(passed.indexOf(month) !== -1) {  
+      result[result.length - 1].friends.push(sortedList[i]); 
       continue;
     }
-    passed.push(month);
-    result.push({month: months[month-1], friends: [sortedList[i]]});
+    passed.push(month); 
+    result.push({month: months[month-1], friends: [sortedList[i]]}); 
   }
   return result;
 };
@@ -116,21 +114,24 @@ function findIndexMin(arr) {
 
 function getMinimumPresentsPrice(phoneList) {
   if(!Array.isArray(phoneList)) return [];
-  let friendsList = [];
+  const friendsList = [];
   let totalPrice = 0;
   for(let i = 0; i < phoneList.length; i++) {
     friendsList.push({ name: phoneList[i].name, birthdate: phoneList[i].birthdate, present: undefined });
-    let prices = [];
+    const prices = [];
     if("wishList" in phoneList[i]) {
-      for(let obj in phoneList[i].wishList) {
-        prices.push(phoneList[i].wishList[obj].price)
-      }
+      phoneList[i].wishList.forEach(element => {
+          prices.push(element.price)
+      });
       let indexMin = findIndexMin(prices);
       friendsList[i].present = phoneList[i].wishList[indexMin];
       totalPrice += phoneList[i].wishList[indexMin].price;
     }
   }
-  return {friendsList: friendsList, totalPrice: totalPrice};
+  return {
+    friendsList,
+    totalPrice,
+  };
 };
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
