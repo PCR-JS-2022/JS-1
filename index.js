@@ -109,7 +109,7 @@ function getNextBirthdays(date, phoneList) {
         }
     });
     //people.sort(mySort);
-    return people;
+    return people.sort((x) => x.birthdate).reverse();
 }
 function getMonthName(monthN) {
     if (monthN == 1) return "январь";
