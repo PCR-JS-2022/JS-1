@@ -72,6 +72,7 @@ function getObjectDate(date) {
 
 
 function getMonthsList(phoneList) {
+    if (!Array.isArray(phoneList) || phoneList.length === 0) return [];
     const months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
   
     const birthdaysList = months.map((e) => {
