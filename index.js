@@ -32,6 +32,7 @@ function getObjectDate(date) {
   }
 
 function getNextBirthdays(date, phoneList) {
+    
     if(checkDateCorrect == false || !Array.isArray(phoneList) || phoneList.length === 0) return [];
     
     let sortedPhoneList = phoneList.filter((e) => {
@@ -53,14 +54,8 @@ function getNextBirthdays(date, phoneList) {
     })
     
 };
-function getMonthsList(phoneList) {  
-    const months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
-  
-    const birthdaysList = months.map((e) => {
-      return {month: e, friends: []}
-    });
 
-    
+
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<{
@@ -69,8 +64,22 @@ function getMonthsList(phoneList) {
  *  }>}
  */
 export function getMonthsList(phoneList) {
+    const months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
+  
+    const birthdaysList = months.map((e) => {
+      return {month: e, friends: []}
+    });
 
-};
+    phoneList.forEach((e) => {
+        const month = getObjectDate(e.birthdate).getMonth();
+        birthdaysList[month].friends.push(e);
+      })
+    
+      return birthdaysList.filter((e) => {
+        if(e.friends.length !== 0) return e;
+      });
+}
+
 
 /**
  * @param {Array<{
@@ -92,3 +101,4 @@ export function getMinimumPresentsPrice(phoneList) {
 };
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
+
