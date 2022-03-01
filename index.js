@@ -22,7 +22,7 @@
 
  function getNextBirthdays(date, phoneList) {
   date = date.split('.');
-  if(!Array.isArray(phoneList) || checkDate(date) || phoneList.length === 0) return [];
+  if(Array.isArray(phoneList) || checkDate(date) || phoneList.length === 0) return [];
   let dateYear = +date[2];
   let dateMonth = +date[1];
   let dateDay = +date[0];
