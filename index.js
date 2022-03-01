@@ -17,9 +17,16 @@
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
- export function getNextBirthdays(date, phoneList) {
-
+function getNextBirthdays(date, phoneList) {
+    if (!(Array.isArray(phoneList) && checkData(date)) || phoneList.length === 0) return []; 
+    
 };
+
+function checkData(date){
+    if (typeof date !== "string") return false;
+    let splDate = date.split('.');
+    return(splDate.length == 3 && splDate[0].length == 2 && splDate[1].length == 2 && splDate[2].length == 4)
+}
 
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
@@ -28,7 +35,7 @@
  *    friends: Array<Person>,
  *  }>}
  */
-export function getMonthsList(phoneList) {
+function getMonthsList(phoneList) {
 
 };
 
@@ -47,7 +54,7 @@ export function getMonthsList(phoneList) {
  *    totalPrice: number
  *  }}
  */
-export function getMinimumPresentsPrice(phoneList) {
+function getMinimumPresentsPrice(phoneList) {
 
 };
 
