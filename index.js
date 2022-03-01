@@ -61,11 +61,12 @@ function getNextBirthdays(date, phoneList) {
         if (dateTime.getFullYear() > contactBirthdate.getFullYear()) {
           newPhoneList.push(contact);
         }
-        //  else if (dateTime.getFullYear() === contactBirthdate.getFullYear() && dateTime.getMonth() < contactBirthdate.getMonth()) {
-        //   newPhoneList.push(contact);
-        // } else if (dateTime.getFullYear() === contactBirthdate.getFullYear() && dateTime.getMonth() === contactBirthdate.getMonth() && dateTime.getDate() < contactBirthdate.getDate()) {
-        //   newPhoneList.push(contact);
-        // }
+        else if (dateTime.getFullYear() === contactBirthdate.getFullYear() && dateTime.getMonth() < contactBirthdate.getMonth() && dateTime.getMonth() > contactBirthdate.getMonth()) {
+          newPhoneList.push(contact);
+        } 
+        else if (dateTime.getFullYear() === contactBirthdate.getFullYear() && dateTime.getMonth() === contactBirthdate.getMonth() && dateTime.getDate() < contactBirthdate.getDate()) {
+          newPhoneList.push(contact);
+        }
       }
 
       newPhoneList.sort((a, b) => {
@@ -81,7 +82,7 @@ function getNextBirthdays(date, phoneList) {
 };
 
 getNextBirthdays('28.02.1980', phoneList);
-
+newPhoneList.length = 0;
 /**
 * @param {Array<Person>} phoneList - список друзей из телефонной книги
 * @returns {Array<{
@@ -172,6 +173,8 @@ function getMonthsList(phoneList) {
 };
 
 getMonthsList(phoneList);
+phoneList.length = 0;
+
 
 /**
 * @param {Array<{
@@ -293,5 +296,7 @@ function getMinimumPresentsPrice(phoneList) {
 };
 
 getMinimumPresentsPrice(phoneList);
+phoneList.length = 0;
+
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
