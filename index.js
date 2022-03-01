@@ -33,10 +33,10 @@ function getObjectDate(date) {
 
 
 function getNextBirthdays(date, phoneList) {
-    
+
     const splitDate = date.split('.');
     const startDate = getObjectDate(date);
-    const sortedPhoneList;
+    const sortedPhoneList = undefined;
 
     if(checkDateCorrect == false || !Array.isArray(phoneList) || phoneList.length === 0) return [];
     
