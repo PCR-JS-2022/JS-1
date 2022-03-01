@@ -1,3 +1,79 @@
+const phoneList1 = [
+	{
+		name: "Александра",
+		birthdate: "21.05.2001",
+	},
+	{
+		name: "Егор",
+		birthdate: "06.08.1976",
+	},
+	{
+		name: "Роман",
+		birthdate: "14.04.2000",
+	},
+	{
+		name: "Василий",
+		birthdate: "27.02.1980",
+	},
+];
+const phoneList2 = [
+	{
+		name: 'Александра',
+		birthdate: '21.05.2001',
+		wishList: [
+			{
+				title: 'Книга "Изучаем программирование на JavaScript"',
+				price: 250,
+			},
+			{
+				title: 'Билет на концерт Макса Коржа',
+				price: 1500,
+			},
+			{
+				title: 'Книга "Чистый код. Создание, анализ и рефакторинг"',
+				price: 200,
+			},
+		],
+	},
+	{
+		name: 'Егор',
+		birthdate: '06.08.1976',
+		wishList: [
+			{
+				title: 'Годовой абонимент в библиотеку',
+				price: 400,
+			},
+			{
+				title: 'Шариковая ручка',
+				price: 750,
+			},
+		],
+	},
+	{
+		name: 'Роман',
+		birthdate: '14.05.2000',
+	},
+	{
+		name: 'Василий',
+		birthdate: '27.02.1980',
+		wishList: [
+			{
+				title: 'Годовой курс обучения на ИРИТ-РтФ',
+				price: 100500,
+			},
+			{
+				title: 'Путешествие на Марс',
+				price: 999999999,
+			},
+		],
+	},
+];
+console.log(JSON.stringify(getNextBirthdays('28.02.1980', phoneList1)));
+console.log()
+console.log(JSON.stringify(getMonthsList(phoneList1)));
+console.log()
+console.log(JSON.stringify(getMinimumPresentsPrice(phoneList2)));
+
 /**
  * @typedef Person
  * @type {object}
@@ -17,18 +93,18 @@
  * @param {Array<Person>} friends
  * @returns {Array<Person>}
  */
-export function getNextBirthdays(dateAsString, friends) {
+function getNextBirthdays(dateAsString, friends) {
 	if (!getNextBirthdaysIsValid(dateAsString, friends)) {
 		return [];
 	}
 
-	let birthDate = getBirthDate(dateAsString);
-	let birthday = getBirthday(birthDate);
+	const birthDate = getBirthDate(dateAsString);
+	const birthday = getBirthday(birthDate);
 
 	return friends
 		.filter(friend => {
-			let friendBirthDate = getBirthDate(friend.birthdate);
-			let friendBirthday = getBirthday(friendBirthDate);
+			const friendBirthDate = getBirthDate(friend.birthdate);
+			const friendBirthday = getBirthday(friendBirthDate);
 			return friendBirthDate <= birthDate && friendBirthday >= birthday;
 		})
 		.sort(getBirthdayComparer())
@@ -73,24 +149,24 @@ function getBirthdayComparer() {
  *    friends: Array<Person>,
  *  }>}
  */
-export function getMonthsList(phoneList) {
+function getMonthsList(phoneList) {
 	if (!Array.isArray(phoneList)) {
 		return [];
 	}
 
-	let monthsList = [];
-	phoneList
+	return phoneList
 		.sort(getBirthdayComparer())
-		.forEach(person => {
-			let date = getBirthDate(person.birthdate);
-			let month = date.toLocaleString("ru", {month: "long"});
+		.reduce((monthsList, person) => {
+			const date = getBirthDate(person.birthdate);
+			const month = date.toLocaleString("ru", { month: "long" });
+
 			if (monthsList.some(m => m.month === month)) {
 				monthsList[monthsList.findIndex(m => m.month === month)].friends.push(person);
 			} else {
-				monthsList.push({month: month, friends: [person]});
+				monthsList.push({ month, friends: [person] });
 			}
-		})
-	return monthsList;
+			return monthsList;
+		}, []);
 }
 
 /**
@@ -108,28 +184,21 @@ export function getMonthsList(phoneList) {
  *    totalPrice: number
  *  }}
  */
-export function getMinimumPresentsPrice(phoneList) {
+function getMinimumPresentsPrice(phoneList) {
 	if (!Array.isArray(phoneList)) {
 		return [];
 	}
 
-	let total = 0;
-	let presents = []
-
-	phoneList.forEach(person => {
-		let present = person.wishList?.sort((a, b) => a.price - b.price)[0];
-		presents.push({
+	return phoneList.reduce((presents, person) => {
+		const present = person.wishList?.sort((a, b) => a.price - b.price)[0];
+		presents.friendsList.push({
 			name: person.name,
 			birthdate: person.birthdate,
-			present: present
-		})
-		total += present?.price ?? 0;
-	})
-
-	return {
-		friendsList: presents,
-		totalPrice: total
-	}
+			present
+		});
+		presents.totalPrice += present?.price ?? 0;
+		return presents;
+	}, { friendsList: [], totalPrice: 0 })
 }
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
