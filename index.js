@@ -20,14 +20,15 @@
  */
 function getNextBirthdays(date, phoneList) {
     const result = [];
-    if (!Array.isArray(phoneList) || (typeof date === "string" && !date.match(/\d{2}(.)\d{2}(.)\d{4}/g))
+    const validDate = /\d{2}(.)\d{2}(.)\d{4}/g;
+    if (!Array.isArray(phoneList) || (typeof date === "string" && !date.match(validDate))
         || typeof date !== "string")
         return result
     else {
         const current_day = date.split('.')[0];
         const current_month = date.split('.')[1];
         const current_year = date.split('.')[2];
-        phoneList.forEach(elem => {
+        const result = phoneList.reduce((result,elem)=> {
             const day = elem.birthdate.split('.')[0];
             const month = elem.birthdate.split('.')[1];
             const year = elem.birthdate.split('.')[2];
@@ -37,7 +38,8 @@ function getNextBirthdays(date, phoneList) {
                 else if (month === current_month)
                     if (day >= current_day)
                         result.push(elem)
-        })
+            return result
+        },[])
         return (result.sort((a,b) =>
             new Date("1",a.birthdate.split('.')[1]-1,a.birthdate.split('.')[0]) -
             new Date("1",b.birthdate.split('.')[1]-1,b.birthdate.split('.')[0])))
@@ -69,9 +71,10 @@ function getMonthsList(phoneList) {
         "11": 'ноябрь',
         "12": 'декабрь'
     };
-    for (let elem of phoneList.sort((a,b) => {
+    const sortedPhoneList = phoneList.sort((a,b) => {
         return a.birthdate.split('.')[1] - b.birthdate.split('.')[1]
-    })) {
+    })
+    for (let elem of sortedPhoneList) {
         const current_month = elem.birthdate.split('.')[1];
         if (!result.find(obj => obj.month === months[current_month])) {
             result.push({month:months[current_month],friends:[]})
@@ -100,11 +103,10 @@ function getMonthsList(phoneList) {
  *  }}
  */
 function getMinimumPresentsPrice(phoneList) {
-    let totalPrice = 0;
     const result = [];
     if (!Array.isArray(phoneList))
         return result
-    phoneList.forEach(elem => {
+    const totalPrice = phoneList.reduce((totalPrice,elem) => {
         let presentArr = [];
         if (elem.wishList !== undefined) {
             elem.wishList.forEach(wish => {
@@ -115,13 +117,14 @@ function getMinimumPresentsPrice(phoneList) {
                 name: elem.name, birthdate: elem.birthdate,
                 present: elem.wishList.find(present => present.price === min)
             });
-            totalPrice += min
+            return totalPrice += min;
         }
         else {
-            result.push({name: elem.name, birthdate: elem.birthdate,present: undefined})
+            result.push({name: elem.name, birthdate: elem.birthdate,present: undefined});
+            return totalPrice += 0
         }
-    })
-    return {friendsList:result,totalPrice:totalPrice}
+    },0)
+    return {friendsList:result,totalPrice}
 }
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
