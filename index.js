@@ -54,7 +54,7 @@ function getNextBirthdays(date, phoneList) {
     const friend1 = getObjectDate(a.birthdate);
     const friend2 = getObjectDate(b.birthdate);
 
-    return friend2 - friend1;
+        return friend2 - friend1;
     });
     })
     
