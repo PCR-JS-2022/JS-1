@@ -20,8 +20,6 @@
 function dateParse(date) {
     if (typeof date !== "string")
         return [];
-    if (date[2] != '.' || date[5] != '.')
-        return [];
     let newdate = date.split('.');
     return newdate;
 };
@@ -58,8 +56,11 @@ function getNextBirthdays(date, phoneList) {
         return [];
     let people = [];
     phoneList.forEach(x => {
-        if (dateParse(x.birthdate)[2] < newdate[2] &&
+        if ((dateParse(x.birthdate)[2] < newdate[2] &&
             (dateParse(x.birthdate)[1] = newdate[1] &&
+                dateParse(x.birthdate)[0] > newdate[0] ||
+                dateParse(x.birthdate)[1] > newdate[1]))
+                || dateParse(x.birthdate)[2] == newdate[2] && (dateParse(x.birthdate)[1] = newdate[1] &&
                 dateParse(x.birthdate)[0] > newdate[0] ||
                 dateParse(x.birthdate)[1] > newdate[1])) people.push({ name: x.name, birthdate: x.birthdate })
     });
