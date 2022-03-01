@@ -23,14 +23,14 @@
  function getNextBirthdays(date, phoneList) {
     if(!Array.isArray(phoneList) || !checkDate(date) || phoneList.length === 0) return [];
     date = date.split('.');
-    let dateYear = +date[2];
-    let dateMonth = +date[1];
-    let dateDay = +date[0];
-    let sortedPhoneList = phoneList.filter(e => {
-    let friendDate = (e.birthdate.split('.'));
-    let friendYear = +friendDate[2];
-    let friendMonth = +friendDate[1];
-    let friendDays = +friendDate[0];
+    const dateYear = +date[2];
+    const dateMonth = +date[1];
+    const dateDay = +date[0];
+    const sortedPhoneList = phoneList.filter(e => {
+    const friendDate = (e.birthdate.split('.'));
+    const friendYear = +friendDate[2];
+    const friendMonth = +friendDate[1];
+    const friendDays = +friendDate[0];
     if (friendYear <= dateYear){ 
       if (friendMonth > dateMonth){
           return e;}
@@ -48,7 +48,7 @@
   
   function getDate(date){
     date = date.split('.');
-    let corrDate = new Date();
+    const corrDate = new Date();
     corrDate.setFullYear(date[2], date[1] - 1 ,date[0]);
     return corrDate;
   }
@@ -79,8 +79,8 @@
     });
 
     phoneList.forEach((e) => {
-        let date = e.birthdate.split('.');
-        let month = date[1];
+        const date = e.birthdate.split('.');
+        const month = date[1];
         for(let i = 0; i < 11; i++){
             if(i + 1 == month)
                 birthdays[i].friends.push(e);
@@ -120,12 +120,9 @@
             e.wishList.sort((a, b) => {
                 return a.price - b.price;
             });
-            // console.log(e.wishList);
-
             e.present = e.wishList[0];
             presentsList.friendsList.push(e);
             presentsList.totalPrice += (e.present.price);
-            delete e.wishList;
         }
         else {
           e.present = undefined;
