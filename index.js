@@ -20,6 +20,8 @@
 function dateParse(date) {
     if (typeof date !== "string")
         return [];
+    if (date[2] != '.' || date[5] != '.')
+        return [];
     let newdate = date.split('.');
     return newdate;
 };
@@ -65,18 +67,18 @@ function getNextBirthdays(date, phoneList) {
     return people;
 };
 function getMonthName(monthN) {
-if (monthN == 1) return "январь";
-if (monthN == 2) return "февраль";
-if (monthN == 3) return "март";
-if (monthN == 4) return "апрель";
-if (monthN == 5) return "май";
-if (monthN == 6) return "июнь";
-if (monthN == 7) return "июль";
-if (monthN == 8) return "август";
-if (monthN == 9) return "сентябрь";
-if (monthN == 10) return "октябрь";
-if (monthN == 11) return "ноябрь";
-if (monthN == 12) return "декабрь";
+    if (monthN == 1) return "январь";
+    if (monthN == 2) return "февраль";
+    if (monthN == 3) return "март";
+    if (monthN == 4) return "апрель";
+    if (monthN == 5) return "май";
+    if (monthN == 6) return "июнь";
+    if (monthN == 7) return "июль";
+    if (monthN == 8) return "август";
+    if (monthN == 9) return "сентябрь";
+    if (monthN == 10) return "октябрь";
+    if (monthN == 11) return "ноябрь";
+    if (monthN == 12) return "декабрь";
 };
 
 /**
@@ -88,11 +90,10 @@ if (monthN == 12) return "декабрь";
  */
 function getMonthsList(phoneList) {
     if (!Array.isArray(phoneList))
-    return [];
+        return [];
     let result = [];
-    for (let i = 0; i < 12; i++)
-    {
-        result.push({month: getMonthName(i+1), friends: phoneList.filter(x => dateParse(x.birthdate))[1] == i+1});
+    for (let i = 0; i < 12; i++) {
+        result.push({ month: getMonthName(i + 1), friends: phoneList.filter(x => dateParse(x.birthdate))[1] == i + 1 });
     }
     result.filter(x => x.friends.length > 0);
     return result;
@@ -120,15 +121,15 @@ function findCheapestGift(Gifts) {
 
 function getMinimumPresentsPrice(phoneList) {
     if (!Array.isArray(phoneList))
-    return [];
+        return [];
     let friendsList = [];
     let totalPrice = 0;
     phoneList.forEach(x => {
-            friendsList.push({name: x.name, birthdate: x.birthdate, present: findCheapestGift(x.wishList)});
-            if (x.wishList.length > 0)
+        friendsList.push({ name: x.name, birthdate: x.birthdate, present: findCheapestGift(x.wishList) });
+        if (x.wishList.length > 0)
             totalPrice = totalPrice + x.wishList[0].price;
     });
-    return {friendsList: friendsList, totalPrice: totalPrice};
+    return { friendsList: friendsList, totalPrice: totalPrice };
 };
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
