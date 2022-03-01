@@ -46,8 +46,8 @@
     let endYearDate = new Date(compareDate.getFullYear(), 11, 31);
     let listBirthdate = phoneList.filter(el => {
         let listBird = parseDate(el.birthdate);
-        if (listBird.getFullYear() < compareDate.getFullYear()){
-          if (listBird.getMonth() < endYearDate.getMonth() && listBird.getMonth() > compareDate.getMonth()) {
+        if (listBird.getFullYear() <= compareDate.getFullYear()){
+          if (listBird.getMonth() <= endYearDate.getMonth() && listBird.getMonth() > compareDate.getMonth()) {
             return el;
           }
           if (listBird.getMonth() === compareDate.getMonth())
