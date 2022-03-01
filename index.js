@@ -33,12 +33,12 @@ function getObjectDate(date) {
 
 
 function getNextBirthdays(date, phoneList) {
-
+    if(checkDateCorrect == false || !Array.isArray(phoneList) || phoneList.length === 0) return [];
     const splitDate = date.split('.');
     const startDate = getObjectDate(date);
  
 
-    if(checkDateCorrect == false || !Array.isArray(phoneList) || phoneList.length === 0) return [];
+    
     
     var filterPhoneList = phoneList.filter((e) => {
         const friendDate = getObjectDate(e.birthdate);
