@@ -20,20 +20,10 @@
 export function getNextBirthdays(date, phoneList) {
   if (typeof date !== "string") return [];
 
-  const splitedDate = date.split(".");
-  if (
-    !(
-      splitedDate.length === 3 &&
-      splitedDate[0].length === 2 &&
-      splitedDate[1].length === 2 &&
-      splitedDate[2].length === 4
-    ) ||
-    !Array.isArray(phoneList)
-  ) {
+  const realDate = convertToDate(date);
+  if (realDate === null || !Array.isArray(phoneList)) {
     return [];
   }
-
-  const realDate = convertToDate(date);
 
   const nextBirthdays = phoneList
     .filter((person) => {
@@ -75,6 +65,15 @@ function sortByMonthAndDate(date1, date2) {
  */
 function convertToDate(date) {
   const splitedDate = date.split(".");
+
+  if (
+    splitedDate.length !== 3 ||
+    splitedDate[0].length !== 2 ||
+    splitedDate[1].length !== 2 ||
+    splitedDate[2].length !== 4
+  )
+    return null;
+
   return new Date(
     parseInt(splitedDate[2]),
     parseInt(splitedDate[1]),
