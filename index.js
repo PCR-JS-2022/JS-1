@@ -38,7 +38,7 @@
 ];
 
 const dateFormat = new RegExp(/^(0?[1-9]|[12][0-9]|3[01])[.-](0?[1-9]|1[012])[.-]\d{4}$/);
-let newPhoneList = [];
+// let newPhoneList = {};
 
 const transformDate = (dateString) => {
  const newStr = new Date(dateString.split('.').reverse().join('.'));
@@ -50,40 +50,31 @@ const sortData = (a, b) => {
 }
 
 function getNextBirthdays(date, phoneList) {
+  const dateTime = transformDate(date);
+  const dateTimeYear = dateTime.getFullYear();
+  if (!Array.isArray(phoneList) ||  phoneList.length === 0 || dateTime === null) return [];
 
-  newPhoneList = [];
+  let newPhoneList = {};
   
-
   if (dateFormat.test(date) && Array.isArray(phoneList)) {
-    phoneList.map((contact) => {
-      
-      const dateTime = transformDate(date);
-      console.log(dateTime);
+    return phoneList.filter((contact) => {
       const contactBirthdate = transformDate(contact.birthdate);
-
-      const dateTimeYear = dateTime.getFullYear();
-      
+      newPhoneList[contact.birthdate] = contactBirthdate;
       const birthdateBeforeDateTime = contactBirthdate <= dateTime;
-      contactBirthdate.setFullYear(dateTimeYear)
-      if (birthdateBeforeDateTime && contactBirthdate >= dateTime) {
-        newPhoneList.push(contact);
-      }
-
-      newPhoneList.sort((a, b) => {
-        return sortData(a,b);
-      });
-     
+      contactBirthdate.setFullYear(dateTimeYear);
+  
+      return birthdateBeforeDateTime && contactBirthdate >= dateTime;
     })
-  } else if (!Array.isArray(phoneList) ||  phoneList.length === 0 || dateTime === null) {
-      newPhoneList = [];
+    .sort((a,b) => {
+      return newPhoneList[a.birthdate] - newPhoneList[b.birthdate];
+    })
   }
-  console.log(newPhoneList);
-  return newPhoneList;
 };
 
 // getNextBirthdays('28.02.1980', phoneList);
 getNextBirthdays('28.02.1980', phoneList);
-
+console.log(getNextBirthdays('28.02.1980', phoneList))
+console.log(getNextBirthdays('28.02.1980', phoneList))
 /**
 * @param {Array<Person>} phoneList - список друзей из телефонной книги
 * @returns {Array<{
