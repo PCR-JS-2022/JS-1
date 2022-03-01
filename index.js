@@ -35,7 +35,7 @@
     if (friendMonth > dateMonth){
         return e;}
     if (friendMonth == dateMonth)
-      if (friendDays >= dateDay) 
+      if (friendDays > dateDay) 
         return e;}
   })
   return sortedPhoneList.sort((a, b) => {
