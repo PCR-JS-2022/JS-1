@@ -21,10 +21,8 @@
 
 function checkDateCorrect(date){
     const splitDate = date.split('.');
-    const startDate = getObjectDate(date)
     if (typeof(date) !== "string" || splitDate.length != 3 && splitDate[0].length != 2 && splitDate[1].length != 2 &&
     splitDate[2].length != 4) return false;
-    else return startDate
 }
 
 
@@ -34,7 +32,9 @@ function getObjectDate(date) {
 
 
 function getNextBirthdays(date, phoneList) {
-    
+    const splitDate = date.split('.');
+    const startDate = getObjectDate(date)
+
     if(checkDateCorrect == false || !Array.isArray(phoneList) || phoneList.length === 0) return [];
     
     let sortedPhoneList = phoneList.filter((e) => {
