@@ -22,44 +22,35 @@
 
  function getNextBirthdays(date, phoneList) {
   date = date.split('.');
-  // let firstDate = new Date();
-  // firstDate.setFullYear(date[0],(date[1] - 1 ),date[2]);
-  // console.log(firstDate);
-
-  let arr = [];
-
   if(!Array.isArray(phoneList) || !checkDate(date) || phoneList.length === 0) return [];
-
-  let dateYear = date[2];
-  let dateMonth = date[1] * 10 / 10;
-  let dateDay = date[0] * 10 / 10;
+  let dateYear = +date[2];
+  let dateMonth = +date[1];
+  let dateDay = +date[0];
   let sortedPhoneList = phoneList.filter(e => {
   let friendDate = (e.birthdate.split('.'));
-  let name = (e.name);
-  let friendYear = friendDate[2];
-  let friendMonth = friendDate[1] * 10 / 10;
-  let friendDays = friendDate[0] * 10 / 10;
+  let friendYear = +friendDate[2];
+  let friendMonth = +friendDate[1];
+  let friendDays = +friendDate[0];
   if (friendYear <= dateYear){ 
-    if (friendMonth > dateMonth)
-        return e;
-    if (friendMonth == dateMonth) 
+    if (friendMonth > dateMonth){
+        return e;}
+    if (friendMonth == dateMonth)
       if (friendDays >= dateDay) 
         return e;}
   })
-  // console.log(arr);
   return sortedPhoneList.sort((a, b) => {
-    const friend1 = getDateObject(a.birthdate);
-    const friend2 = getDateObject(b.birthdate);
+    const friend1 = getDate(a.birthdate);
+    const friend2 = getDate(b.birthdate);
 
     return friend1 - friend2;
   })
 };
 
-function getDateObject(date){
+function getDate(date){
   date = date.split('.');
-  let firstDate = new Date();
-  firstDate.setFullYear(date[2], date[1] - 1 ,date[0]);
-  return firstDate;
+  let corrDate = new Date();
+  corrDate.setFullYear(date[2], date[1] - 1 ,date[0]);
+  return corrDate;
 }
 
 function checkDate(date){
@@ -68,26 +59,26 @@ function checkDate(date){
 }
 
 const phoneList = [
-{
-  name: "Александра",
-  birthdate: "21.05.1978",
-},
-{
-  name: "Егор",
-  birthdate: "25.02.1980",
-},
-{
-  name: "Роман",
-  birthdate: "14.04.2000",
-},
-{
-  name: "Василий",
-  birthdate: "27.02.1950",
-},
-];;
+  {
+    name: "Александра",
+    birthdate: "21.5.2001",
+  },
+  {
+    name: "Егор",
+    birthdate: "12.4.1976",
+  },
+  {
+    name: "Роман",
+    birthdate: "14.11.1975",
+  },
+  {
+    name: "Василий",
+    birthdate: "28.5.1940",
+  },
+];
 
 
-console.log(getNextBirthdays('25.02.1980', phoneList));
+console.log(getNextBirthdays('28.10.1980', phoneList));
 
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
