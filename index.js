@@ -82,7 +82,7 @@
   ];
   
   
-  console.log(getNextBirthdays('28.05.1980', phoneList));
+//   console.log(getNextBirthdays('28.05.1980', phoneList));
   
   
   /**
@@ -92,9 +92,30 @@
    *    friends: Array<Person>,
    *  }>}
    */
-  function getMonthsList(phoneList) {
-  
-  };
+  function getMonthsList(phoneList){
+    if (!Array.isArray(phoneList)) return [];
+
+    const months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
+
+    const birthdays = months.map((e) => {
+        return {month: e, friends: []}
+    });
+
+    phoneList.forEach((e) => {
+        let date = e.birthdate.split('.');
+        let month = date[1];
+        for(let i = 0; i < 11; i++){
+            if(i + 1 == month)
+                birthdays[i].friends.push(e);
+        }
+      })
+    
+      return birthdays.filter((e) => {
+        if(e.friends.length !== 0) return e;
+      });
+    }
+
+   console.log(getMonthsList(phoneList));
   
   /**
    * @param {Array<{
