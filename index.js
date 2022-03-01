@@ -106,13 +106,13 @@ function getMinimumPresentsPrice(phoneList) {
     const resultList = { friendsList: [], totalPrice: undefined };
     let total = 0;
     phoneList.map(person => {
-        const present = person.wishList.sort((gift1, gift2) => gift1.price - gift2.price)[0];
+        const present = person.wishList?.sort((gift1, gift2) => gift1.price - gift2.price)[0];
         resultList.friendsList.push({
             name: person.name,
             birthdate: person.birthdate,
             present
         })
-        total += present[0]?.price ?? 0;
+        total += present?.price ?? 0;
     })
     resultList.totalPrice = total;
     return resultList;
