@@ -34,7 +34,8 @@ function dateParse(date) {
     let newdate = date.split('.');
     if (newdate[0].length != 2) return [];
     if (newdate[1].length != 2) return [];
-    if (parseInt(newdate[1] == 0)) return [];
+    if (parseInt(newdate[1] == 0)) {newdate[2] - 1;
+    newdate[1]='12'};
     if (newdate[2].length != 4) return [];
     return new Date(newdate[2], Number.parseInt(newdate[1]) + 1, newdate[0]);
 }
