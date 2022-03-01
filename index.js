@@ -94,14 +94,15 @@ function getNextBirthdays(date, phoneList) {
     phoneList.forEach((x) => {
         console.log(x);
         console.log(dateParse(x.birthdate));
-        console.log(newdate);
-        //console.log(dateParse(x.birthdate).dateString === newdate.dateString);
+        console.log(dateParse(x.birthdate).getUTCDay());
+        console.log(newdate.getUTCDay());
         if (
             dateParse(x.birthdate) - newdate === 0 ||
             (dateParse(x.birthdate).getYear() < newdate.getYear() &&
                 (dateParse(x.birthdate).getMonth() > newdate.getMonth() ||
                     (dateParse(x.birthdate).getMonth() === newdate.getMonth() &&
-                        dateParse(x.birthdate).getDay() >= newdate.getDay())))
+                        dateParse(x.birthdate).getUTCDate() >=
+                            newdate.getUTCDate())))
         ) {
             people.push({ name: x.name, birthdate: x.birthdate });
             console.log({ name: x.name, birthdate: x.birthdate });
