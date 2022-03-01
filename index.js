@@ -53,7 +53,7 @@ function getNextBirthdays(date, phoneList) {
 
   newPhoneList = [];
 
-  if (dateFormat.test(date) && Array.isArray(phoneList)) {
+  if (dateFormat.test(date) || Array.isArray(phoneList)) {
     phoneList.map((contact) => {
       
       const endOfTheYear = new Date(new Date().getFullYear(), 11, 31);
