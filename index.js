@@ -41,7 +41,7 @@
  
   
   function getNextBirthdays(date, phoneList) {
-    if(!Array.isArray(phoneList) && !correctData(date) ) {
+    if(!Array.isArray(phoneList) || !correctData(date) || phoneList.length === 0) {
       return [];
     }
     let compareDate = parseDate(date);
@@ -74,7 +74,7 @@
  *  }>}
  */
  function getMonthsList(phoneList) {
-    if(!Array.isArray(phoneList))
+    if(!Array.isArray(phoneList) || phoneList.length === 0)
       return [];
     let res = [];
     let months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
