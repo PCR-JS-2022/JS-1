@@ -20,7 +20,7 @@
 
 
 
- function getNextBirthdays(date, phoneList) {
+function getNextBirthdays(date, phoneList) {
     if(!Array.isArray(phoneList) || !checkDate(date) || phoneList.length === 0) return [];
     date = date.split('.');
     const sortedPhoneList = phoneList.filter(e => {
@@ -33,27 +33,26 @@
                 return e;}
     })
     return sortedPhoneList.sort((a, b) => {
-      const friend1 = getDate(a.birthdate);
-      const friend2 = getDate(b.birthdate);
-  
-      return friend2 - friend1;
+        const friend1 = getDate(a.birthdate);
+        const friend2 = getDate(b.birthdate);
+        return friend2 - friend1;
     })
   };
   
-  function getDate(date){
+function getDate(date){
     date = date.split('.');
     const corrDate = new Date();
-    corrDate.setFullYear(date[2], date[1] - 1 ,date[0]);
+    corrDate.setFullYear(date[2], date[1] - 1 , date[0]);
     return corrDate;
-  }
+}
   
-  function checkDate(date){
+function checkDate(date){
     if(typeof date !== 'string')
-      return false;
+        return false;
     date = date.split('.');
     return (date.length === 3 && date[0].length === 2 &&
-      date[1].length === 2 && date[2].length === 4);
-  }
+        date[1].length === 2 && date[2].length === 4);
+}
   
   /**
    * @param {Array<Person>} phoneList - список друзей из телефонной книги
@@ -63,7 +62,7 @@
    *  }>}
    */
 
-  function getMonthsList(phoneList){
+function getMonthsList(phoneList){
     if (!Array.isArray(phoneList)) return [];
 
     const months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
@@ -74,17 +73,17 @@
 
     phoneList.forEach((e) => {
         const date = e.birthdate.split('.');
-        const month = date[1];
         for(let i = 0; i < 11; i++){
-            if(i + 1 == month)
+            if(i + 1 == date[1])
                 birthdays[i].friends.push(e);
         }
-      })
+    })
     
-      return birthdays.filter((e) => {
-        if(e.friends.length !== 0) return e;
-      });
-    }
+    return birthdays.filter((e) => {
+    if(e.friends.length !== 0) 
+        return e;
+    });
+}
   
   /**
    * @param {Array<{
@@ -101,7 +100,8 @@
    *    totalPrice: number
    *  }}
    */
-  function getMinimumPresentsPrice(phoneList) {
+
+function getMinimumPresentsPrice(phoneList) {
     if(!Array.isArray(phoneList)) return [];
 
     let presentsList = {
@@ -127,65 +127,4 @@
       
       return presentsList;
     }
-  
-
-
-
-
-
-  const phoneList = [
-    {
-      name: 'Александра',
-      birthdate: '21.05.2001',
-      wishList: [
-        {
-          title: 'Книга "Изучаем программирование на JavaScript"',
-          price: 250,
-        },
-        {
-          title: 'Билет на концерт Макса Коржа',
-          price: 1500,
-        },
-        {
-          title: 'Книга "Чистый код. Создание, анализ и рефакторинг"',
-          price: 200,
-        },
-      ],
-    },
-    {
-      name: 'Егор',
-      birthdate: '06.08.1976',
-      wishList: [
-        {
-          title: 'Годовой абонимент в библиотеку',
-          price: 400,
-        },
-        {
-          title: 'Шариковая ручка',
-          price: 750,
-        },
-      ],
-    },
-    {
-      name: 'Роман',
-      birthdate: '14.05.2000',
-    },
-    {
-      name: 'Василий',
-      birthdate: '27.02.1980',
-      wishList: [
-        {
-          title: 'Годовой курс обучения на ИРИТ-РтФ',
-          price: 100500,
-        },
-        {
-          title: 'Путешествие на Марс',
-          price: 999999999,
-        },
-      ],
-    },
-  ];
-  console.log(getMinimumPresentsPrice(phoneList));
-
-  
   module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
