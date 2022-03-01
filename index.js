@@ -17,6 +17,26 @@
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
+
+const phoneList = [
+    {
+        name: "Александра",
+        birthdate: "21.05.2001",
+      },
+      {
+        name: "Егор",
+        birthdate: "06.08.1976",
+      },
+      {
+        name: "Роман",
+        birthdate: "14.04.2000",
+      },
+      {
+        name: "Василий",
+        birthdate: "27.02.1980",
+      },
+];
+let date = '28.02.1980';
 function getNextBirthdays(date, phoneList) {
     if (!(Array.isArray(phoneList) && checkData(date)) || phoneList.length === 0) return []; 
     const result = [];
@@ -30,12 +50,8 @@ function getNextBirthdays(date, phoneList) {
             result.push(phoneList[i]);
         }
     }
-
-    
-
+    return result;
 };
-
-getNextBirthdays()
 
 function checkData(date){
     if (typeof date !== "string") return false;
