@@ -33,7 +33,19 @@ function getObjectDate(date) {
 
 function getNextBirthdays(date, phoneList) {
     if(checkDateCorrect == false || !Array.isArray(phoneList) || phoneList.length === 0) return [];
+    
+    let sortedPhoneList = phoneList.filter((e) => {
+        const friendDate = getObjectDate(e.birthdate);
 
+    return phoneList.filter(phone => {
+        const birthdate = getObjectDate(phone.birthdate);
+        dates[phone.birthdate] = birthdate;
+        const whenBirthdateLessStartDate = birthdate <= startDate;
+        birthdate.setFullYear(startDayYear);
+        return birthdateSmallerThanStartDate && birthdate >= startDate;
+    }).sort((a, b) => {
+        return dates[a.birthdate] - dates[b.birthdate]
+    })
     
 };
 
