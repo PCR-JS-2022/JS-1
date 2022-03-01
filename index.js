@@ -79,6 +79,7 @@ const phoneList = [
 
 console.log(getNextBirthdays('28.05.1980', phoneList));
 
+
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<{
