@@ -21,6 +21,12 @@ function dateParse(date) {
     if (typeof date !== "string")
         return [];
     let newdate = date.split('.');
+    if (newdate[0].length != 2)
+        return [];
+    if (newdate[1].length != 2)
+        return [];
+    if (newdate[2].length != 4)
+        return [];
     return newdate;
 };
 
@@ -48,12 +54,7 @@ function mySort(a, b) {
 //     const newdate = dateParse(date);
 //     if (!Array.isArray(phoneList))
 //         return [];
-//     if (newdate[0].length != 2)
-//         return [];
-//     if (newdate[1].length != 2)
-//         return [];
-//     if (newdate[2].length != 4)
-//         return [];
+
 //     let people = [];
 //     phoneList.forEach(x => {
 //         if ((dateParse(x.birthdate)[2] < newdate[2] &&
@@ -73,8 +74,8 @@ function getNextBirthdays(date, phoneList) {
     if (!Array.isArray(phoneList)) return [];
     let people = [];
     phoneList.forEach((x) => {
-        if (dateParse(x.birthdate) < newdate  &&
-        dateParse(x.birthdate) < Date.now) {
+        if (dateParse(x.birthdate) < newdate &&
+            dateParse(x.birthdate) < Date.now) {
             people.push({ name: x.name, birthdate: x.birthdate });
             console.log({ name: x.name, birthdate: x.birthdate });
         }
