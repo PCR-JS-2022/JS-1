@@ -23,6 +23,7 @@ function getNextBirthdays(date, phoneList) {
     if (!(Array.isArray(phoneList) && checkData(date)) || phoneList.length === 0) return []; 
     const result = [];
     date = date.split('.').map(item => parseInt(item));
+    if (date[2] >= 2022) return [];
     for(let i = 0; i < phoneList.length; i++){
         let currDate = parseInt.phoneList[i].birthdate.split('.');
         if (currDate[1] > date[2]){
