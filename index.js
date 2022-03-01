@@ -126,13 +126,10 @@
             presentsList.friendsList.push(e);
             presentsList.totalPrice += (e.present.price);
             delete e.wishList;
-            // console.log(presentsList.friendsList);
-            // console.log(presentsList.totalPrice);
         }
         else {
           e.present = undefined;
           presentsList.friendsList.push(e);
-          delete e.wishList;
         }
       });
       
