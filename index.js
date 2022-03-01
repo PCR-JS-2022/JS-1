@@ -58,10 +58,10 @@ function getNextBirthdays(date, phoneList) {
     phoneList.forEach(x => {
         if ((dateParse(x.birthdate)[2] < newdate[2] &&
             (dateParse(x.birthdate)[1] = newdate[1] &&
-                dateParse(x.birthdate)[0] > newdate[0] ||
+                dateParse(x.birthdate)[0] >= newdate[0] ||
                 dateParse(x.birthdate)[1] > newdate[1]))
                 || dateParse(x.birthdate)[2] == newdate[2] && (dateParse(x.birthdate)[1] = newdate[1] &&
-                dateParse(x.birthdate)[0] > newdate[0] ||
+                dateParse(x.birthdate)[0] >= newdate[0] ||
                 dateParse(x.birthdate)[1] > newdate[1])) people.push({ name: x.name, birthdate: x.birthdate })
     });
     people.sort(mySort);
