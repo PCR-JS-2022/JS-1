@@ -25,7 +25,9 @@
 
 
  const sortData = (d1, d2) => {
-  return parseDate(d1) - parseDate(d2);
+  let newD1 = d1.split('.').reverse();
+  let newD2 = d2.split('.').reverse();
+  return new Date(0 , newD1[1]-1, newD1[2]) - new Date(0, newD2[1]-1, newD2[2]);
  }
 
  const sortMonth = (d1, d2) => {
@@ -51,10 +53,10 @@
             return el;
           }
           if (listBird.getMonth() === compareDate.getMonth()) 
-            if (listBird.getDate() > compareDate.getDate())
+            if (listBird.getDate() >= compareDate.getDate())
               return el;
           if (listBird.getMonth() === endYearDate.getMonth())
-            if (listBird.getDate() < endYearDate.getDate())
+            if (listBird.getDate() <= endYearDate.getDate())
               return el;
         }
       }
@@ -63,7 +65,6 @@
       return sortData(a.birthdate,b.birthdate);
     });
   };
-
 
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
