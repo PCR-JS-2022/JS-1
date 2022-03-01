@@ -49,16 +49,16 @@ function getNextBirthdays(date, phoneList) {
             if(friendDate.getMonth() === startDate.getMonth())
               if(friendDate.getDate() >= startDate.getDate()) return e;
           }
-
-    return sortedPhoneList.sort((a, b) => {
-    const friend1 = getDateObject(a.birthdate);
-    const friend2 = getDateObject(b.birthdate);
-
-    return friend2 - friend1;
     });
+    return sortedPhoneList.sort((a, b) => {
+        const friend1 = getDateObject(a.birthdate);
+        const friend2 = getDateObject(b.birthdate);
+
+        return friend2 - friend1;
+        });
     
     
-});
+};
 
 
 /**
