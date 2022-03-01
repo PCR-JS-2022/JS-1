@@ -61,6 +61,7 @@
       date[1].length === 2 && date[2].length === 4);
   }
   
+  
   const phoneList = [
     {
       name: "Александра",
