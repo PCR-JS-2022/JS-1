@@ -51,8 +51,8 @@ function getNextBirthdays(date, phoneList) {
           }
     });
     return filterPhoneList.sort((a, b) => {
-        const friend1 = getDateObject(a.birthdate);
-        const friend2 = getDateObject(b.birthdate);
+        const friend1 = getObjectDate(a.birthdate);
+        const friend2 = getObjectDate(b.birthdate);
 
         return friend2 - friend1;
         });
