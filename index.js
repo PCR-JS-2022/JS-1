@@ -47,6 +47,7 @@ function sortByBd(dateForSort1, dateForSort2){
   return (d1 - d2);
 }
 
+/*
 const phoneList = [
   {
     name: "Александра",
@@ -68,6 +69,7 @@ const phoneList = [
 
 const result = getNextBirthdays('28.02.1980', phoneList);
 console.log(JSON.stringify(result))
+*/
   
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
@@ -120,6 +122,83 @@ function getMonthsList(phoneList) {
  *    totalPrice: number
  *  }}
  */
-function getMinimumPresentsPrice(phoneList) {
 
+/*
+ const phoneList = [
+  {
+    name: 'Александра',
+    birthdate: '21.05.2001',
+    wishList: [
+      {
+        title: 'Книга "Изучаем программирование на JavaScript"',
+        price: 250,
+      },
+      {
+        title: 'Билет на концерт Макса Коржа',
+        price: 1500,
+      },
+      {
+        title: 'Книга "Чистый код. Создание, анализ и рефакторинг"',
+        price: 200,
+      },
+    ],
+  },
+  {
+    name: 'Егор',
+    birthdate: '06.08.1976',
+    wishList: [
+      {
+        title: 'Годовой абонимент в библиотеку',
+        price: 400,
+      },
+      {
+        title: 'Шариковая ручка',
+        price: 750,
+      },
+    ],
+  },
+  {
+    name: 'Роман',
+    birthdate: '14.05.2000',
+  },
+  {
+    name: 'Василий',
+    birthdate: '27.02.1980',
+    wishList: [
+      {
+        title: 'Годовой курс обучения на ИРИТ-РтФ',
+        price: 100500,
+      },
+      {
+        title: 'Путешествие на Марс',
+        price: 999999999,
+      },
+    ],
+  },
+];
+*/
+
+function getMinimumPresentsPrice(phoneList) {
+  if (!Array.isArray(phoneList)){
+    return([]);
+  }
+
+  let totalPrice = 0;
+  let minPrice = 0;
+
+  let friendsList = phoneList.map(person => ({
+    name: person.name,
+    birthdate: person.birthdate,
+    present: person.wishList ? person.wishList.sort((wish1, wish2) => wish1.price - wish2.price)[0] : undefined
+  }));
+
+  friendsList.forEach(person => {
+    person.present ? totalPrice += person.present.price : 0;
+  });
+
+  return {friendsList, totalPrice}
 };
+
+
+//const result1 = getMinimumPresentsPrice(phoneList);
+//console.log(JSON.stringify(result1))
