@@ -34,6 +34,7 @@ function dateParse(date) {
     let newdate = date.split('.');
     if (newdate[0].length != 2) return [];
     if (newdate[1].length != 2) return [];
+    if (parseInt(newdate[1] == 0)) return [];
     if (newdate[2].length != 4) return [];
     return new Date(newdate[2], Number.parseInt(newdate[1]) + 1, newdate[0]);
 }
@@ -83,7 +84,7 @@ function getNextBirthdays(date, phoneList) {
     let people = [];
     phoneList.forEach((x) => {
         if (
-            dateParse(x.birthdate) < newdate 
+            dateParse(x.birthdate) < newdate// dateParse(x.birthdate).year < newdate.year ||  dateParse(x.birthdate).year == newdate.year && dateParse(x.birthdate).month
         ) {
             people.push({ name: x.name, birthdate: x.birthdate });
             console.log({ name: x.name, birthdate: x.birthdate });
