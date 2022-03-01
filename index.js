@@ -80,7 +80,7 @@ function getNextBirthdays(date, phoneList) {
             console.log({ name: x.name, birthdate: x.birthdate });
         }
     });
-    //people.sort(mySort);
+    people.sort(mySort);
     return people;
 }
 function getMonthName(monthN) {
