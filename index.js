@@ -114,3 +114,4 @@ function getMinimumPresentsPrice(phoneList) {
 };
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
+//krinzh
