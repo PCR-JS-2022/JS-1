@@ -17,32 +17,6 @@
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
- const phoneList2 = [
-    {
-      name: "Александра",
-      birthdate: "21.05.2001",
-    },
-    {
-      name: "Егор",
-      birthdate: "06.08.1976",
-    },
-    {
-      name: "Роман",
-      birthdate: "14.04.2000",
-    },
-    {
-      name: "Василий",
-      birthdate: "27.02.1980",
-    },
-    {
-      name: "Настя",
-      birthdate: "21.05.2002",
-    },
-    {
-      name: "Виктор",
-      birthdate: "20.08.1977",
-    }
-  ];
   
 function getNextBirthdays(date, phoneList) { 
     const reg = /^\d{2}\.\d{2}\.\d{4}$/;
@@ -83,11 +57,6 @@ function getNextBirthdays(date, phoneList) {
     });
 };
 
-//console.log(getNextBirthdays('27.02.1980', phoneList2));
-
-
-  
-
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<{
@@ -95,6 +64,7 @@ function getNextBirthdays(date, phoneList) {
  *    friends: Array<Person>,
  *  }>}
  */
+
 function getMonthsList(phoneList) {
   if(!Array.isArray(phoneList)) return [];
   const months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
@@ -120,8 +90,6 @@ function getMonthsList(phoneList) {
   return result;
 };
 
-//console.log(getMonthsList(phoneList2));
-
 /**
  * @param {Array<{
  *    name: string,
@@ -137,59 +105,6 @@ function getMonthsList(phoneList) {
  *    totalPrice: number
  *  }}
  */
-
- const phoneList3 = [
-  {
-    name: 'Александра',
-    birthdate: '21.05.2001',
-    wishList: [
-      {
-        title: 'Книга "Изучаем программирование на JavaScript"',
-        price: 250,
-      },
-      {
-        title: 'Билет на концерт Макса Коржа',
-        price: 1500,
-      },
-      {
-        title: 'Книга "Чистый код. Создание, анализ и рефакторинг"',
-        price: 200,
-      },
-    ],
-  },
-  {
-    name: 'Егор',
-    birthdate: '06.08.1976',
-    wishList: [
-      {
-        title: 'Годовой абонимент в библиотеку',
-        price: 400,
-      },
-      {
-        title: 'Шариковая ручка',
-        price: 750,
-      },
-    ],
-  },
-  {
-    name: 'Роман',
-    birthdate: '14.05.2000',
-  },
-  {
-    name: 'Василий',
-    birthdate: '27.02.1980',
-    wishList: [
-      {
-        title: 'Годовой курс обучения на ИРИТ-РтФ',
-        price: 100500,
-      },
-      {
-        title: 'Путешествие на Марс',
-        price: 999999999,
-      },
-    ],
-  },
-];
 
 function findIndexMin(arr) {
   let min = arr[0];
@@ -217,8 +132,5 @@ function getMinimumPresentsPrice(phoneList) {
   }
   return {friendsList: friendsList, totalPrice: totalPrice};
 };
-
-console.log(getMinimumPresentsPrice(phoneList3));
-
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
