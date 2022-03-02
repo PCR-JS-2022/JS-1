@@ -38,7 +38,7 @@
 ];
 
 const dateFormat = new RegExp(/^(0?[1-9]|[12][0-9]|3[01])[.-](0?[1-9]|1[012])[.-]\d{4}$/);
-// let newPhoneList = [];
+let newPhoneList = [];
 
 const transformDate = (dateString) => {
  const newStr = new Date(dateString.split('.').reverse().join('.'));
