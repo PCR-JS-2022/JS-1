@@ -118,9 +118,99 @@
  *    totalPrice: number
  *  }}
  */
+
+ const phoneList = [
+  {
+    name: 'Александра',
+    birthdate: '21.05.2001',
+    wishList: [
+      {
+        title: 'Книга "Изучаем программирование на JavaScript"',
+        price: 250,
+      },
+      {
+        title: 'Билет на концерт Макса Коржа',
+        price: 1500,
+      },
+      {
+        title: 'Книга "Чистый код. Создание, анализ и рефакторинг"',
+        price: 200,
+      },
+    ],
+  },
+  {
+    name: 'Егор',
+    birthdate: '06.08.1976',
+    wishList: [
+      {
+        title: 'Годовой абонимент в библиотеку',
+        price: 400,
+      },
+      {
+        title: 'Шариковая ручка',
+        price: 750,
+      },
+    ],
+  },
+  {
+    name: 'Роман',
+    birthdate: '14.05.2000',
+  },
+  {
+    name: 'Василий',
+    birthdate: '27.02.1980',
+    wishList: [
+      {
+        title: 'Годовой курс обучения на ИРИТ-РтФ',
+        price: 100500,
+      },
+      {
+        title: 'Путешествие на Марс',
+        price: 999999999,
+      },
+    ],
+  },
+];
+
+
 function getMinimumPresentsPrice(phoneList) {
   if (phoneList.length === 0 || !Array.isArray(phoneList))
     return [];
+  let friendsList = [];
+  let totalPrice = 0;
+  let price = Number.MAX_SAFE_INTEGER;
+
+  for (let i = 0; i < phoneList.length; i++) {
+    if (!("wishList" in phoneList[i])) {
+      friendsList[i] = {
+        name: phoneList[i].name,
+        birthdate: phoneList[i].birthdate,
+        present: undefined
+      };
+      continue;
+    }
+
+    for(let j = 0; j < phoneList[i].wishList.length; j++) {
+      if (phoneList[i].wishList[j].price < price){
+        friendsList[i] = {
+                          name: phoneList[i].name,
+                          birthdate: phoneList[i].birthdate,
+                          present: {
+                                    title: phoneList[i].wishList[j].title,
+                                    price: phoneList[i].wishList[j].price 
+                                   }
+                        };
+      price = phoneList[i].wishList[j].price; 
+      }
+      
+    }
+    totalPrice += price;
+    price = Number.MAX_SAFE_INTEGER;
+  }
+  return {friendsList: friendsList, totalPrice};
 };
+
+getMinimumPresentsPrice(phoneList);
+
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
