@@ -18,53 +18,53 @@
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
 
- function parseDate(date) {
-   const newdate = date.split(".").reverse();
-  return new Date(newdate[0], newdate[1]-1, newdate[2]);
- }
+function parseDate(date) {
+  const newdate = date.split(".").reverse();
+  return new Date(newdate[0], newdate[1] - 1, newdate[2]);
+}
 
 
- const sortData = (d1, d2) => {
+const sortData = (d1, d2) => {
   const newD1 = d1.split('.').reverse();
   const newD2 = d2.split('.').reverse();
-  return new Date(0 , newD1[1]-1, newD1[2]) - new Date(0, newD2[1]-1, newD2[2]);
- }
+  return new Date(0, newD1[1] - 1, newD1[2]) - new Date(0, newD2[1] - 1, newD2[2]);
+}
 
- const sortMonth = (d1, d2) => {
+const sortMonth = (d1, d2) => {
   return parseDate(d1).getMonth() - parseDate(d2).getMonth();
- }
- 
- function correctData(date) {
-  return /^\d{2}\.\d{2}\.\d{4}$/.test(date) && typeof date === 'string';
- };
+}
 
- 
-  
-  function getNextBirthdays(date, phoneList) {
-    if(!Array.isArray(phoneList) || !correctData(date) || phoneList.length === 0) {
-      return [];
-    }
-    let compareDate = parseDate(date);
-    let endYearDate = new Date(compareDate.getFullYear(), 11, 31);
-    let listBirthdate = phoneList.filter(el => {
-        let listBird = parseDate(el.birthdate);
-        if (listBird.getFullYear() <= compareDate.getFullYear()){
-          if (listBird.getMonth() < endYearDate.getMonth() && listBird.getMonth() > compareDate.getMonth()) {
-            return el;
-          }
-          if (listBird.getMonth() === compareDate.getMonth()) 
-            if (listBird.getDate() >= compareDate.getDate())
-              return el;
-          if (listBird.getMonth() === endYearDate.getMonth())
-            if (listBird.getDate() <= endYearDate.getDate())
-              return el;
-        }
+function correctData(date) {
+  return /^\d{2}\.\d{2}\.\d{4}$/.test(date) && typeof date === 'string';
+};
+
+
+
+function getNextBirthdays(date, phoneList) {
+  if (!Array.isArray(phoneList) || !correctData(date) || phoneList.length === 0) {
+    return [];
+  }
+  let compareDate = parseDate(date);
+  let endYearDate = new Date(compareDate.getFullYear(), 11, 31);
+  let listBirthdate = phoneList.filter(el => {
+    let listBird = parseDate(el.birthdate);
+    if (listBird.getFullYear() <= compareDate.getFullYear()) {
+      if (listBird.getMonth() < endYearDate.getMonth() && listBird.getMonth() > compareDate.getMonth()) {
+        return el;
       }
-    );
-    return listBirthdate.sort((a,b) => {
-      return sortData(a.birthdate,b.birthdate);
-    });
-  };
+      if (listBird.getMonth() === compareDate.getMonth())
+        if (listBird.getDate() >= compareDate.getDate())
+          return el;
+      if (listBird.getMonth() === endYearDate.getMonth())
+        if (listBird.getDate() <= endYearDate.getDate())
+          return el;
+    }
+  }
+  );
+  return listBirthdate.sort((a, b) => {
+    return sortData(a.birthdate, b.birthdate);
+  });
+};
 
 /**
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
@@ -73,34 +73,34 @@
  *    friends: Array<Person>,
  *  }>}
  */
- function getMonthsList(phoneList) {
-    if(!Array.isArray(phoneList) || phoneList.length === 0) {
-      return [];
+function getMonthsList(phoneList) {
+  if (!Array.isArray(phoneList) || phoneList.length === 0) {
+    return [];
+  }
+  let res = [];
+  let months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
+  let newPhoneList = phoneList.sort((a, b) => {
+    return sortMonth(a.birthdate, b.birthdate);
+  });
+  let prevMonth;
+  let curIndex;
+  for (let i = 0; i < newPhoneList.length; i++) {
+    let curMonth = parseDate(phoneList[i].birthdate).getMonth();
+    if (i === 0) {
+      res.push({ month: months[curMonth], friends: [phoneList[i]] });
+      prevMonth = res[i].month;
+      curIndex = i;
+    } else if (prevMonth === months[curMonth]) {
+      res[curIndex].friends.push(newPhoneList[i]);
+      curIndex = res.length - 1;
+      prevMonth = res[curIndex].month;
+    } else {
+      res.push({ month: months[curMonth], friends: [phoneList[i]] });
+      curIndex = res.length - 1;
+      prevMonth = res[curIndex].month;
     }
-    let res = [];
-    let months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
-    let newPhoneList = phoneList.sort((a,b) => {
-      return sortMonth(a.birthdate,b.birthdate);
-    });
-    let prevMonth;
-    let curIndex;
-    for (let i = 0; i < newPhoneList.length; i++){
-      let curMonth = parseDate(phoneList[i].birthdate).getMonth();
-      if (i === 0){
-        res.push({month: months[curMonth],friends: [phoneList[i]]});
-        prevMonth = res[i].month;
-        curIndex = i;
-      }else if (prevMonth === months[curMonth]){
-        res[curIndex].friends.push(newPhoneList[i]);
-        curIndex = res.length - 1;
-        prevMonth = res[curIndex].month;
-      }  else {
-        res.push({month: months[curMonth],friends: [phoneList[i]]});
-        curIndex = res.length - 1;
-        prevMonth = res[curIndex].month;
-      } 
-    } 
-    return res;
+  }
+  return res;
 };
 
 /**
@@ -119,7 +119,7 @@
  *  }}
  */
 
- const phoneList = [
+const phoneList = [
   {
     name: 'Александра',
     birthdate: '21.05.2001',
@@ -177,40 +177,37 @@ function getMinimumPresentsPrice(phoneList) {
   if (!Array.isArray(phoneList))
     return [];
   if (phoneList.length === 0) {
-    return {friendsList: [], totalPrice: 0};
+    return { friendsList: [], totalPrice: 0 };
   }
   let friendsList = [];
   let totalPrice = 0;
   let price = Number.MAX_SAFE_INTEGER;
 
   for (let i = 0; i < phoneList.length; i++) {
+    friendsList[i] = {
+      name: phoneList[i].name,
+      birthdate: phoneList[i].birthdate
+    };
+
     if (!("wishList" in phoneList[i])) {
-      friendsList[i] = {
-        name: phoneList[i].name,
-        birthdate: phoneList[i].birthdate,
-        present: undefined
-      };
+      friendsList[i].present = undefined;
       continue;
     }
 
-    for(let j = 0; j < phoneList[i].wishList.length; j++) {
-      if (phoneList[i].wishList[j].price < price){
-        friendsList[i] = {
-                          name: phoneList[i].name,
-                          birthdate: phoneList[i].birthdate,
-                          present: {
-                                    title: phoneList[i].wishList[j].title,
-                                    price: phoneList[i].wishList[j].price 
-                                   }
-                        };
-      price = phoneList[i].wishList[j].price; 
+    for (let j = 0; j < phoneList[i].wishList.length; j++) {
+      if (phoneList[i].wishList[j].price < price) {
+        friendsList[i].present = {
+          title: phoneList[i].wishList[j].title,
+          price: phoneList[i].wishList[j].price
+        };
+        price = phoneList[i].wishList[j].price;
       }
-      
+
     }
     totalPrice += price;
     price = Number.MAX_SAFE_INTEGER;
   }
-  return {friendsList: friendsList, totalPrice: totalPrice};
+  console.log(JSON.stringify({ friendsList: friendsList, totalPrice: totalPrice }));
 };
 
 getMinimumPresentsPrice(phoneList);
