@@ -38,7 +38,7 @@
 ];
 
 const dateFormat = new RegExp(/^(0?[1-9]|[12][0-9]|3[01])[.-](0?[1-9]|1[012])[.-]\d{4}$/);
-// let newPhoneList = {};
+// let newPhoneList = [];
 
 const transformDate = (dateString) => {
  const newStr = new Date(dateString.split('.').reverse().join('.'));
@@ -46,35 +46,54 @@ const transformDate = (dateString) => {
 }
 
 const sortData = (a, b) => {
- return new Date(a.birthdate.split('.').reverse()) - new Date(b.birthdate.split('.').reverse());
+  const aDay = a.birthdate.split('.')[0];
+  const bDay = b.birthdate.split('.')[0];
+  const aMonth = a.birthdate.split('.')[1];
+  const bMonth = b.birthdate.split('.')[1];
+
+  if (aMonth < bMonth) {
+    return -1;
+  } else if (aMonth == bMonth && aDay < bDay) {
+    return -1;
+  } else {
+    return 1;
+  }
 }
 
 function getNextBirthdays(date, phoneList) {
-  const dateTime = transformDate(date);
-  const dateTimeYear = dateTime.getFullYear();
-  if (!Array.isArray(phoneList) ||  phoneList.length === 0 || dateTime === null) return [];
 
-  let newPhoneList = {};
-  
+  newPhoneList = [];
+
   if (dateFormat.test(date) && Array.isArray(phoneList)) {
-    return phoneList.filter((contact) => {
+    phoneList.map((contact) => {
+      
+      const endOfTheYear = new Date(new Date().getFullYear(), 11, 31);
+      const dateTime = transformDate(date);
       const contactBirthdate = transformDate(contact.birthdate);
-      newPhoneList[contact.birthdate] = contactBirthdate;
-      const birthdateBeforeDateTime = contactBirthdate <= dateTime;
-      contactBirthdate.setFullYear(dateTimeYear);
-  
-      return birthdateBeforeDateTime && contactBirthdate >= dateTime;
+      
+      if (dateTime.getFullYear() < endOfTheYear.getFullYear() && dateTime.getFullYear() >= contactBirthdate.getFullYear() && contactBirthdate.getFullYear() < endOfTheYear.getFullYear()) {
+        if (dateTime.getMonth() < contactBirthdate.getMonth()) {
+          newPhoneList.push(contact);
+        } else if (dateTime.getMonth() === contactBirthdate.getMonth() && dateTime.getDate() <= contactBirthdate.getDate()) {
+          newPhoneList.push(contact);
+        }
+      }
+
+
+      newPhoneList.sort((a, b) => {
+        return sortData(a,b);
+      });
+     
     })
-    .sort((a,b) => {
-      return newPhoneList[a.birthdate] - newPhoneList[b.birthdate];
-    })
+  } else {
+      newPhoneList = [];
   }
+  console.log(newPhoneList);
+  return newPhoneList;
 };
 
-// getNextBirthdays('28.02.1980', phoneList);
 getNextBirthdays('28.02.1980', phoneList);
-console.log(getNextBirthdays('28.02.1980', phoneList))
-console.log(getNextBirthdays('28.02.1980', phoneList))
+
 /**
 * @param {Array<Person>} phoneList - список друзей из телефонной книги
 * @returns {Array<{
