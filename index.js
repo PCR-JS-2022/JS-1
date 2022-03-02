@@ -19,14 +19,14 @@
  */
 
  function parseDate(date) {
-   let newdate = date.split(".").reverse();
+   const newdate = date.split(".").reverse();
   return new Date(newdate[0], newdate[1]-1, newdate[2]);
  }
 
 
  const sortData = (d1, d2) => {
-  let newD1 = d1.split('.').reverse();
-  let newD2 = d2.split('.').reverse();
+  const newD1 = d1.split('.').reverse();
+  const newD2 = d2.split('.').reverse();
   return new Date(0 , newD1[1]-1, newD1[2]) - new Date(0, newD2[1]-1, newD2[2]);
  }
 
@@ -74,8 +74,9 @@
  *  }>}
  */
  function getMonthsList(phoneList) {
-    if(!Array.isArray(phoneList) || phoneList.length === 0)
+    if(!Array.isArray(phoneList) || phoneList.length === 0) {
       return [];
+    }
     let res = [];
     let months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
     let newPhoneList = phoneList.sort((a,b) => {
@@ -118,7 +119,8 @@
  *  }}
  */
 function getMinimumPresentsPrice(phoneList) {
-
+  if (phoneList.length === 0 || !Array.isArray(phoneList))
+    return [];
 };
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
