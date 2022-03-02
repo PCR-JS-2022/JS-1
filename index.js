@@ -188,17 +188,26 @@ function getMinimumPresentsPrice(phoneList) {
       name: phoneList[i].name,
       birthdate: phoneList[i].birthdate
     };
-
+    
     if (!("wishList" in phoneList[i])) {
-      friendsList[i].present = undefined;
+      friendsList[i] = {
+        name: phoneList[i].name,
+        birthdate: phoneList[i].birthdate,
+        present: undefined
+      };
       continue;
     }
 
     for (let j = 0; j < phoneList[i].wishList.length; j++) {
       if (phoneList[i].wishList[j].price < price) {
+        friendsList[i] = {
+          name: phoneList[i].name,
+          birthdate: phoneList[i].birthdate,
+          pre
+        };
         friendsList[i].present = {
-          title: phoneList[i].wishList[j].title,
-          price: phoneList[i].wishList[j].price
+            title: phoneList[i].wishList[j].title,
+            price: phoneList[i].wishList[j].price
         };
         price = phoneList[i].wishList[j].price;
       }
@@ -207,7 +216,7 @@ function getMinimumPresentsPrice(phoneList) {
     totalPrice += price;
     price = Number.MAX_SAFE_INTEGER;
   }
-  console.log(JSON.stringify({ friendsList: friendsList, totalPrice: totalPrice }));
+  return{ friendsList: friendsList, totalPrice: totalPrice }; 
 };
 
 getMinimumPresentsPrice(phoneList);
