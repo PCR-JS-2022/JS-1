@@ -197,10 +197,6 @@ function getMinimumPresentsPrice(phoneList) {
 
     for (let j = 0; j < phoneList[i].wishList.length; j++) {
       if (phoneList[i].wishList[j].price < price) {
-        friendsList[i] = {
-          name: phoneList[i].name,
-          birthdate: phoneList[i].birthdate
-        };
         friendsList[i].present = {
             title: phoneList[i].wishList[j].title,
             price: phoneList[i].wishList[j].price
