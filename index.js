@@ -17,15 +17,24 @@
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
+
+const incorrectDate = (date) => {
+    let _date = date.split(".")
+    return (_date[0] < 1 || _date[0] > 31) && (_date[1] < 1 || _date[1] > 12) && (_date[2] < 1000 || _date[2] > 9999)
+}
+
 export function getNextBirthdays(date, phoneList) {
     let today = date.split('.');
     let nextBirthdays = []
-    if (today[0] < 1 || today[0] > 31 || today[1] < 1 || today[1] > 12 || today[2] < 1000 || today[2] > 9999 || !(Array.isArray(phoneList)))
+
+    if (incorrectDate(date) || !(Array.isArray(phoneList)))
         return []
     else phoneList.forEach(element => {
         let listDate = element.birthdate.split('.')
-        if ((listDate[2] <= today[2] && listDate[1] > today[1]) ||
-            (listDate[2] <= today[2] && listDate[1] == today[1] && listDate[0] > today[0]))
+
+        if (((listDate[2] <= today[2] && listDate[1] > today[1]) ||
+            (listDate[2] <= today[2] && listDate[1] == today[1] && listDate[0] > today[0])) &&
+            !(incorrectDate(element.birthdate)))
             nextBirthdays.push(element)
     });
     nextBirthdays.sort((a, b) => a.birthdate.split('.')[1] > b.birthdate.split('.')[1] ? 1 : -1)
