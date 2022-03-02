@@ -174,8 +174,11 @@
 
 
 function getMinimumPresentsPrice(phoneList) {
-  if (phoneList.length === 0 || !Array.isArray(phoneList))
+  if (!Array.isArray(phoneList))
     return [];
+  if (phoneList.length === 0) {
+    return {friendsList: [], totalPrice: 0};
+  }
   let friendsList = [];
   let totalPrice = 0;
   let price = Number.MAX_SAFE_INTEGER;
@@ -207,7 +210,7 @@ function getMinimumPresentsPrice(phoneList) {
     totalPrice += price;
     price = Number.MAX_SAFE_INTEGER;
   }
-  return {friendsList: friendsList, totalPrice};
+  return {friendsList: friendsList, totalPrice: totalPrice};
 };
 
 getMinimumPresentsPrice(phoneList);
