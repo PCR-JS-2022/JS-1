@@ -37,26 +37,29 @@ function getNextBirthdays(date, phoneList) {
     date = getCorrectDate(date);
     if (Array.isArray(phoneList) && typeof date == 'object') {
         for (let i = 0; i < phoneList.length; i++) {
-            phoneList[i].birthdate = getCorrectDate(phoneList[i].birthdate);
-            if (phoneList[i].birthdate === false)
+            let tempBirthdate = getCorrectDate(phoneList[i].birthdate);
+            if (tempBirthdate === false)
                 return [];
-            if (phoneList[i].birthdate.getFullYear() <= date.getFullYear()
-                && +phoneList[i].birthdate.getMonth() - +date.getMonth() > 0) {
+            if (tempBirthdate.getFullYear() <= date.getFullYear()
+                && +tempBirthdate.getMonth() - +date.getMonth() > 0) {
                 resultArray.push(phoneList[i]);
             }
-            if (phoneList[i].birthdate.getFullYear() <= date.getFullYear()
-                && +phoneList[i].birthdate.getMonth() - +date.getMonth() === 0
-                && +phoneList[i].birthdate.getDate() - +date.getDate() >= 0) {
+            if (tempBirthdate.getFullYear() <= date.getFullYear()
+                && +tempBirthdate.getMonth() - +date.getMonth() === 0
+                && +tempBirthdate.getDate() - +date.getDate() >= 0) {
                 resultArray.push(phoneList[i]);
             }
         }
         resultArray.sort(function (a, b) {
-            if (a.birthdate.getMonth() > b.birthdate.getMonth())
+            if (getCorrectDate(a.birthdate).getMonth() > getCorrectDate(b.birthdate).getMonth())
                 return 1;
-            else if (a.birthdate.getMonth() === b.birthdate.getMonth())
+            else if (getCorrectDate(a.birthdate).getMonth() === getCorrectDate(b.birthdate).getMonth()
+                && getCorrectDate(a.birthdate).getDate() > getCorrectDate(b.birthdate).getDate()) {
+                return 1;
+            } else if (getCorrectDate(a.birthdate).getMonth() === getCorrectDate(b.birthdate).getMonth()
+                && getCorrectDate(a.birthdate).getDate() === getCorrectDate(b.birthdate).getDate()) {
                 return 0;
-            else
-                return -1;
+            } else return -1;
         })
 
         return resultArray;
