@@ -153,16 +153,19 @@ const result = [
 ]
 
 let finalRes = [];
-function getMonthsList(phoneList) {
 
-  finalRes = [];
+function getMonthsList(phoneList) {
+  finalRes.length = 0;
+  result.map((item) => {
+    item.friends = []
+  })
+  // result[item].friends = [];
 
   if (Array.isArray(phoneList)) { 
     const sortPhoneList = phoneList.sort((a, b) => {
       return sortData(a, b);
     });
     sortPhoneList.map(data => {
-      // console.log(data)
       const month = transformDate(data.birthdate).getMonth();
       Object.keys(result).map((item) => {
         if (item == month) {
@@ -172,7 +175,7 @@ function getMonthsList(phoneList) {
       });
     })
   } else {
-    newPhoneList = [];
+    return [];
   }
 
   Object.keys(result).map((item) => {
