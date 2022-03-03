@@ -1,42 +1,93 @@
+// const phoneList = [
+//     {
+//         name: "Виталий",
+//         birthdate: "01.01.2001",
+//     },
+//     {
+//         name: "Сергей",
+//         birthdate: "03.01.2001",
+//     },
+//     {
+//         name: "Никита",
+//         birthdate: "31.12.2001",
+//     },
+//     {
+//         name: "Василиса",
+//         birthdate: "15.10.2001",
+//     },
+//     {
+//         name: "Анна",
+//         birthdate: "25.10.2001",
+//     },
+//     {
+//         name: "Александра",
+//         birthdate: "21.05.2001",
+//     },
+//     {
+//         name: "Егор",
+//         birthdate: "06.08.1976",
+//     },
+//     {
+//         name: "Роман",
+//         birthdate: "14.04.2000",
+//     },
+//     {
+//         name: "Василий",
+//         birthdate: "27.02.1980",
+//     },
+// ];
 const phoneList = [
     {
-        name: "Виталий",
-        birthdate: "01.01.2001",
+        name: 'Александра',
+        birthdate: '21.05.2001',
+        wishList: [
+            {
+                title: 'Книга "Изучаем программирование на JavaScript"',
+                price: 250,
+            },
+            {
+                title: 'Билет на концерт Макса Коржа',
+                price: 1500,
+            },
+            {
+                title: 'Книга "Чистый код. Создание, анализ и рефакторинг"',
+                price: 200,
+            },
+        ],
     },
     {
-        name: "Сергей",
-        birthdate: "03.01.2001",
+        name: 'Егор',
+        birthdate: '06.08.1976',
+        wishList: [
+            {
+                title: 'Годовой абонимент в библиотеку',
+                price: 400,
+            },
+            {
+                title: 'Шариковая ручка',
+                price: 750,
+            },
+        ],
     },
     {
-        name: "Никита",
-        birthdate: "31.12.2001",
+        name: 'Роман',
+        birthdate: '14.05.2000',
     },
     {
-        name: "Василиса",
-        birthdate: "15.10.2001",
-    },
-    {
-        name: "Анна",
-        birthdate: "25.10.2001",
-    },
-    {
-        name: "Александра",
-        birthdate: "21.05.2001",
-    },
-    {
-        name: "Егор",
-        birthdate: "06.08.1976",
-    },
-    {
-        name: "Роман",
-        birthdate: "14.04.2000",
-    },
-    {
-        name: "Василий",
-        birthdate: "27.02.1980",
+        name: 'Василий',
+        birthdate: '27.02.1980',
+        wishList: [
+            {
+                title: 'Годовой курс обучения на ИРИТ-РтФ',
+                price: 100500,
+            },
+            {
+                title: 'Путешествие на Марс',
+                price: 999999999,
+            },
+        ],
     },
 ];
-
 const months = new Map([
         [0, 'январь'],
         [1, 'февраль'],
@@ -154,8 +205,36 @@ function getMonthsList(phoneList) {
  *  }}
  */
 function getMinimumPresentsPrice(phoneList) {
-
-};
+    let resultArray = {
+        'friendsList': [],
+        'totalPrice': 0
+    }
+    let totalPrice = 0;
+    if (!Array.isArray(phoneList))
+        return [];
+    for (let person of phoneList) {
+        if (person.wishList !== undefined) {
+            person.wishList.sort((a, b) => a.price - b.price);
+            totalPrice += person.wishList[0].price;
+            resultArray.friendsList.push({
+                'name': person.name,
+                'birthdate': person.birthdate,
+                'present': {
+                    'title': person.wishList[0].title,
+                    'price': person.wishList[0].price,
+                }
+            });
+        } else {
+            resultArray.friendsList.push({
+                'name': person.name,
+                'birthdate': person.birthdate,
+                'present': undefined
+            });
+        }
+    }
+    resultArray.totalPrice = totalPrice;
+    console.log(resultArray);
+}
 
 /**
  * Get the Date object from correct string
@@ -172,7 +251,7 @@ function getCorrectDate(date) {
     }
 }
 
-getMonthsList(phoneList);
+
 // module.exports = {
 //     getNextBirthdays,
 //     getMonthsList,
