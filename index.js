@@ -1,58 +1,66 @@
 function getNextBirthdays(date, phoneList) {
 
-    if (!getNextBirthdaysIsValid(date, phoneList)) {return [];}
+    if (!getNextBirthdaysIsValid(date, phoneList)) {
+        return [];
+    }
 
     const referenceDate = getDateType(date);
-	const referenceDay = getBirthday(referenceDate);
+    const referenceDay = getBirthday(referenceDate);
 
-	return phoneList
-		.filter(friend => {
-			const friendBirthDate = getDateType(friend.birthdate);
-			const friendBirthday = getBirthday(friendBirthDate);
-			return friendBirthday >= referenceDay && friendBirthDate <= referenceDate;
-		}).sort((freind1, friend2) => getBirthday(getDateType(freind1.birthdate)) - getBirthday(getDateType(friend2.birthdate)))
+    return phoneList
+        .filter(friend => {
+            const friendBirthDate = getDateType(friend.birthdate);
+            const friendBirthday = getBirthday(friendBirthDate);
+            return friendBirthday >= referenceDay && friendBirthDate <= referenceDate;
+        }).sort((freind1, friend2) => getBirthday(getDateType(freind1.birthdate)) - getBirthday(getDateType(friend2.birthdate)))
 };
 
 function getNextBirthdaysIsValid(date, friends) {
-	return Array.isArray(friends) && /^\d{2}.\d{2}.\d{4}$/.test(date) && typeof date === "string";
+    return Array.isArray(friends) && /^\d{2}.\d{2}.\d{4}$/.test(date) && typeof date === "string";
 };
 
 function getBirthday(date) {
-	return new Date(0, date.getUTCMonth(), date.getUTCDay());
+    return new Date(0, date.getUTCMonth(), date.getUTCDay());
 };
 
 function getDateType(date) {
-	const [dd, mm, yyyy] = date.split('.');
+    const [dd, mm, yyyy] = date.split('.');
     return new Date(`${mm}/${dd}/${yyyy}`);
 };
 
 function getMonthsList(phoneList) {
-	if (!Array.isArray(phoneList)) {
-		return [];
-	};
+    if (!Array.isArray(phoneList)) {
+        return [];
+    };
 
-	return phoneList
-		.sort((person1, person2) => getBirthday(getDateType(person1.birthdate)) - getBirthday(getDateType(person2.birthdate)))
-		.reduce((monthsList, person) => {
-			const month = getDateType(person.birthdate).toLocaleString("ru", { month: "long" });
+    return phoneList
+        .sort((person1, person2) => getBirthday(getDateType(person1.birthdate)) - getBirthday(getDateType(person2.birthdate)))
+        .reduce((monthsList, person) => {
+            const month = getDateType(person.birthdate).toLocaleString("ru", { month: "long" });
 
-          if(monthsList.length === 0 ){monthsList.push({ month, friends: [person] });}
-            
-           else{
-              if (monthsList.some(m => m.month === month)){
-              const monthsListIndex = monthsList.findIndex(m => m.month === month);
-              monthsList[monthsListIndex].friends.push(person);
-              }
-              else {
-                  monthsList.push({ month, friends: [person] });
+            if (monthsList.length === 0) {
+                monthsList.push({ month, friends: [person] });
+            }
+
+            else {
+                if (monthsList.some(m => m.month === month)) {
+                    const monthsListIndex = monthsList.findIndex(m => m.month === month);
+                    monthsList[monthsListIndex].friends.push(person);
+                }
+
+                else {
+                    monthsList.push({ month, friends: [person] });
                 };
             };
-			return monthsList;}, 
-        []);
+            return monthsList;
+        },
+            []);
 };
 
 function getMinimumPresentsPrice(phoneList) {
-    if (!Array.isArray(phoneList)) {return [];}
+    if (!Array.isArray(phoneList)) {
+        return [];
+    }
 
     const friendsList = phoneList.map(person => ({
         name: person.name,
@@ -63,10 +71,10 @@ function getMinimumPresentsPrice(phoneList) {
     return {
         friendsList,
         totalPrice: friendsList.reduce((total, { present }) => {
-        if(present)
-            return total += present.price;
-        else 
-            return  total;
+            if (present)
+                return total += present.price;
+            else
+                return total;
         }, 0),
     };
 };
