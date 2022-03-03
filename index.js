@@ -126,7 +126,7 @@ function getMinimumPresentsPrice(phoneList) {
         'totalPrice': 0
     }
     let totalPrice = 0;
-    if (!Array.isArray(phoneList) || phoneList.length === 0)
+    if (!Array.isArray(phoneList))
         return [];
     for (let person of phoneList) {
         if (person.wishList !== undefined) {
