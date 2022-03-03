@@ -40,15 +40,8 @@ function getNextBirthdays(date, phoneList) {
             let tempBirthdate = getDate(phoneList[i].birthdate);
             if (tempBirthdate === false)
                 return [];
-            if (tempBirthdate.getFullYear() <= date.getFullYear()
-                && +tempBirthdate.getMonth() - +date.getMonth() > 0) {
+            if (isInvalidBirthdate(date, tempBirthdate))
                 resultArray.push(phoneList[i]);
-            }
-            if (tempBirthdate.getFullYear() <= date.getFullYear()
-                && +tempBirthdate.getMonth() - +date.getMonth() === 0
-                && +tempBirthdate.getDate() - +date.getDate() >= 0) {
-                resultArray.push(phoneList[i]);
-            }
         }
         resultArray.sort(function (a, b) {
             if (getDate(a.birthdate).getMonth() > getDate(b.birthdate).getMonth())
@@ -166,6 +159,20 @@ function getDate(date) {
             return new Date(+date[2], +date[1] - 1, +date[0]);
         } else return false;
     }
+}
+
+/**
+ * Check: is the birthdate right
+ */
+function isInvalidBirthdate(date, birthdate) {
+    if (birthdate.getFullYear() <= date.getFullYear()) {
+        if ((+birthdate.getMonth() - +date.getMonth() > 0) || (+birthdate.getMonth() - +date.getMonth() === 0
+            && +birthdate.getDate() - +date.getDate() >= 0)) {
+            return true;
+        }
+        return true;
+    }
+    return false;
 }
 
 module.exports = {
