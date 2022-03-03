@@ -43,18 +43,7 @@ function getNextBirthdays(date, phoneList) {
             if (isInvalidBirthdate(date, tempBirthdate))
                 resultArray.push(phoneList[i]);
         }
-        resultArray.sort(function (a, b) {
-            if (getDate(a.birthdate).getMonth() > getDate(b.birthdate).getMonth())
-                return 1;
-            else if (getDate(a.birthdate).getMonth() === getDate(b.birthdate).getMonth()
-                && getDate(a.birthdate).getDate() > getDate(b.birthdate).getDate()) {
-                return 1;
-            } else if (getDate(a.birthdate).getMonth() === getDate(b.birthdate).getMonth()
-                && getDate(a.birthdate).getDate() === getDate(b.birthdate).getDate()) {
-                return 0;
-            } else return -1;
-        })
-
+        resultArray.sort(sortDate());
         return resultArray;
     }
     return [];
@@ -173,6 +162,25 @@ function isInvalidBirthdate(date, birthdate) {
         return true;
     }
     return false;
+}
+
+/**
+ * Sort by date of birth
+ * Отсортировать по дате рождения
+ * @param {Person} a
+ * @param {Person} b
+ * @returns {number}
+ */
+function sortDate(a, b) {
+    if (getDate(a.birthdate).getMonth() > getDate(b.birthdate).getMonth())
+        return 1;
+    else if (getDate(a.birthdate).getMonth() === getDate(b.birthdate).getMonth()
+        && getDate(a.birthdate).getDate() > getDate(b.birthdate).getDate()) {
+        return 1;
+    } else if (getDate(a.birthdate).getMonth() === getDate(b.birthdate).getMonth()
+        && getDate(a.birthdate).getDate() === getDate(b.birthdate).getDate()) {
+        return 0;
+    } else return -1;
 }
 
 module.exports = {
