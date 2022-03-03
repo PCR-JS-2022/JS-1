@@ -273,7 +273,7 @@ function getMinimumPresentsPrice(phoneList) {
   }
 
   if (Array.isArray(phoneList)) { 
-      phoneList3.map(data => {
+      phoneList.map(data => {
         let minPriceArray = [];
         if (data.wishList) {
           const wishListArray = data.wishList.map(item => {
@@ -310,9 +310,9 @@ function getMinimumPresentsPrice(phoneList) {
      console.log(minPresentsPrice);
      return minPresentsPrice;
     } else {
-      phoneList3 = [];
-      console.log(phoneList3);
-      return phoneList3;
+      phoneList = [];
+      console.log(phoneList);
+      return phoneList;
     }    
 };
 
