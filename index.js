@@ -157,7 +157,6 @@ function isInvalidBirthdate(date, birthdate) {
             && +birthdate.getDate() - +date.getDate() >= 0)) {
             return true;
         }
-        return true;
     }
     return false;
 }
