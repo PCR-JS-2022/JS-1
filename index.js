@@ -77,6 +77,8 @@ function getNextBirthdays(date, phoneList) {
  */
 function getMonthsList(phoneList) {
     let resultArray = [];
+    if (!Array.isArray(phoneList) || phoneList.length === 0)
+        return [];
     for (let person of phoneList) {
         let tempBirthdate = getCorrectDate(person.birthdate);
         if (tempBirthdate === false) {
@@ -124,7 +126,7 @@ function getMinimumPresentsPrice(phoneList) {
         'totalPrice': 0
     }
     let totalPrice = 0;
-    if (!Array.isArray(phoneList))
+    if (!Array.isArray(phoneList) || phoneList.length === 0)
         return [];
     for (let person of phoneList) {
         if (person.wishList !== undefined) {
@@ -164,7 +166,6 @@ function getCorrectDate(date) {
         } else return false;
     }
 }
-
 module.exports = {
     getNextBirthdays,
     getMonthsList,
