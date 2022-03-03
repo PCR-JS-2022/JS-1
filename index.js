@@ -34,10 +34,10 @@ const months = new Map([
  */
 function getNextBirthdays(date, phoneList) {
     let resultArray = [];
-    date = getCorrectDate(date);
+    date = getDate(date);
     if (Array.isArray(phoneList) && typeof date == 'object') {
         for (let i = 0; i < phoneList.length; i++) {
-            let tempBirthdate = getCorrectDate(phoneList[i].birthdate);
+            let tempBirthdate = getDate(phoneList[i].birthdate);
             if (tempBirthdate === false)
                 return [];
             if (tempBirthdate.getFullYear() <= date.getFullYear()
@@ -51,13 +51,13 @@ function getNextBirthdays(date, phoneList) {
             }
         }
         resultArray.sort(function (a, b) {
-            if (getCorrectDate(a.birthdate).getMonth() > getCorrectDate(b.birthdate).getMonth())
+            if (getDate(a.birthdate).getMonth() > getDate(b.birthdate).getMonth())
                 return 1;
-            else if (getCorrectDate(a.birthdate).getMonth() === getCorrectDate(b.birthdate).getMonth()
-                && getCorrectDate(a.birthdate).getDate() > getCorrectDate(b.birthdate).getDate()) {
+            else if (getDate(a.birthdate).getMonth() === getDate(b.birthdate).getMonth()
+                && getDate(a.birthdate).getDate() > getDate(b.birthdate).getDate()) {
                 return 1;
-            } else if (getCorrectDate(a.birthdate).getMonth() === getCorrectDate(b.birthdate).getMonth()
-                && getCorrectDate(a.birthdate).getDate() === getCorrectDate(b.birthdate).getDate()) {
+            } else if (getDate(a.birthdate).getMonth() === getDate(b.birthdate).getMonth()
+                && getDate(a.birthdate).getDate() === getDate(b.birthdate).getDate()) {
                 return 0;
             } else return -1;
         })
@@ -80,7 +80,7 @@ function getMonthsList(phoneList) {
     if (!Array.isArray(phoneList) || phoneList.length === 0)
         return [];
     for (let person of phoneList) {
-        let tempBirthdate = getCorrectDate(person.birthdate);
+        let tempBirthdate = getDate(person.birthdate);
         if (tempBirthdate === false) {
             return [];
         }
@@ -98,7 +98,7 @@ function getMonthsList(phoneList) {
         }
     }
     resultArray.sort(function (a, b) {
-        return getCorrectDate(a.friends[0].birthdate).getMonth() - getCorrectDate(b.friends[0].birthdate).getMonth();
+        return getDate(a.friends[0].birthdate).getMonth() - getDate(b.friends[0].birthdate).getMonth();
     });
 
     return resultArray;
@@ -153,10 +153,11 @@ function getMinimumPresentsPrice(phoneList) {
 }
 
 /**
- * Get the Date object from correct string
+ * Get the Date object from string
  * Преобразовать дату в корректный формат
+ * @param {string} date
  */
-function getCorrectDate(date) {
+function getDate(date) {
     if (typeof date != "string")
         return false;
     else {
@@ -166,6 +167,7 @@ function getCorrectDate(date) {
         } else return false;
     }
 }
+
 module.exports = {
     getNextBirthdays,
     getMonthsList,
