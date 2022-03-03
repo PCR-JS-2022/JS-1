@@ -4,12 +4,20 @@ const phoneList = [
         birthdate: "01.01.2001",
     },
     {
+        name: "Сергей",
+        birthdate: "03.01.2001",
+    },
+    {
         name: "Никита",
         birthdate: "31.12.2001",
     },
     {
         name: "Василиса",
         birthdate: "15.10.2001",
+    },
+    {
+        name: "Анна",
+        birthdate: "25.10.2001",
     },
     {
         name: "Александра",
@@ -30,18 +38,18 @@ const phoneList = [
 ];
 
 const months = new Map([
-        ['00', 'январь'],
-        ['01', 'февраль'],
-        ['02', 'март'],
-        ['03', 'апрель'],
-        ['04', 'май'],
-        ['05', 'июнь'],
-        ['06', 'июль'],
-        ['07', 'август'],
-        ['08', 'сентябрь'],
-        ['09', 'октябрь'],
-        ['10', 'ноябрь'],
-        ['11', 'декабрь']
+        [0, 'январь'],
+        [1, 'февраль'],
+        [2, 'март'],
+        [3, 'апрель'],
+        [4, 'май'],
+        [5, 'июнь'],
+        [6, 'июль'],
+        [7, 'август'],
+        [8, 'сентябрь'],
+        [9, 'октябрь'],
+        [10, 'ноябрь'],
+        [11, 'декабрь']
     ]
 );
 /**
@@ -104,6 +112,29 @@ function getNextBirthdays(date, phoneList) {
  *  }>}
  */
 function getMonthsList(phoneList) {
+    let resultArray = [];
+    for (let person of phoneList) {
+        person.birthdate = getCorrectDate(person.birthdate);
+        if (person.birthdate === false) {
+            return [];
+        }
+        let findElement = resultArray.find(function (element, index, array) {
+            return element.month === months.get(person.birthdate.getMonth());
+        });
+
+        if (findElement === undefined) {
+            resultArray.push({
+                'month': months.get(person.birthdate.getMonth()),
+                'friends': [person]
+            });
+        } else {
+            findElement.friends.push(person);
+        }
+    }
+    resultArray.sort(function (a, b) {
+        return a.friends[0].birthdate.getMonth() - b.friends[0].birthdate.getMonth();
+    });
+    console.log(resultArray);
 }
 ;
 
@@ -136,12 +167,12 @@ function getCorrectDate(date) {
     else {
         date = date.split('.');
         if (date[0].length === 2 && date[1].length === 2 && date[2].length === 4) {
-            return new Date(+date[2], +date[1]-1, +date[0]);
+            return new Date(+date[2], +date[1] - 1, +date[0]);
         } else return false;
     }
 }
 
-console.log(getNextBirthdays('01.01.2001', phoneList));
+getMonthsList(phoneList);
 // module.exports = {
 //     getNextBirthdays,
 //     getMonthsList,
