@@ -78,17 +78,17 @@ function getNextBirthdays(date, phoneList) {
 function getMonthsList(phoneList) {
     let resultArray = [];
     for (let person of phoneList) {
-        person.birthdate = getCorrectDate(person.birthdate);
-        if (person.birthdate === false) {
+        let tempBirthdate = getCorrectDate(person.birthdate);
+        if (tempBirthdate === false) {
             return [];
         }
         let findElement = resultArray.find(function (element, index, array) {
-            return element.month === months.get(person.birthdate.getMonth());
+            return element.month === months.get(tempBirthdate.getMonth());
         });
 
         if (findElement === undefined) {
             resultArray.push({
-                'month': months.get(person.birthdate.getMonth()),
+                'month': months.get(tempBirthdate.getMonth()),
                 'friends': [person]
             });
         } else {
@@ -96,7 +96,7 @@ function getMonthsList(phoneList) {
         }
     }
     resultArray.sort(function (a, b) {
-        return a.friends[0].birthdate.getMonth() - b.friends[0].birthdate.getMonth();
+        return getCorrectDate(a.friends[0].birthdate).getMonth() - getCorrectDate(b.friends[0].birthdate).getMonth();
     });
 
     return resultArray;
