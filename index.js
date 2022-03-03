@@ -69,7 +69,6 @@ function getMonthsList(phoneList) {
         let findElement = resultArray.find(function (element, index, array) {
             return element.month === months.get(tempBirthdate.getMonth());
         });
-
         if (findElement === undefined) {
             resultArray.push({
                 'month': months.get(tempBirthdate.getMonth()),
@@ -82,7 +81,6 @@ function getMonthsList(phoneList) {
     resultArray.sort(function (a, b) {
         return getDate(a.friends[0].birthdate).getMonth() - getDate(b.friends[0].birthdate).getMonth();
     });
-
     return resultArray;
 }
 ;
