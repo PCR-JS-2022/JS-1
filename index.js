@@ -34,16 +34,16 @@ const months = new Map([
  */
 function getNextBirthdays(date, phoneList) {
     let resultArray = [];
-    date = getDate(date);
+    date = getFormatDate(date);
     if (Array.isArray(phoneList) && typeof date == 'object') {
         for (let i = 0; i < phoneList.length; i++) {
-            let tempBirthdate = getDate(phoneList[i].birthdate);
+            let tempBirthdate = getFormatDate(phoneList[i].birthdate);
             if (tempBirthdate === false)
                 return [];
             if (isInvalidBirthdate(date, tempBirthdate))
                 resultArray.push(phoneList[i]);
         }
-        resultArray.sort(sortDate());
+        resultArray.sort(sortDate);
         return resultArray;
     }
     return [];
@@ -62,7 +62,7 @@ function getMonthsList(phoneList) {
     if (!Array.isArray(phoneList) || phoneList.length === 0)
         return [];
     for (let person of phoneList) {
-        let tempBirthdate = getDate(person.birthdate);
+        let tempBirthdate = getFormatDate(person.birthdate);
         if (tempBirthdate === false) {
             return [];
         }
@@ -79,7 +79,7 @@ function getMonthsList(phoneList) {
         }
     }
     resultArray.sort(function (a, b) {
-        return getDate(a.friends[0].birthdate).getMonth() - getDate(b.friends[0].birthdate).getMonth();
+        return getFormatDate(a.friends[0].birthdate).getMonth() - getFormatDate(b.friends[0].birthdate).getMonth();
     });
     return resultArray;
 }
@@ -137,7 +137,7 @@ function getMinimumPresentsPrice(phoneList) {
  * Преобразовать дату в корректный формат
  * @param {string} date
  */
-function getDate(date) {
+function getFormatDate(date) {
     if (typeof date != "string")
         return false;
     else {
@@ -169,13 +169,13 @@ function isInvalidBirthdate(date, birthdate) {
  * @returns {number}
  */
 function sortDate(a, b) {
-    if (getDate(a.birthdate).getMonth() > getDate(b.birthdate).getMonth())
+    if (getFormatDate(a.birthdate).getMonth() > getFormatDate(b.birthdate).getMonth())
         return 1;
-    else if (getDate(a.birthdate).getMonth() === getDate(b.birthdate).getMonth()
-        && getDate(a.birthdate).getDate() > getDate(b.birthdate).getDate()) {
+    else if (getFormatDate(a.birthdate).getMonth() === getFormatDate(b.birthdate).getMonth()
+        && getFormatDate(a.birthdate).getDate() > getFormatDate(b.birthdate).getDate()) {
         return 1;
-    } else if (getDate(a.birthdate).getMonth() === getDate(b.birthdate).getMonth()
-        && getDate(a.birthdate).getDate() === getDate(b.birthdate).getDate()) {
+    } else if (getFormatDate(a.birthdate).getMonth() === getFormatDate(b.birthdate).getMonth()
+        && getFormatDate(a.birthdate).getDate() === getFormatDate(b.birthdate).getDate()) {
         return 0;
     } else return -1;
 }
