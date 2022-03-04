@@ -1,154 +1,82 @@
-/**
- * @typedef Person
- * @type {object}
- * @property {string} name - имя
- * @property {string} birthdate - дата рождения
- */
+/* functions */
+const removeDuplicates = (originalArray, prop) => {
+ const newArray = [];
+ const lookupObject = {};
 
-/**
- * @typedef Gift
- * @type {object}
- * @property {string} title - название подарка
- * @property {number} price - стоимость подарка
- */
-
-/**
- * @typedef SplitDate
- * @type {object}
- * @property {number} day - день
- * @property {number} month - месяц
- * @property {number} year - год
- */
-
-/**
- * @param {string} date - дата отсчета
- * @param {Array<Person>} phoneList - список друзей из телефонной книги
- * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
- */
-function getNextBirthdays(date, phoneList) {
- const normedDate = getDate(date)
- if (!Array.isArray(phoneList) || !normedDate)
-  return []
-
- const friendsList = phoneList.filter(person => checkDate(getDate(person.birthdate), normedDate))
-
- return friendsList.sort((a, b) => sortByBirthday(getDate(a.birthdate), getDate(b.birthdate)))
-}
-
-/**
- * @param {Array<Person>} phoneList - список друзей из телефонной книги
- * @returns {Array<{
- *    month: string,
- *    friends: Array<Person>,
- *  }>}
- */
-function getMonthsList(phoneList) {
- if (!Array.isArray(phoneList)) return []
- const tempPhoneList = phoneList.sort((a, b) => sortByBirthday(getDate(a.birthdate), getDate(b.birthdate)))
- let monthsList = []
-
- for (const person of tempPhoneList) {
-  const birthdate = getDate(person.birthdate)
-  const month = birthdate.toLocaleString('ru-RU', {month: 'long'})
-  const monthItem = monthsList.find(item => item.month === month)
-
-  if (monthItem) {
-   monthItem.friends.push(person)
-  } else {
-   monthsList.push({month, friends: [person]})
-  }
+ for (let i in originalArray) {
+  lookupObject[originalArray[i][prop]] = originalArray[i];
  }
- return monthsList
-}
-
-/**
- * @param {Array<{
- *    name: string,
- *    birthdate: string,
- *    wishList: Array<Gift>
- *  }>} phoneList - список друзей из телефонной книги
- * @returns {{totalPrice: number, friendsList: *[]}}
- */
-function getMinimumPresentsPrice(phoneList) {
- if (!Array.isArray(phoneList)) return []
-
- return phoneList.reduce((result, person) => {
-  if (person.wishList) {
-   person.wishList.sort((a, b) => a.price - b.price)
-   result.totalPrice += person.wishList[0].price
-   result.friendsList.push({name: person.name, birthdate: person.birthdate, present: person.wishList[0]})
-  } else {
-   result.friendsList.push({ ...person, present: undefined })
-  }
-  return result
- }, { totalPrice: 0, friendsList: [] })
-}
-
-/**
- * @param {string} date - дата
- * @returns {SplitDate | undefined}
- */
-function getSplitDate(date) {
- if (typeof date !== 'string')
-  return undefined
-
- const sd = date.split('.')
- if (sd.length !== 3)
-  return undefined
-
- const [day, month, year] = sd
-
- if (day.length !== 2 || month.length !== 2 || year.length !== 4)
-  return undefined
-
- return {day: +day, month: +month, year: +year}
-}
-
-/**
- * @param {string} date - дата
- * @returns {Date | undefined}
- */
-function getDate(date) {
- const sd = getSplitDate(date)
- if (!sd) return undefined
-
- const {day, month, year} = sd
-
- return new Date(year, month - 1, day)
-}
-
-/**
- * @param {Date} date - дата для проверки
- * @param {Date} currentDate - текущая переданная дата
- * @returns {boolean}
- */
-function checkDate(date, currentDate) {
- if (date.getFullYear() < currentDate.getFullYear()) {
-  if (currentDate.getMonth() === date.getMonth()) {
-   return currentDate.getDate() <= date.getDate()
-  }
-  return currentDate.getMonth() < date.getMonth()
+ console.log();
+ for (i in lookupObject) {
+  newArray.push(lookupObject[i]);
  }
- return date.getFullYear() === currentDate.getFullYear()
-     && currentDate.getMonth() === date.getMonth()
-     && currentDate.getDate() === date.getDate()
-}
-
-/**
- * @param {Date} a - первая дата
- * @param {Date} b - вторая дата
- * @returns {number}
- */
-function sortByBirthday(a, b) {
- if (a.getMonth() > b.getMonth()) {
-  return 1
- } else if (a.getMonth() === b.getMonth()) {
-  if (a.getDate() === b.getDate()) {
-   return a.getFullYear() - b.getFullYear()
-  }
-  return a.getDate() - b.getDate()
+ return newArray;
+};
+const isValidDate = (dateString) => {
+ if (
+     !/^\d{1,2}.\d{1,2}.\d{4}$/.test(dateString) ||
+     typeof dateString !== "string"
+ ) {
+  return false;
  }
- return -1
-}
+ const parts = dateString.split(".");
+ const day = parseInt(parts[0], 10);
+ const month = parseInt(parts[1], 10);
+ const year = parseInt(parts[2], 10);
+ if (month === 0 || month > 12) {
+  return false;
+ }
 
-module.exports = {getNextBirthdays, getMonthsList, getMinimumPresentsPrice};
+ const monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+ if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+  monthLength[1] = 29;
+ return day > 0 && day <= monthLength[month - 1];
+};
+const getNextBirthdays = (date, phoneList) => {
+ let result = [];
+ if (!isValidDate(date) || !Array.isArray(phoneList)) return [];
+ const currentDateArr = date.split(".");
+ const currentDateTime = new Date(
+     currentDateArr[2],
+     currentDateArr[1],
+     currentDateArr[0]
+ ).getTime();
+ phoneList.forEach((friend) => {
+  let friendArr = friend.birthdate.split(".");
+  const friendDateTime = new Date(
+      friendArr[2],
+      friendArr[1],
+      friendArr[0]
+  ).getTime();
+  if (friendDateTime < currentDateTime) {
+   result.push(friend);
+  }
+ });
+ return result.sort(
+     (a, b) =>
+         new Date(a.birthdate.split(".").reverse()).getTime() -
+         new Date(b.birthdate.split(".").reverse()).getTime()
+ );
+};
+const getMonthsList = (phoneList) => {
+ let result = [];
+ const months = Array.from({ length: 12 }, (e, i) => {
+  return new Date(null, i + 1, null).toLocaleDateString("ru", {
+   month: "long",
+  });
+ });
+ phoneList.forEach((friend, i) => {
+  const birthDateMonth = +friend.birthdate.split(".")[1];
+  const phoneListFiltered = phoneList.filter(
+      (person) => +person.birthdate.split(".")[1] === birthDateMonth
+  );
+  const object = {
+   month: months[birthDateMonth - 1],
+   friends: [...phoneListFiltered],
+  };
+  result.push(object);
+ });
+ console.log(removeDuplicates(result, "month"));
+ return removeDuplicates(result, "month");
+};
+module.exports = { getMonthsList, getNextBirthdays };
