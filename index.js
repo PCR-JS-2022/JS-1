@@ -70,8 +70,12 @@ function getNextBirthdays(date, phoneList) {
       const endOfTheYear = new Date(new Date().getFullYear(), 11, 31);
       const dateTime = transformDate(date);
       const contactBirthdate = transformDate(contact.birthdate);
+
+      const dateYear = dateTime.getFullYear();
+      const endYear = endOfTheYear.getFullYear();
+      const contactBirthdateYear = contactBirthdate.getFullYear();
       
-      if (dateTime.getFullYear() < endOfTheYear.getFullYear() && dateTime.getFullYear() >= contactBirthdate.getFullYear() && contactBirthdate.getFullYear() < endOfTheYear.getFullYear()) {
+      if (dateYear < endYear && dateYear >= contactBirthdateYear && contactBirthdateYear < endYear) {
         if (dateTime.getMonth() < contactBirthdate.getMonth()) {
           newPhoneList.push(contact);
         } else if (dateTime.getMonth() === contactBirthdate.getMonth() && dateTime.getDate() <= contactBirthdate.getDate()) {
@@ -274,17 +278,9 @@ function getMinimumPresentsPrice(phoneList) {
 
   if (Array.isArray(phoneList)) { 
       phoneList.map(data => {
-        let minPriceArray = [];
         if (data.wishList) {
-          const wishListArray = data.wishList.map(item => {
-            return item;
-          });
-        
-          wishListArray.forEach((item) => {
-            minPriceArray.push(item.price);
-          });
-        
-          const minimumPrice = Math.min(...minPriceArray);  
+          const wishListArray = [...data.wishList];
+          const minimumPrice = Math.min(...wishListArray.map((wl) => wl.price));
         
           wishListArray.filter((item) => {
             if (item.price === minimumPrice) {
