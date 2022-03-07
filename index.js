@@ -13,6 +13,36 @@ const months = new Map([
         [11, 'декабрь']
     ]
 );
+
+/**
+ * Get the Date object from string
+ * Преобразовать дату в корректный формат
+ * @param {string} date
+ */
+function getFormatDate(date) {
+    if (typeof date != "string") {
+        return false;
+    } else {
+        const splittedDate = date.split('.');
+        if (splittedDate[0].length === 2 && splittedDate[1].length === 2 && splittedDate[2].length === 4) {
+            return new Date(Number(splittedDate[2]), Number(+splittedDate[1]) - 1, Number(+splittedDate[0]));
+        } else return false;
+    }
+}
+
+/**
+ * Check: is the birthdate right
+ */
+function isInvalidBirthdate(date, birthdate) {
+    if (birthdate.getFullYear() <= date.getFullYear()) {
+        if ((Number(birthdate.getMonth()) - Number(date.getMonth()) > 0) || (Number(birthdate.getMonth()) - Number(date.getMonth()) === 0
+            && Number(birthdate.getDate()) - Number(date.getDate()) >= 0)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 /**
  * @typedef Person
  * @type {object}
@@ -33,14 +63,14 @@ const months = new Map([
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
 function getNextBirthdays(date, phoneList) {
-    let resultArray = [];
-    date = getFormatDate(date);
-    if (Array.isArray(phoneList) && typeof date == 'object') {
+    const resultArray = [];
+    const formatDate = getFormatDate(date);
+    if (Array.isArray(phoneList) && typeof formatDate === 'object') {
         for (let i = 0; i < phoneList.length; i++) {
-            let tempBirthdate = getFormatDate(phoneList[i].birthdate);
+            const tempBirthdate = getFormatDate(phoneList[i].birthdate);
             if (tempBirthdate === false)
                 return [];
-            if (isInvalidBirthdate(date, tempBirthdate))
+            if (isInvalidBirthdate(formatDate, tempBirthdate))
                 resultArray.push(phoneList[i]);
         }
         resultArray.sort(sortDate);
@@ -58,29 +88,25 @@ function getNextBirthdays(date, phoneList) {
  *  }>}
  */
 function getMonthsList(phoneList) {
-    let resultArray = [];
+    const resultArray = [];
     if (!Array.isArray(phoneList) || phoneList.length === 0)
         return [];
-    for (let person of phoneList) {
-        let tempBirthdate = getFormatDate(person.birthdate);
+    phoneList.forEach((person) => {
+        const tempBirthdate = getFormatDate(person.birthdate);
         if (tempBirthdate === false) {
             return [];
         }
-        let findElement = resultArray.find(function (element, index, array) {
-            return element.month === months.get(tempBirthdate.getMonth());
-        });
+        const findElement = resultArray.find(element => element.month === months.get(tempBirthdate.getMonth()));
         if (findElement === undefined) {
             resultArray.push({
-                'month': months.get(tempBirthdate.getMonth()),
-                'friends': [person]
+                month: months.get(tempBirthdate.getMonth()),
+                friends: [person]
             });
         } else {
             findElement.friends.push(person);
         }
-    }
-    resultArray.sort(function (a, b) {
-        return getFormatDate(a.friends[0].birthdate).getMonth() - getFormatDate(b.friends[0].birthdate).getMonth();
     });
+    resultArray.sort((a, b) => getFormatDate(a.friends[0].birthdate).getMonth() - getFormatDate(b.friends[0].birthdate).getMonth());
     return resultArray;
 }
 ;
@@ -101,14 +127,15 @@ function getMonthsList(phoneList) {
  *  }}
  */
 function getMinimumPresentsPrice(phoneList) {
-    let resultArray = {
+    const resultArray = {
         'friendsList': [],
         'totalPrice': 0
     }
     let totalPrice = 0;
-    if (!Array.isArray(phoneList))
+    if (!Array.isArray(phoneList)) {
         return [];
-    for (let person of phoneList) {
+    }
+    phoneList.forEach((person) => {
         if (person.wishList !== undefined) {
             person.wishList.sort((a, b) => a.price - b.price);
             totalPrice += person.wishList[0].price;
@@ -127,38 +154,9 @@ function getMinimumPresentsPrice(phoneList) {
                 'present': undefined
             });
         }
-    }
+    })
     resultArray.totalPrice = totalPrice;
     return resultArray;
-}
-
-/**
- * Get the Date object from string
- * Преобразовать дату в корректный формат
- * @param {string} date
- */
-function getFormatDate(date) {
-    if (typeof date != "string")
-        return false;
-    else {
-        date = date.split('.');
-        if (date[0].length === 2 && date[1].length === 2 && date[2].length === 4) {
-            return new Date(+date[2], +date[1] - 1, +date[0]);
-        } else return false;
-    }
-}
-
-/**
- * Check: is the birthdate right
- */
-function isInvalidBirthdate(date, birthdate) {
-    if (birthdate.getFullYear() <= date.getFullYear()) {
-        if ((+birthdate.getMonth() - +date.getMonth() > 0) || (+birthdate.getMonth() - +date.getMonth() === 0
-            && +birthdate.getDate() - +date.getDate() >= 0)) {
-            return true;
-        }
-    }
-    return false;
 }
 
 /**
