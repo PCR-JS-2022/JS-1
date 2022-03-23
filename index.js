@@ -50,6 +50,11 @@ function getNextBirthdays(date, phoneList) {
 
 function CheckBirthdays(selectdate, date) {
   const newdate = date.split('.');
+  if(Number(newdate[0]) == Number(selectdate[0])
+  && Number(newdate[1]) == Number(selectdate[1])
+  && Number(newdate[2]) == Number(selectdate[2])){
+    return true;
+  }
   return ((Number(newdate[2]) < Number(selectdate[2])) &&
     ((Number(newdate[1]) > Number(selectdate[1]) ||
       (newdate[1] == selectdate[1] && Number(newdate[0]) >= Number(selectdate[0])))))
