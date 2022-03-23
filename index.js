@@ -19,14 +19,15 @@
  */
 function CheckDate(date){
   if (typeof date != 'string') {
-    return false;
+    return true;
   }
   const newdate = date.split('.');
   if (isNaN(newdate[0]) 
   || isNaN(newdate[1]) 
   || isNaN(newdate[2])) {
-    return false;
+    return true;
   }
+  return false;
 }
 
 function getNextBirthdays(date, phoneList) {
