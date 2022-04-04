@@ -29,7 +29,7 @@ export function getNextBirthdays(date, phoneList) {
     if (!Array.isArray(phoneList) || !checkdate(date))
         return [];
 
-    const filterdate = getNextBirthdays.filter(function (item) {
+    const filterdate = phoneList.filter(function (item) {
         const arraybirthdate = item.birthdate.split('.');
         const taskday = +arraybirthdate[0];
         const taskmonth = +arraybirthdate[1];
