@@ -34,7 +34,7 @@ export function getNextBirthdays(date, phoneList) {
         const taskday = +arraybirthdate[0];
         const taskmonth = +arraybirthdate[1];
         const taskyear = +arraybirthdate[2];
-        if (startyear >= taskyear && (startmonth < taskmonth || (startmonth == startmonth && startday <= taskday))) {
+        if (startyear >= taskyear && (startmonth < taskmonth || (startmonth == taskmonth && startday <= taskday))) {
             return true
         }
     });
