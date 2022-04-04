@@ -17,8 +17,32 @@
  * @param {Array<Person>} phoneList - список друзей из телефонной книги
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
- export function getNextBirthdays(date, phoneList) {
+export function getNextBirthdays(date, phoneList) {
+    const arraydate = date.split('.');
+    const startday = +arraydate[0];
+    const startmonth = +arraydate[1];
+    const startyear = +arraydate[2];
+    function checkdate(date) {
+        if (startday.length != 2 && startmonth.length != 2 && startyear.length != 4)
+            return false
+    };
+    if (!Array.isArray(phoneList) || !checkdate(date))
+        return [];
 
+    const filterdate = getNextBirthdays.filter(function (item) {
+        const arraybirthdate = item.birthdate.split('.');
+        const taskday = +arraybirthdate[0];
+        const taskmonth = +arraybirthdate[1];
+        const taskyear = +arraybirthdate[2];
+        if (startyear >= taskyear && (startmonth < taskmonth || (startmonth == startmonth && startday <= taskday))) {
+            return true
+        }
+    });
+    const sort = filterdate.sort(function (a, b) {
+        return (new Date(0, a.birthdate.split('.')[1], a.birthdate.split('.')[0]) -
+            new Date(0, b.birthdate.split('.')[1], b.birthdate.split('.')[0]))
+    });
+    return sort;
 };
 
 /**
@@ -29,7 +53,20 @@
  *  }>}
  */
 export function getMonthsList(phoneList) {
-
+    const newlist = []
+    const months = [январь, февраль, март, апрель, май, июнь, июль, август, сентябрь, октябрь, ноябрь, декабрь]
+    if (!Array.isArray(phoneList)) {
+        return []
+    }
+    const sort = phoneList.sort(function (a, b) {
+        return (new Date(0, a.birthdate.split('.')[1], a.birthdate.split('.')[0]) -
+            new Date(0, b.birthdate.split('.')[1], b.birthdate.split('.')[0]))
+    });
+    phoneList.map(function (item) {
+        const month = item.birthdate.split('.')[1]
+        return newlist.push({ month: months[month - 1], friends: [item] })
+    })
+    return newlist
 };
 
 /**
