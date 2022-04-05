@@ -18,12 +18,13 @@
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
 export function getNextBirthdays(date, phoneList) {
+    if (typeof (date) !== "string") return false
     const arraydate = date.split('.');
     const startday = +arraydate[0];
     const startmonth = +arraydate[1];
     const startyear = +arraydate[2];
     function checkdate(date) {
-        if (typeof (date) != "string" || startday.length != 2 && startmonth.length != 2 && startyear.length != 4)
+        if (startday.length != 2 && startmonth.length != 2 && startyear.length != 4)
             return false
     };
     if (!Array.isArray(phoneList) || checkdate(date))
