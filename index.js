@@ -18,7 +18,7 @@
  * @returns {Array<Person>} массив друзей, у которых дни рождения после даты отсчета
  */
 export function getNextBirthdays(date, phoneList) {
-    if (typeof (date) !== "string") return false
+    if (typeof (date) !== "string") []
     const arraydate = date.split('.');
     const startday = +arraydate[0];
     const startmonth = +arraydate[1];
