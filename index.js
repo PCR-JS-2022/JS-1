@@ -54,7 +54,7 @@ export function getNextBirthdays(date, phoneList) {
  *  }>}
  */
 export function getMonthsList(phoneList) {
-    const newlist = []
+    let newlist = []
     if (!Array.isArray(phoneList)) return []
     const months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"]
     const sort = phoneList.sort(function (a, b) {
