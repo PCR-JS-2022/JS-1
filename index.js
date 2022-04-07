@@ -61,7 +61,7 @@ export function getMonthsList(phoneList) {
         return (new Date(0, a.birthdate.split('.')[1], a.birthdate.split('.')[0]) -
             new Date(0, b.birthdate.split('.')[1], b.birthdate.split('.')[0]))
     });
-    phoneList.map(function (item) {
+    sort.map(function (item) {
         const month = item.birthdate.split('.')[1]
         return newlist.push({ month: months[month - 1], friends: [item] })
     })
