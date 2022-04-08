@@ -63,7 +63,13 @@ export function getMonthsList(phoneList) {
     });
     sort.map(function (item) {
         const month = item.birthdate.split('.')[1]
-        newlist.push({ month: months[month - 1], friends: [item] })
+        if (newlist.find(function (it) {
+            it.month === months[month - 1]
+        })) {
+            newlist.friends.push(item)
+        } else {
+            newlist.push({ month: months[month - 1], friends: [item] })
+        }
     })
     return newlist
 };
