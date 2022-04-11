@@ -47,7 +47,7 @@ function getNextBirthdays(date, phoneList) {
         let friendBirthYear = friend.birthdate.substring(6);
         if (friendBirthYear > reportYear) continue;
         if (friendBirthMonth < reportMonth) continue;
-        if (friendBirthMonth == reportMonth && friendBirthDay < reportDay)
+        if (friendBirthMonth == reportMonth && friendBirthDay <= reportDay)
             continue;
         newPhoneList.push(friend);
     }
