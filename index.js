@@ -34,42 +34,44 @@ function getNextBirthdays(date, phoneList) {
         return [];
     }
     //parsing date by day, month, year
-    const reportDay = date.substring(0, 2);
-    const reportMonth = date.substring(3, 5);
-    const reportYear = date.substring(6);
-    //second validation date
-    const numberReportMonth = Number(reportMonth) - 1;
-    const dateObj = new Date(reportYear, numberReportMonth, reportDay);
-    if (numberReportMonth != dateObj.getMonth()) return [];
+    const reportDay = Number(date.substring(0, 2));
+    const reportMonth = Number(date.substring(3, 5)) - 1;
+    const reportYear = Number(date.substring(6));
+    //second validation date (example: >29.02.2020)
+    const dateObj = new Date(reportYear, reportMonth, reportDay);
+    if (reportMonth != dateObj.getMonth()) return [];
     //find friend
     let newPhoneList = [];
-    let i;
-    for (i = 0; i < phoneList.length; ++i) {
+    for (var i = 0; i < phoneList.length; ++i) {
         let friend = phoneList[i];
-        let friendBirthDay = friend.birthdate.substring(0, 2);
-        let friendBirthMonth = friend.birthdate.substring(3, 5);
-        let friendBirthYear = friend.birthdate.substring(6);
+        let friendBirthDay = Number(friend.birthdate.substring(0, 2));
+        let friendBirthMonth = Number(friend.birthdate.substring(3, 5)) - 1;
+        let friendBirthYear = Number(friend.birthdate.substring(6));
         if (friendBirthYear > reportYear) continue;
         if (friendBirthMonth < reportMonth) continue;
         if (friendBirthMonth == reportMonth && friendBirthDay < reportDay)
             continue;
-        newPhoneList.push(friend);
+        //bisect
+        let index = 0;
+        for (var j = 0; j < newPhoneList.length; ++j) {
+            let addedDate = newPhoneList[j].birthdate;
+            let addedDateObj = new Date(
+                Number(addedDate.substring(6)),
+                Number(addedDate.substring(3, 5)) - 1,
+                Number(addedDate.substring(0, 2))
+            );
+            let curDateObj = new Date(
+                friendBirthYear,
+                friendBirthMonth,
+                friendBirthDay
+            );
+            if (addedDateObj > curDateObj) {
+                index = j;
+                break;
+            }
+        }
+        newPhoneList.splice(index, 0, friend);
     }
-    //sorted newPhoneList
-    newPhoneList.sort(function (friend1, friend2) {
-        let friend1BirthDate = new Date(
-            friend1.birthdate.substring(6),
-            friend1.birthdate.substring(3, 5),
-            friend1.birthdate.substring(0, 2)
-        );
-        let friend2BirthDate = new Date(
-            friend2.birthdate.substring(6),
-            friend2.birthdate.substring(3, 5),
-            friend2.birthdate.substring(0, 2)
-        );
-        return friend1BirthDate - friend2BirthDate;
-    });
-
     return newPhoneList;
 }
 
@@ -100,12 +102,10 @@ function getMonthsList(phoneList) {
         ["12", "декабрь"],
     ]);
     let friendsBirthMonths = [];
-    let i;
-    for (i = 0; i < phoneList.length; ++i) {
+    for (var i = 0; i < phoneList.length; ++i) {
         let friend = phoneList[i];
         let nameBirthMonth = namesMonths.get(friend.birthdate.substring(3, 5));
         let friendsBirthMonth = null;
-        let j;
         for (j = 0; j < friendsBirthMonths.length; ++j) {
             if (friendsBirthMonths[j].month == nameBirthMonth) {
                 friendsBirthMonth = friendsBirthMonths[j];
@@ -160,8 +160,7 @@ function getMinimumPresentsPrice(phoneList) {
     }
     let friendsList = [];
     let totalPrice = 0;
-    let i;
-    for (i = 0; i < phoneList.length; ++i) {
+    for (var i = 0; i < phoneList.length; ++i) {
         let friend = phoneList[i];
         let friendWithSelectedPresent = {
             name: friend.name,
