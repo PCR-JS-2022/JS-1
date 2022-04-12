@@ -19,7 +19,7 @@
  */
 function getNextBirthdays(date, phoneList) {
     "use strict";
-    //validation date
+    //first validation date
     if (
         typeof date !== "string" ||
         date.length != 10 ||
@@ -37,6 +37,10 @@ function getNextBirthdays(date, phoneList) {
     const reportDay = date.substring(0, 2);
     const reportMonth = date.substring(3, 5);
     const reportYear = date.substring(6);
+    //second validation date
+    const numberReportMonth = Number(reportMonth) - 1;
+    const dateObj = new Date(reportYear, numberReportMonth, reportDay);
+    if (numberReportMonth != dateObj.getMonth()) return [];
     //find friend
     let newPhoneList = [];
     let i;
@@ -47,7 +51,7 @@ function getNextBirthdays(date, phoneList) {
         let friendBirthYear = friend.birthdate.substring(6);
         if (friendBirthYear > reportYear) continue;
         if (friendBirthMonth < reportMonth) continue;
-        if (friendBirthMonth == reportMonth && friendBirthDay <= reportDay)
+        if (friendBirthMonth == reportMonth && friendBirthDay < reportDay)
             continue;
         newPhoneList.push(friend);
     }
