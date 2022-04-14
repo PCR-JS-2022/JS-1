@@ -90,6 +90,7 @@ function sortByDate(firstDate, secondDate) {
  *  }>}
  */
 function getMonthsList(phoneList) {
+    const months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"]
     if (!Array.isArray(phoneList)) {
         console.log("Введённый список друзей некорректен")
         return []
