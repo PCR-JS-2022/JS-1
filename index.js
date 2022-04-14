@@ -47,6 +47,9 @@ function getNextBirthdays(date, phoneList) {
 };
 
 function dateIsIncorret(selectedDate) {
+    if (typeof selectedDate !== "string") {
+        return true
+    }
     const date = getObjectDateFromString(selectedDate)
     if (date.day.length != 2
         || date.month.length != 2
@@ -55,8 +58,6 @@ function dateIsIncorret(selectedDate) {
         || date.day > 31
         || date.month <= 0
         || date.month > 12
-        || typeof selectedDate !== "string"
-        || selectedDate.split(".") == undefined
         || selectedDate.split(".").length != 3) {
         console.log("Введённая дата некорректна")
         return true
@@ -68,12 +69,10 @@ function dateIsIncorret(selectedDate) {
 
 function getObjectDateFromString(date) {
     date = date.split(".")
-    if (date != undefined) {
-        return {
-            day: date[0],
-            month: date[1],
-            year: date[2]
-        }
+    return {
+        day: date[0],
+        month: date[1],
+        year: date[2]
     }
 }
 
@@ -90,7 +89,7 @@ function sortByDate(firstDate, secondDate) {
  *    friends: Array<Person>,
  *  }>}
  */
- function getMonthsList(phoneList) {
+function getMonthsList(phoneList) {
     if (!Array.isArray(phoneList)) {
         console.log("Введённый список друзей некорректен")
         return []
@@ -134,7 +133,7 @@ function sortByDate(firstDate, secondDate) {
  *    totalPrice: number
  *  }}
  */
- function getMinimumPresentsPrice(phoneList) {
+function getMinimumPresentsPrice(phoneList) {
     if (!Array.isArray(phoneList)) {
         console.log("Введённый список друзей некорректен")
         return []
