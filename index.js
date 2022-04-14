@@ -56,7 +56,7 @@ function dateIsIncorret(selectedDate) {
         || date.month <= 0
         || date.month > 12
         || typeof selectedDate !== "string"
-        || selectedDate.split(".") != undefined
+        || selectedDate.split(".") == undefined
         || selectedDate.split(".").length != 3) {
         console.log("Введённая дата некорректна")
         return true
