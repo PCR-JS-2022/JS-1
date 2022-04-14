@@ -56,6 +56,7 @@ function dateIsIncorret(selectedDate) {
         || date.month <= 0
         || date.month > 12
         || typeof selectedDate !== "string"
+        || selectedDate.split(".") != undefined
         || selectedDate.split(".").length != 3) {
         console.log("Введённая дата некорректна")
         return true
@@ -67,10 +68,12 @@ function dateIsIncorret(selectedDate) {
 
 function getObjectDateFromString(date) {
     date = date.split(".")
-    return {
-        day: date[0],
-        month: date[1],
-        year: date[2]
+    if (date != undefined) {
+        return {
+            day: date[0],
+            month: date[1],
+            year: date[2]
+        }
     }
 }
 
