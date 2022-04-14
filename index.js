@@ -159,44 +159,5 @@ function sortByDate(firstDate, secondDate) {
         totalPrice: totalPrice
     }
 };
-const phoneList = [
-    {
-        name: "Александра",
-        birthdate: "21.05.2001",
-    },
-    {
-        name: "Егор2",
-        birthdate: "09.08.1976",
-    },
-    {
-        name: "Егор",
-        birthdate: "06.08.1976",
-    },
-    {
-        name: "Роман",
-        birthdate: "14.04.2000",
-    },
-    {
-        name: "Василий",
-        birthdate: "27.02.1980",
-    },
-    {
-        name: "Василий1",
-        birthdate: "21.02.1980",
-    },
-    {
-        name: "Егор1",
-        birthdate: "05.08.1976",
-    },
-];
-const months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"]
-getMonthsList(phoneList)
-    .forEach(list => {
-        console.log(list.month)
-        list.friends.forEach(friend => {
-            console.log(friend)
-        })
-        console.log(" ")
-    })
 
 module.exports = { getNextBirthdays, getMonthsList, getMinimumPresentsPrice };
