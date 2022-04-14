@@ -33,13 +33,14 @@ function getNextBirthdays(date, phoneList) {
         .filter(friend => {
             const birthdate = getObjectDateFromString(friend.birthdate)
 
-            if (birthdate.year < date.year) {
-                if (birthdate.month > date.month) {
-                    return friend
-                }
-                if (birthdate.month == date.month && birthdate.day >= date.day) {
-                    return friend
-                }
+            if (birthdate.year < date.year && birthdate.month > date.month) {
+                return friend
+            }
+            if (birthdate.year < date.year && birthdate.month == date.month && birthdate.day >= date.day) {
+                return friend
+            }
+            if (birthdate.year == date.year && birthdate.month == date.month && birthdate.day == date.day) {
+                return friend
             }
         })
         .sort((first, second) => sortByDate(first.birthdate, second.birthdate))
