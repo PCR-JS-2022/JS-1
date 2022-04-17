@@ -165,7 +165,7 @@ function getMonthsList(phoneList) {
             let friendBirthDay = Number(friend.birthdate.substring(0, 2));
             let index = 0;
             for (var k = 0; k < friendsList.length; ++k) {
-                addedFriendBirthDay = Number(
+                let addedFriendBirthDay = Number(
                     friendsList[k].birthdate.substring(0, 2)
                 );
                 if (
