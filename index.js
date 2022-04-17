@@ -49,7 +49,7 @@ function getNextBirthdays(date, phoneList) {
         let friendBirthYear = Number(friend.birthdate.substring(6));
         if (friendBirthYear > reportYear) continue;
         if (friendBirthMonth < reportMonth) continue;
-        if (friendBirthMonth == reportMonth && friendBirthDay <= reportDay)
+        if (friendBirthMonth == reportMonth && friendBirthDay < reportDay)
             continue;
         //bisect sorted newPhoneList
         let index = 0;
@@ -165,7 +165,7 @@ function getMonthsList(phoneList) {
             let friendBirthDay = Number(friend.birthdate.substring(0, 2));
             let index = 0;
             for (var k = 0; k < friendsList.length; ++k) {
-                let addedFriendBirthDay = Number(
+                addedFriendBirthDay = Number(
                     friendsList[k].birthdate.substring(0, 2)
                 );
                 if (
