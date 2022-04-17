@@ -38,8 +38,8 @@ function getNextBirthdays(date, phoneList) {
     const reportMonth = Number(date.substring(3, 5)) - 1;
     const reportYear = Number(date.substring(6));
     //second validation date (example: >29.02.2020)
-    const dateObj = new Date(reportYear, reportMonth, reportDay);
-    if (reportMonth != dateObj.getMonth()) return [];
+    const reportDate = new Date(reportYear, reportMonth, reportDay);
+    if (reportMonth != reportDate.getMonth()) return [];
     //find friend
     let newPhoneList = [];
     for (var i = 0; i < phoneList.length; ++i) {
@@ -49,23 +49,38 @@ function getNextBirthdays(date, phoneList) {
         let friendBirthYear = Number(friend.birthdate.substring(6));
         if (friendBirthYear > reportYear) continue;
         if (friendBirthMonth < reportMonth) continue;
-        if (friendBirthMonth == reportMonth && friendBirthDay < reportDay)
+        if (friendBirthMonth == reportMonth && friendBirthDay <= reportDay)
             continue;
-        //bisect
+        //bisect sorted newPhoneList
         let index = 0;
         for (var j = 0; j < newPhoneList.length; ++j) {
-            let addedDate = newPhoneList[j].birthdate;
-            let addedDateObj = new Date(
-                Number(addedDate.substring(6)),
-                Number(addedDate.substring(3, 5)) - 1,
-                Number(addedDate.substring(0, 2))
+            let addedFriendBirthDay = Number(
+                newPhoneList[j].birthdate.substring(0, 2)
             );
-            let curDateObj = new Date(
-                friendBirthYear,
-                friendBirthMonth,
-                friendBirthDay
-            );
-            if (addedDateObj > curDateObj) {
+            let addedFriendBirthMonth =
+                Number(newPhoneList[j].birthdate.substring(3, 5)) - 1;
+            if (newPhoneList.length == 1) {
+                if (
+                    friendBirthMonth > addedFriendBirthMonth ||
+                    (friendBirthMonth == addedFriendBirthMonth &&
+                        friendBirthDay > addedFriendBirthDay)
+                ) {
+                    index = 1;
+                    break;
+                }
+            }
+            if (
+                friendBirthMonth > addedFriendBirthMonth ||
+                (friendBirthMonth == addedFriendBirthMonth &&
+                    friendBirthDay >= addedFriendBirthDay)
+            ) {
+                index = j + 1;
+            }
+            if (
+                friendBirthMonth < addedFriendBirthMonth ||
+                (friendBirthMonth == addedFriendBirthMonth &&
+                    friendBirthDay < addedFriendBirthDay)
+            ) {
                 index = j;
                 break;
             }
@@ -88,53 +103,91 @@ function getMonthsList(phoneList) {
         return [];
     }
     const namesMonths = new Map([
-        ["01", "январь"],
-        ["02", "февраль"],
-        ["03", "март"],
-        ["04", "апрель"],
-        ["05", "май"],
-        ["06", "июнь"],
-        ["07", "июль"],
-        ["08", "август"],
-        ["09", "сентбярь"],
-        ["10", "октябрь"],
-        ["11", "ноябрь"],
-        ["12", "декабрь"],
+        [0, "январь"],
+        [1, "февраль"],
+        [2, "март"],
+        [3, "апрель"],
+        [4, "май"],
+        [5, "июнь"],
+        [6, "июль"],
+        [7, "август"],
+        [8, "сентбярь"],
+        [9, "октябрь"],
+        [10, "ноябрь"],
+        [11, "декабрь"],
     ]);
     let friendsBirthMonths = [];
     for (var i = 0; i < phoneList.length; ++i) {
         let friend = phoneList[i];
-        let nameBirthMonth = namesMonths.get(friend.birthdate.substring(3, 5));
+        let numberBirthMonth = Number(friend.birthdate.substring(3, 5)) - 1;
+        let nameBirthMonth = namesMonths.get(numberBirthMonth);
         let friendsBirthMonth = null;
-        for (j = 0; j < friendsBirthMonths.length; ++j) {
+        for (var j = 0; j < friendsBirthMonths.length; ++j) {
             if (friendsBirthMonths[j].month == nameBirthMonth) {
                 friendsBirthMonth = friendsBirthMonths[j];
                 break;
             }
         }
         if (friendsBirthMonth === null) {
-            friendsBirthMonths.push({
+            //bisect sorted friendsBirthMonths
+            let index = 0;
+            for (var k = 0; k < friendsBirthMonths.length; ++k) {
+                let addedMonthName = friendsBirthMonths[k].month;
+                let addedMonthNumber;
+                for (let [key, value] of namesMonths.entries()) {
+                    if (value === addedMonthName) {
+                        addedMonthNumber = key;
+                        break;
+                    }
+                }
+                if (
+                    friendsBirthMonths.length == 1 &&
+                    numberBirthMonth > addedMonthNumber
+                ) {
+                    index = 1;
+                    break;
+                }
+                if (numberBirthMonth > addedMonthNumber) {
+                    index = k + 1;
+                }
+                if (numberBirthMonth < addedMonthNumber) {
+                    index = k;
+                    break;
+                }
+            }
+            friendsBirthMonths.splice(index, 0, {
                 month: nameBirthMonth,
                 friends: [friend],
             });
         } else {
             let friendsList = friendsBirthMonth.friends;
-            friendsList.push(objectFriend);
-            friendsList.sort(function (friend1, friend2) {
-                let friend1BirthDate = new Date(
-                    friend1.birthdate.substring(6),
-                    friend1.birthdate.substring(3, 5),
-                    friend1.birthdate.substring(0, 2)
+            ////bisect sorted inside BirthMonth
+            let friendBirthDay = Number(friend.birthdate.substring(0, 2));
+            let index = 0;
+            for (var k = 0; k < friendsList.length; ++k) {
+                let addedFriendBirthDay = Number(
+                    friendsList[k].birthdate.substring(0, 2)
                 );
-                let friend2BirthDate = new Date(
-                    friend2.birthdate.substring(6),
-                    friend2.birthdate.substring(3, 5),
-                    friend2.birthdate.substring(0, 2)
-                );
-                return friend1BirthDate - friend2BirthDate;
-            });
+                if (
+                    friendsList.length == 1 &&
+                    friendBirthDay > addedFriendBirthDay
+                ) {
+                    index = 1;
+                    break;
+                }
+                if (friendBirthDay >= addedFriendBirthDay) {
+                    index = k + 1;
+                }
+                if (friendBirthDay < addedFriendBirthDay) {
+                    index = k;
+                    break;
+                }
+            }
+            friendsList.splice(index, 0, friend);
         }
     }
+    //sorting by months
+
     return friendsBirthMonths;
 }
 
